@@ -1,0 +1,1 @@
+This folder (mod_test) was created just to test mod_rewrite in apache to test for agular.js, do not store anything here
