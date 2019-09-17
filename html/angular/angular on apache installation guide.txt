@@ -1,0 +1,3 @@
+https://github.com/mgechev/angular-seed/wiki/Deploying-prod-build-to-Apache-2
+
+Follow that guide
