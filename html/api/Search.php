@@ -4,7 +4,7 @@ $inData = getRequestInfo();
 
 $searchResults = "";
 $searchCount = 0;
-
+$cookie_id = ""
 $connection = new mysqli("localhost", "frontend", "simpleyetEffective2019!", "user");
 
 if ($conn->connect_error) 
@@ -15,7 +15,27 @@ if ($conn->connect_error)
 else
 {
 //    passing in two separate values, one for first time and one for last name. If one of those isn't present, ask Angular to pass in null
-    $query = "SELECT first_name, last_name, nick_name, fav_color, bio, primary_street_addr, second_street_addr, city, state, country, zip, favorite from `contacts` where first_name LIKE '%".$inData["first_name"]."%' OR last_name LIKE '%".$inData["last_name"]."%' OR  nick_name LIKE '%".$inData["first_name"]."%' OR nick_name LIKE '%".$inData["last_name"]."%'";
+    
+    //checking if user has logged in
+    if(!isset($_COOKIE["user_id"]))
+    {
+        errorReturn("User not logged in!");
+    }
+    else
+    {
+        $cookie_id = $_COOKIE["user_id"];
+    }
+    
+    //making sure it's a valid user
+    $test_id_query = "SELECT * from `login` where user_id = ".$cookie_id;
+    $test_result = $connection->query($test_id_query);
+    if($test_result <= 0)
+    {
+        errorReturn("Invalid credentials, please log in again");
+    }
+    
+    //getting the results from searching
+    $query = "SELECT first_name, last_name, nick_name, fav_color, bio, primary_street_addr, second_street_addr, city, state, country, zip, favorite from `contacts` where user_id = ".$cookie_id." AND (first_name LIKE '%".$inData["first_name"]."%' OR last_name LIKE '%".$inData["last_name"]."%' OR  nick_name LIKE '%".$inData["first_name"]."%' OR nick_name LIKE '%".$inData["last_name"]."%')";
     $result = $connection->query($query);
     if($result->num_rows > 0)
     {
@@ -51,7 +71,7 @@ function sendResultInfoAsJson( $obj )
 
 function errorReturn ($error)
 {
-    $value = '{"id":0,"firstName":"","lastName":"","error":"'.$err.'"}';
+    $value = '{"error":"'.$err.'"}';
     sendResultInfoJson($value);
 }
 
