@@ -1,41 +1,50 @@
 <?php
 
+session_start();
+
 $inData = getRequestInfo();
 
 $searchResults = "";
 $searchCount = 0;
-$cookie_id = ""
+$session_id = -123;
 $connection = new mysqli("localhost", "frontend", "simpleyetEffective2019!", "user");
-
-if ($conn->connect_error) 
+if ($connection->connect_error) 
 {
-    errorReturn($connection->connect_error);
+    errorReturn("cannot connect to db");
 }
 
 else
 {
-//    passing in two separate values, one for first time and one for last name. If one of those isn't present, ask Angular to pass in null
+//    passing in one values, it should contain field to search either by first or last name or both.
     
-    //checking if user has logged in
-    if(!isset($_COOKIE["user_id"]))
+    if(!isset($_SESSION["user_id"]))
     {
-        errorReturn("User not logged in!");
+//        errorReturn("User not logged in!");
+        $session_id = 1;
     }
     else
     {
-        $cookie_id = $_COOKIE["user_id"];
+        $session_id = $_SESSION["user_id"];
     }
+//    
+//    //making sure it's a valid user
+//    $test_id_query = "SELECT name from `login` where user_id = ".$session_id;
+//    $test_result = $connection->query($test_id_query);
+//    if($test_result->num_rows <= 0)
+//    {
+//        errorReturn("Invalid credentials, please log in again");
+//    }
     
-    //making sure it's a valid user
-    $test_id_query = "SELECT * from `login` where user_id = ".$cookie_id;
-    $test_result = $connection->query($test_id_query);
-    if($test_result <= 0)
+    $name_given = $inData["search"];
+    if (strlen($name_given) <= 0)
     {
-        errorReturn("Invalid credentials, please log in again");
+        $query = "SELECT * from `contacts` where user_id = ".$session_id;
     }
-    
+    else
+    {
     //getting the results from searching
-    $query = "SELECT first_name, last_name, nick_name, fav_color, bio, primary_street_addr, second_street_addr, city, state, country, zip, favorite from `contacts` where user_id = ".$cookie_id." AND (first_name LIKE '%".$inData["first_name"]."%' OR last_name LIKE '%".$inData["last_name"]."%' OR  nick_name LIKE '%".$inData["first_name"]."%' OR nick_name LIKE '%".$inData["last_name"]."%')";
+    $query = "SELECT * from `contacts` where user_id = ".$session_id." AND (first_name LIKE '%".$inData["search"]."%' OR last_name LIKE '%".$inData["search"]."%' OR fullname LIKE '%".$inData["search"]."%')";
+    }
     $result = $connection->query($query);
     if($result->num_rows > 0)
     {
@@ -46,7 +55,7 @@ else
                 $searchResults .= ",";
             }
             $searchCount++;
-            $searchResults .= '"' . $row["first_name"] . '" "' . $row["last_name"] . '" "' . $row["nicl_name"] . '" "' . $row["fav_color"] . '" "' . $row["bio"] . '" "' . $row["parimary_street_addr"] . '" "' . $row["second_street_addr"] . '" "' . $row["city"] . '" "' . $row["state"] . '" "' . $row["country"] . '" "' . $row["zip"] . '" "' . $row["favorite"] . '"';
+            $searchResults .= '"' . $row["first_name"] . '", "' . $row["last_name"] . '", "' . $row["fav_color"] . '", "' . $row["phone_number"] . '", "' . $row["birthday"] . '", "' . $row["notes"] . '", "' . $row["parimary_street_addr"] . '", "' . $row["second_street_addr"] . '", "' . $row["city"] . '", "' . $row["state"] . '", "' . $row["country"] . '", "' . $row["zip"] . '", "' . $row["favorite"] . '"';
         }
     }
     else
@@ -71,7 +80,7 @@ function sendResultInfoAsJson( $obj )
 
 function errorReturn ($error)
 {
-    $value = '{"error":"'.$err.'"}';
+    $value = '{"error":"'.$error.'"}';
     sendResultInfoJson($value);
 }
 
