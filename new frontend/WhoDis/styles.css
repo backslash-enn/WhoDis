@@ -40,7 +40,6 @@ button:hover {
 }
 
 .smolbutton {
-    float: right;
     margin-top: 15px;
     width: 31px;
     height: 31px;
@@ -54,6 +53,7 @@ button:hover {
 }
 
 .add {
+    float: right;
     clear: right;
     background-color: #46cd38;
     background-image: url("img/plusicon.png");
@@ -66,6 +66,7 @@ button:hover {
 }
 
 .favorites {
+    float: right;    
     margin-right: 6px;
     background-color: #f591ef;
     background-image: url("img/favoriteiconwhite.png");
@@ -197,7 +198,6 @@ button:hover {
     top: 8px;
 }
 
-
 /* Left Panel */
 .leftpanel {
     position: absolute;
@@ -208,3 +208,114 @@ button:hover {
     background-size: 100% 100%;
     background-repeat: no-repeat;
 }
+
+.contactinfo {
+    position: absolute;
+    left: 0;
+    width: 90%;
+    height: 100%;
+}
+
+.contactinfo h1 {
+    float: left;
+    margin: 0; 
+}
+.contactinfo h2 {
+    float: left;
+    clear: left;   
+    margin: 0 40px 0 12px;
+    width: 85%;
+    height: 40%;
+}
+.contactinfo h2 img {
+    float: left;
+    clear: right;
+    width: 60%;
+    height: 100%;
+}
+.contactinfo h2 text {
+    float: left; 
+    margin-top: 225px;
+    margin-left: -80px;
+    font-size: 42px; 
+    color: white;
+    font-family: sans-serif;
+}
+.contactinfo h3 {
+    float:left;
+    letter-spacing: 20px;
+    margin-top: 35px;
+}
+
+.contactinfo h3 img {
+    margin-left: 30px;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    vertical-align: -10px; 
+}
+
+.contactinfo h3 text {
+    font-size: 28px;
+    font-weight: 100;
+    letter-spacing: 7px;
+    font-family: sans-serif;
+}
+
+.contactinfo footer {
+    float: left;
+}
+
+.edit {
+    float: left;
+    margin-left: 12px;
+    background-color: #ffe760;
+    background-image: url("img/editicon.png");
+}
+.edit:hover {
+    background-color: #ccb94d;
+}
+.edit:active {
+    background-color: #998b3a;
+}
+
+.delete {
+    float: left;
+    margin-left: 6px;
+    background-color: #f03737;
+    background-image: url("img/trashicon.png");
+}
+.delete:hover {
+    background-color: #bd2b2b;
+}
+.delete:active {
+    background-color: #aa2020;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
