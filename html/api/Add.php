@@ -8,6 +8,7 @@
 	$db_name = "user";
 	
 	$id = 0;
+	$name = $inData["name"];
 	$username = $inData["username"];
 	$password = $inData["password"];
 	
@@ -18,7 +19,7 @@
     }
 	else
 	{
-		$sql = "SELECT user_id FROM login where username = '" . $username . "'";
+		$sql = "SELECT user_id FROM `login` where username = '" . $username . "'";
 		$result = $conn->query($sql);
 		if ($result->num_rows > 0)
 		{
@@ -26,16 +27,15 @@
 		}
 		else
 		{
-			$sql = "INSERT INTO login (username, password) VALUES ('" . $username . "','" . $password . "')";
-			$result = $conn->query($sql);
-
+			$sql = "INSERT INTO `login` (name, username, password) VALUES ('" . $name . "', '" . $username . "', '" . $password . "')";
+	
 			if($conn->query($sql) === TRUE)
 			{
 				returnWithInfo($username, 0);
 			}
 			else
 			{
-				returnWithError($conn->connect_error);
+				returnWithError("Unable to add user.");
 			}
 		}
 
