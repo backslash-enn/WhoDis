@@ -50,7 +50,6 @@ button:hover {
     background-repeat: no-repeat;
     background-size: 24px;
     background-position: 4px 4px;
-    transition-duration: 200ms;
 }
 
 .add {
@@ -99,17 +98,6 @@ button:hover {
     font-size:20px;
 }
 
-.notes {
-    float: left;
-    background-color: #232323;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    outline-color: #5da4e1;
-    border-width: 0px;
-    margin-top: 15px;
-    margin-left: 30px;
-    color: #5da4e1;
-    font-size:20px;
-}
 
 /* Contact Stuff */
 .contactpanel {
@@ -127,7 +115,6 @@ button:hover {
     scrollbar-width: none;
     scrollbar-color: #232323 #555555;
 }
-
 .contactpanel:hover {
     --sbw: 10px;
     scrollbar-width: thin;
@@ -175,7 +162,6 @@ button:hover {
     font-size:40px;
     color: #319626;
     line-height: 25px;
-    transition-duration: 200ms;
 }
 .contactitem button:focus {
     background-image: url("img/contactpanelselected.png");
@@ -215,70 +201,12 @@ button:hover {
 /* Left Panel */
 .leftpanel {
     position: absolute;
-    left: -1050px;
-    transform: translateX(1050px);
-    opacity: 1;    width: 50%;
+    left: 0;
+    width: 50%;
     height: 100%;
     background-image: url("img/sidepanel.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
-
-    animation: swap-leftpanel-slide .4s 1s linear forwards;
-    animation-timing-function: cubic-bezier(0, .85, .31, .99);
-}
-
-@keyframes initial-leftpanel-slide {
-    0% { 
-        transform: translateX(0px); 
-        opacity: 0;
-    }
-
-    100% { 
-        transform: translateX(1050px); 
-        opacity: 1;
-    }
-}
-
-@keyframes swap-leftpanel-slide {
-    0% {
-        opacity: 1;
-        transform: translateX(1050px);
-    }
-    35% {
-        opacity: 0;
-        transform: translateX(1050px);
-    }
-    35.1% {
-        opacity: 0;
-        transform: translateX(0);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(1050px);
-    }
-}
-
-.welcome {
-    display: block;
-    margin-top: 270px;
-}
-
-.welcome h1 text{
-    color: white;
-    font-family: sans-serif;
-    font-size: 80px;
-    font-weight: 30;
-    margin-left: 155px;
-    letter-spacing: 7px;
-}
-
-.welcome h2 text{
-    color: #232323;
-    font-family: sans-serif;
-    font-size: 80px;
-    font-weight: 30;
-    margin-left: 100px;
-    letter-spacing: 7px;
 }
 
 .contactinfo {
@@ -286,9 +214,6 @@ button:hover {
     left: 0;
     width: 90%;
     height: 100%;
-    opacity: 1;
-    transition: 1s opacity;
-    display: none;
 }
 
 .contactinfo h1 {
@@ -310,13 +235,11 @@ button:hover {
 }
 .contactinfo h2 text {
     float: left; 
-    margin-top: 270px;
+    margin-top: 225px;
     margin-left: -80px;
     font-size: 42px; 
     color: white;
     font-family: sans-serif;
-    font-weight: 30;
-    letter-spacing: 7px;
 }
 .contactinfo h3 {
     float:left;
@@ -333,7 +256,7 @@ button:hover {
 }
 
 .contactinfo h3 text {
-    font-size: 35px;
+    font-size: 28px;
     font-weight: 100;
     letter-spacing: 7px;
     font-family: sans-serif;

@@ -17,7 +17,7 @@
 	}
 	else
 	{
-		$sql = "SELECT name FROM contacts where contact_id = '" . $contactID . "' AND user_id = '" . $userID . "'";
+		$sql = "SELECT first_name, last_name FROM contacts where contact_id = '" . $contactID . "' AND user_id = '" . $userID . "'";
 		$result = $conn->query($sql);
 		if ($result->num_rows <= 0)
 		{
