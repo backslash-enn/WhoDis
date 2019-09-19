@@ -1,4 +1,7 @@
 /* Universal */
+body {
+    --sbw: 0;
+}
 html, body {
     height: 100%;
     margin: 0;
@@ -12,6 +15,11 @@ button:hover {
     cursor: pointer;
 }
 
+::selection {
+    background-color: #8dd4f1;
+    color: white;
+  }
+
 
 /* Right Panel */
 .rightpanel {
@@ -20,9 +28,15 @@ button:hover {
     float: right;
 }
 
-.rightpanel > img {
+.logo {
+    background-image: url("img/logo.png");
+    background-color: #00000000;
+    background-size: 100%;
+    border: none;
+    outline: none;
     float: right;
-    width: 300px;
+    width: 378px;
+    height: 100px;
 }
 
 .smolbutton {
@@ -86,17 +100,49 @@ button:hover {
 
 /* Contact Stuff */
 .contactpanel {
+    position: relative;
     float: right;
     clear: right;
+    right: -15px;
     margin-top: 50px;
-    width: 100%;
+    width: 125%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 700px;
+    --sbw: 0;
+    /*(for firefox)*/
+    scrollbar-width: none;
+    scrollbar-color: #232323 #555555;
+}
+.contactpanel:hover {
+    --sbw: 10px;
+    scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+    width: var(--sbw);
+    background-color: #232323;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #555555;
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #3b3b3b;
+}
+::-webkit-scrollbar-thumb:active {
+    background-color: #151515;
 }
 
 .contactitem {
     margin-bottom: 12px;
     position: relative;
+    right: -100px;
     width: 460px;
     height: 75px;
+}
+.contactitem:last-child {
+    margin-bottom: 0;
 }
 
 .contactitem button {
@@ -116,10 +162,15 @@ button:hover {
     color: #319626;
     line-height: 25px;
 }
-
 .contactitem button:focus {
     background-image: url("img/contactpanelselected.png");
     box-shadow: 0 0 8px 2px #5da4e1;
+}
+
+.contactitem button span{
+    color: #ececec;
+    font-size: 20px;
+    letter-spacing: 3px;
 }
 
 .contactitem img {
@@ -129,10 +180,21 @@ button:hover {
     clip-path: polygon(0% 0%, 74% 0%, 100% 100%, 28% 100%);
 }
 
-.contactitem button span{
-    color: #ececec;
-    font-size: 20px;
-    letter-spacing: 3px;
+.contactletterdiv {
+    position: relative;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    left: 20px;
+    top: 40px;
+    height: 30px;
+    color: white;
+    font-size: 50px;
+    white-space: nowrap;
+    color: #5da4e1;
+}
+
+.contactletterdiv:first-child {
+    height: 0;
+    top: 8px;
 }
 
 
