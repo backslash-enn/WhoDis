@@ -3,6 +3,8 @@
     <head>
         <link rel="stylesheet" href="styles.css">
         <meta name="viewport" content="width=device-width, initial-size=1.0">
+        <script src="functionality.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="rightpanel">
@@ -15,11 +17,11 @@
                     <span>H</span>
                 </div>
                 <div class="contactitem">
-                    <button>Harry Otter<br><span>(000) 000 - 0000</span></button>
+                    <button onclick="displayContactInfo(this)" id="Harry Otter">Harry Otter<br><span>(000) 000 - 0000</span></button>
                     <img src="img/test.png" alt="">
                 </div>
                 <div class="contactitem">
-                    <button>Harry Otter 2<br><span>(111) 111 - 1111</span></button>
+                    <button onclick="displayContactInfo(this)" id="Harry Otter 2">Harry Otter 2<br><span>(111) 111 - 1111</span></button>
                     <img src="img/test.png" alt="">
                 </div>
                 <div class="contactitem">
@@ -70,7 +72,15 @@
 
         <div class="leftpanel">
             <!--Individual contact info/ login screen/settings go here-->
-            <div class="contactinfo">
+            <div class="welcome" id="welcome">
+                <h1>
+                    <text>Welcome,</text>
+                </h1>
+                <h2>
+                    <text>Emma Otson</text>
+                </h2>
+            </div>
+            <div class="contactinfo" id="contactinfo">
                 <h1>
                     <button class="smolbutton edit" type="button"></button>
                     <button class="smolbutton delete" type="button"></button>  
@@ -91,12 +101,12 @@
                     <br> <br>
                     <img src="img/favcoloricon.png">
                     <text>Orange</text>
-                    <br> <br>
                     <img src="img/birthdayicon.png">
                     <text>01-01-2001</text>
+                    <br> <br>
+                    <textarea class="notes" type="text" placeholder="Notes" spellcheck="true" rows="3" cols="57"></textarea>
                 </h3>
                 <footer>
-                    
                 </footer>          
             </div>
         </div>
