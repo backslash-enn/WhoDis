@@ -50,6 +50,7 @@ button:hover {
     background-repeat: no-repeat;
     background-size: 24px;
     background-position: 4px 4px;
+    transition-duration: 200ms;
 }
 
 .add {
@@ -162,6 +163,7 @@ button:hover {
     font-size:40px;
     color: #319626;
     line-height: 25px;
+    transition-duration: 200ms;
 }
 .contactitem button:focus {
     background-image: url("img/contactpanelselected.png");
@@ -201,12 +203,47 @@ button:hover {
 /* Left Panel */
 .leftpanel {
     position: absolute;
-    left: 0;
-    width: 50%;
+    left: -1050px;
+    transform: translateX(1050px);
+    opacity: 1;    width: 50%;
     height: 100%;
     background-image: url("img/sidepanel.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
+
+    animation: swap-leftpanel-slide .4s 1s linear forwards;
+    animation-timing-function: cubic-bezier(0, .85, .31, .99);
+}
+
+@keyframes initial-leftpanel-slide {
+    0% { 
+        transform: translateX(0px); 
+        opacity: 0;
+    }
+
+    100% { 
+        transform: translateX(1050px); 
+        opacity: 1;
+    }
+}
+
+@keyframes swap-leftpanel-slide {
+    0% {
+        opacity: 1;
+        transform: translateX(1050px);
+    }
+    35% {
+        opacity: 0;
+        transform: translateX(1050px);
+    }
+    35.1% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(1050px);
+    }
 }
 
 .contactinfo {
