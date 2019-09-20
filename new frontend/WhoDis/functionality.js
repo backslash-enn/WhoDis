@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     var contactlist = [
         {name: "It's working!", number: "(904) 607 - 3083", color: "red"},
-        {name: "Cat", number: "(786) 009 - 2089", color: "pink"}
+        {name: "Cat", number: "(786) 009 - 2089", color: "pink"},
+        {name: "Time Arrow", number: "(000) 000 - 1994", color: "orange"}
     ]
 
     var itemlist = document.getElementById("contactitemlist");
@@ -27,49 +28,42 @@ document.addEventListener("DOMContentLoaded", function(event) {
             itemlist.appendChild(clon);
         }
     }
+}, false);
 
-    function displayContactInfo(b){
 
-        var contact_details = document.getElementById('contactdetails');
-        var welcome_msg = document.getElementById('welcome');
-        var left_panel = document.getElementById('leftpanel');
-        switch (b.id){
-            case "Harry Otter":
-                if (contact_details.style.display === "block")
-                {
-                    left_panel.style.animation = 'none';
-                    left_panel.offsetHeight;
+function displayContactInfo(){
 
-                    left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
-                    left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+    var contact_details = document.getElementById('contactdetails');
+    var welcome_msg = document.getElementById('welcome');
+    var left_panel = document.getElementById('leftpanel');
 
-                    setTimeout(function() {
-                        contact_details.style.display = "none";
-                        welcome_msg.style.display = "block";
-                    }, 100);
-                }
-                else
-                {
-                    left_panel.style.animation = 'none';
-                    left_panel.offsetHeight;
-                    
-                    left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
-                    left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+    if (contact_details.style.display === "block")
+    {
+        left_panel.style.animation = 'none';
+        left_panel.offsetHeight;
 
-                    setTimeout(function() {
-                        contact_details.style.display = "block";
-                        welcome_msg.style.display = "none";
-                    }, 100);
-                } 
-                break;
-            case "Harry Otter 2":
-                if (contact_details.style.display === "block")
-                    contact_info.style.display = "none";
-                else   
-                    contact_details.style.display = "block";
-                break;
-        }
+        left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
+        left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+
+        setTimeout(function() {
+            contact_details.style.display = "none";
+            welcome_msg.style.display = "block";
+        }, 100);
     }
+    else
+    {
+        left_panel.style.animation = 'none';
+        left_panel.offsetHeight;
+        
+        left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
+        left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+
+        setTimeout(function() {
+            contact_details.style.display = "block";
+            welcome_msg.style.display = "none";
+        }, 100);
+    } 
+}
 
 function editcontactinfo(){
 
@@ -92,8 +86,5 @@ function editcontactinfo(){
         document.getElementById("birthday").disabled = true;
         console.log("disabled");
     }
-    
+
 }
-
-
-}, false);
