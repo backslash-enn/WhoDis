@@ -10,6 +10,7 @@
     $firstName = $inData["first_name"];
 	$lastName = $inData["last_name"];
 	$favColor = $inData["fav_color"];
+	$fullname = $inData["fullname"];
 	$notes = $inData["notes"];
 	$primStrAddr = $inData["primary_street_addr"];
 	$sndStrAddr = $inData["second_street_addr"];
@@ -38,6 +39,7 @@
                                       city = '" . $city . "',
                                       state = '" . $state . "',
                                       country = '" . $country . "',
+				      fullname = '" . $fullname . "',
                                       zip = '" . $zip . "',
                                       phone_number = '" . $phoneNumber . "',*/
                                       birthday = $birthday,
