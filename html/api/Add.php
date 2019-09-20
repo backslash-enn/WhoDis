@@ -7,7 +7,6 @@
 	$db_pw = "simpleyetEffective2019!";
 	$db_name = "user";
 	
-	$id = 0;
 	$name = $inData["name"];
 	$username = $inData["username"];
 	$password = $inData["password"];
@@ -28,10 +27,12 @@
 		else
 		{
 			$sql = "INSERT INTO `login` (name, username, password) VALUES ('" . $name . "', '" . $username . "', '" . $password . "')";
-	
-			if($conn->query($sql) === TRUE)
+			$result = $conn->query($sql);
+			if($result->num_rows > 0)
 			{
-				returnWithInfo($username, 0);
+				$row = $result->fetch_assoc();
+				$user_id = $row["user_id"];
+				returnWithInfo($username, $user_id);
 			}
 			else
 			{

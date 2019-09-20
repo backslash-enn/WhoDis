@@ -19,8 +19,8 @@
 	$zip = $inData["zip"];
 	$phoneNumber = $inData["phone_number"];
 	$birthday = $inData["birthday"];
-	$favorite = 0;
-	$user_id = 1;
+	$favorite = $inData["favorite"];
+	$user_id = -1;
 
 	$conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
 	if ($conn->connect_error)
@@ -29,9 +29,18 @@
 	}
 	else
 	{
+		if (!isset($_SESSION["user_id"]))
+		{
+			returnWithError("User not logged in.");
+		}
+		else
+		{
+			$user_id = $_SESSION["user_id"];
+		}
+
 		$sql = "INSERT INTO `contacts` (first_name, last_name, fav_color, notes, primary_street_addr, second_street_addr, city, state, country, zip, phone_number, birthday, favorite, user_id) 
-		VALUES ('" . $firstName . "', '" . $lastName . "', '" . $favColor . "', '" . $notes . "', '" . $primStrAddr . "', '" . $sndStrAddr . "', '" . $city . "', '" . $state . "',
-				'" . $country . "', $zip, $phoneNumber, $birthday, $favorite, $user_id)";
+				VALUES ('" . $firstName . "', '" . $lastName . "', '" . $favColor . "', '" . $notes . "', '" . $primStrAddr . "', '" . $sndStrAddr . "', '" . $city . "', '" . $state . "',
+						'" . $country . "', $zip, $phoneNumber, $birthday, $favorite, $user_id)";
 
 		if ($conn->query($sql) === FALSE)
 		{
@@ -40,7 +49,6 @@
 
 		$conn->close();
 	}
-	
 	
 	function getRequestInfo()
 	{
