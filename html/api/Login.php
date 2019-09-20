@@ -8,9 +8,9 @@
 	$db_pw = "simpleyetEffective2019!";
 	$db_name = "user";
 	
-	$id = 0;
 	$username = $inData["username"];
 	$password = $inData["password"];
+	$user_id = -1;
 	
 	$conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
 	if ($conn->connect_error)
@@ -24,14 +24,14 @@
 		if ($result->num_rows > 0)
 		{
 			$row = $result->fetch_assoc();
-			$id = $row["user_id"];
+			$user_id = $row["user_id"];
 
-			$_SESSION["user_id"] = $id;
-			returnWithInfo( $username, $id );
+			$_SESSION["user_id"] = $user_id;
+			returnWithInfo($username, $user_id);
 		}
 		else
 		{
-			returnWithError( "No Records Found" );
+			returnWithError("No records found");
 		}
 
 		$conn->close();
@@ -48,15 +48,15 @@
 		echo $obj;
 	}
 
-	function returnWithError( $err )
+	function returnWithError($err)
 	{
 		$retValue = '{"id":0,"username":"","error":"' . $err . '"}';
 		sendAsJson( $retValue );
 	}
 
-	function returnWithInfo( $username, $id )
+	function returnWithInfo($username, $user_id)
 	{
-		$retValue = '{"id":' . $id . ',"username":"' . $username . '","error":""}';
+		$retValue = '{"id":' . $user_id . ',"username":"' . $username . '","error":""}';
 		sendAsJson( $retValue );
 	}
 ?>
