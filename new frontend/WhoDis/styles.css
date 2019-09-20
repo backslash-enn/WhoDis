@@ -3,7 +3,7 @@ body {
     --sbw: 0;
 }
 html, body {
-    height: 100%;
+    height: 99%;
     margin: 0;
 }
 
@@ -25,7 +25,9 @@ button:hover {
 .rightpanel {
     padding-top: 50px;
     padding-right: 150px;
+    padding-bottom: 1.2%;
     float: right;
+    height: 92%;
 }
 
 .logo {
@@ -96,7 +98,7 @@ button:hover {
     background-repeat: no-repeat;
     background-size: 20px;
     background-position: 8px 6px;
-    font-size:20px;
+    font-size: 20px;
 }
 
 .notes {
@@ -107,12 +109,13 @@ button:hover {
     border-width: 0px;
     margin-top: 15px;
     margin-left: 30px;
-    color: #5da4e1;
+    color: whitesmoke;
     font-size:20px;
+    resize: none;
 }
 
 /* Contact Stuff */
-.contactpanel {
+.contactitemlist {
     position: relative;
     float: right;
     clear: right;
@@ -121,14 +124,14 @@ button:hover {
     width: 125%;
     overflow-y: scroll;
     overflow-x: hidden;
-    max-height: 700px;
+    max-height: 73%;
     --sbw: 0;
     /*(for firefox)*/
     scrollbar-width: none;
     scrollbar-color: #232323 #555555;
 }
 
-.contactpanel:hover {
+.contactitemlist:hover {
     --sbw: 10px;
     scrollbar-width: thin;
 }
@@ -223,7 +226,6 @@ button:hover {
     background-size: 100% 100%;
     background-repeat: no-repeat;
 
-    animation: swap-leftpanel-slide .4s 1s linear forwards;
     animation-timing-function: cubic-bezier(0, .85, .31, .99);
 }
 
@@ -260,16 +262,17 @@ button:hover {
 
 .welcome {
     display: block;
-    margin-top: 270px;
+    margin-top: 32.25%;
+    margin-left: 3%;
+    text-align: left;
 }
 
 .welcome h1 text{
-    color: white;
+    color: whitesmoke;
     font-family: sans-serif;
     font-size: 80px;
     font-weight: 30;
-    margin-left: 155px;
-    letter-spacing: 7px;
+    letter-spacing: 10px;
 }
 
 .welcome h2 text{
@@ -277,11 +280,10 @@ button:hover {
     font-family: sans-serif;
     font-size: 80px;
     font-weight: 30;
-    margin-left: 100px;
     letter-spacing: 7px;
 }
 
-.contactinfo {
+.contactdetails {
     position: absolute;
     left: 0;
     width: 90%;
@@ -291,40 +293,54 @@ button:hover {
     display: none;
 }
 
-.contactinfo h1 {
+.contactdetails h1 {
     float: left;
     margin: 0; 
 }
-.contactinfo h2 {
+.contactdetails h2 {
+    position: absolute;
+    margin-top: 3.5%;
     float: left;
-    clear: left;   
-    margin: 0 40px 0 12px;
-    width: 85%;
-    height: 40%;
+    margin-bottom: 0;
+    width: 90%;
+    height: 45%;
 }
-.contactinfo h2 img {
-    float: left;
-    clear: right;
-    width: 60%;
+.pp-frame {
+    position: absolute;
+    display: inline-block;
     height: 100%;
+    left: 0;
 }
-.contactinfo h2 text {
-    float: left; 
-    margin-top: 270px;
-    margin-left: -80px;
-    font-size: 42px; 
-    color: white;
+.pp-picture {
+    left: 3.5%;
+    top: 6.25%;
+    height: 90%;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.contactdetails h2 text {
+    position: absolute;
+    top: 80%;
+    left: 40%;
+    font-size: 55px; 
+    font-style: normal;
+    font-weight: 50;
+    color: whitesmoke;
     font-family: sans-serif;
-    font-weight: 30;
     letter-spacing: 7px;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 67%;
+    text-overflow: ellipsis;
 }
-.contactinfo h3 {
-    float:left;
+.contactdetails h3 {
+    position: absolute;
+    top: 47.5%;
     letter-spacing: 20px;
     margin-top: 35px;
 }
 
-.contactinfo h3 img {
+.contactdetails h3 img {
     margin-left: 30px;
     margin-right: 10px;
     width: 40px;
@@ -332,14 +348,14 @@ button:hover {
     vertical-align: -10px; 
 }
 
-.contactinfo h3 text {
+.contactdetails h3 text {
     font-size: 35px;
     font-weight: 100;
     letter-spacing: 7px;
     font-family: sans-serif;
 }
 
-.contactinfo footer {
+.contactdetails footer {
     float: left;
 }
 
