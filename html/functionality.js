@@ -1,11 +1,10 @@
+var contactlist = [
+    {name: "It's working!", number: "(904) 607 - 3083", color: "red", address: "1234 The Street"},
+    {name: "Cat", number: "(786) 009 - 2089", color: "pink", address: "4321 Waterbay Creek"},
+    {name: "Time Arrow", number: "(000) 000 - 1994", color: "orange", address: "1234 The Street"}
+]
+
 document.addEventListener("DOMContentLoaded", function(event) { 
-
-
-    var contactlist = [
-        {name: "It's working!", number: "(904) 607 - 3083", color: "red"},
-        {name: "Cat", number: "(786) 009 - 2089", color: "pink"},
-        {name: "Time Arrow", number: "(000) 000 - 1994", color: "orange"}
-    ]
 
     var itemlist = document.getElementById("contactitemlist");
     var contactitemtemplate = document.getElementById("contactitemtemplate");
@@ -24,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             clon.children[0].children[0].innerHTML = `${contactlist[i].name}<br><span>${contactlist[i].number}</span>`;
             clon.children[0].children[0].style.backgroundColor = contactlist[i].color;
             clon.children[0].children[0].style.color = contactlist[i].color;
+            clon.children[0].id = i;
 
             itemlist.appendChild(clon);
         }
@@ -31,13 +31,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 }, false);
 
 
-function displayContactInfo(){
+function displayContactInfo(b){
 
     var contact_details = document.getElementById('contactdetails');
     var welcome_msg = document.getElementById('welcome');
     var left_panel = document.getElementById('leftpanel');
 
-    if (contact_details.style.display === "block")
+    let i = b.parentNode.id;
+    console.log(i);
+
+    // Animate in
+    if (b.id == "logo")
     {
         left_panel.style.animation = 'none';
         left_panel.offsetHeight;
@@ -61,6 +65,8 @@ function displayContactInfo(){
         setTimeout(function() {
             contact_details.style.display = "block";
             welcome_msg.style.display = "none";
+            document.getElementById('address').value = contactlist[i].address;
+            document.getElementById('phone').value = contactlist[i].number;
         }, 100);
     } 
 }

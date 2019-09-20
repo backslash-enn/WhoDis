@@ -336,20 +336,17 @@ button:hover {
     text-overflow: ellipsis;
 }
 
-.phone {
-    background-color: #232323;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    outline-color: #5da4e1;
-    padding-left: 1%;
-    border-width: 0px;
-    color: whitesmoke;
-    font-size:35px;
-    font-weight: 100;
-    letter-spacing: 7px;
-    resize: none;
+h3 .contactdetailsitem:disabled {
+    background: none;
+    color: #232323;
+    font-weight: 300;
+    transition-duration: 200ms;
+
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari and Chrome */
 }
 
-.email {
+h3 input {
     background-color: #232323;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     outline-color: #5da4e1;
@@ -360,19 +357,8 @@ button:hover {
     font-weight: 100;
     letter-spacing: 7px;
     resize: none;
-}
 
-.address {
-    background-color: #232323;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    outline-color: #5da4e1;
-    padding-left: 1%;
-    border-width: 0px;
-    color: whitesmoke;
-    font-size:35px;
-    font-weight: 100;
-    letter-spacing: 7px;
-    resize: none;
+    transition-duration: 200ms;
 }
 
 .favcolor{
@@ -385,6 +371,9 @@ button:hover {
     font-size:30px;
     font-weight: 100;
     letter-spacing: 7px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     width: 15%;
     resize: none;
 }

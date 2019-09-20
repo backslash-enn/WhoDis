@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="rightpanel">
-            <button class="logo" alt="logo"></button>
+            <button class="logo" id="logo" alt="logo" onclick="displayContactInfo(this)"></button>
             <button class="smolbutton add" type="button"></button>
             <button class="smolbutton favorites" type="button"></button>
             <input class="searchbox" type="text" placeholder="Search" spellcheck="false"></input>
@@ -38,19 +38,19 @@
                 <h3>
                     <img src="img/phonenumbericon.png">
                     <!--<text>000-005-9709</text>-->
-                    <input disabled class="phone" type="tel" id="phone" name="phone" placeholder="XXX-XXX-XXXX"pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                    <input disabled class="phone contactdetailsitem" type="tel" id="phone" name="phone" placeholder="XXX-XXX-XXXX"pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
                     <br> <br>
                     <img src="img/emailicon.png">
                     <!--<text>otty@yahoo.com</text>-->
-                    <input disabled class="email" type="email" id="email" pattern=".+@yahoo.com">
+                    <input disabled class="email contactdetailsitem" type="email" id="email" pattern=".+@yahoo.com">
                     <br> <br>
                     <img src="img/addressicon.png">
                     <!--<text>1234 Waterbay Creek</text>-->
-                    <input disabled class="address" id="address" type="text">
+                    <input disabled class="address contactdetailsitem" id="address" type="text">
                     <br> <br>
                     <img src="img/favcoloricon.png">
                     <!--<text>Orange</text>-->
-                    <select disabled class="favcolor" id="color">
+                    <select disabled class="favcolor contactdetailsitem" id="color">
                         <option value="Red">Red</option>
                         <option value="Pink">Pink</option>
                         <option value="Blue">Blue</option>
@@ -59,9 +59,9 @@
                         <option value="Orange">Orange</option>
                         <option value="Purple">Purple</option>
                     </select>
-                    <img class="bday" src="img/birthdayicon.png">
+                    <img class="bday contactdetailsitem" src="img/birthdayicon.png">
                     <!--<text>01-01-2001</text>-->
-                    <input disabled="disabled" class="birthday" id="birthday" type="date">
+                    <input disabled="disabled" class="birthday contactdetailsitem" id="birthday" type="date">
                     <br> <br>
                     <textarea disabled="disabled" class="notes" id="notes" type="text" placeholder="Notes" spellcheck="true" rows="3" cols="57"></textarea>
                 </h3>
@@ -77,7 +77,7 @@
         </template>
         <template id="contactitemtemplate">
             <div class="contactitem">
-                <button onclick="displayContactInfo()" id="Harry Otter">Harry Otter<br><span>(000) 000 - 0000</span></button>
+                <button onclick="displayContactInfo(this)"><br><span></span></button>
                 <img src="img/test.png" alt="">
             </div>
         </template>
