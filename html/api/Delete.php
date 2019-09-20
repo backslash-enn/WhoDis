@@ -8,7 +8,7 @@
 	$db_name = "user";
 	
 	$contactID = $inData["contact_id"];
-	$userID = $inData["user_id"];
+	$user_id;
 	
 	$conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
 	if ($conn->connect_error)
@@ -17,6 +17,15 @@
 	}
 	else
 	{
+		if (!isset($_SESSION["user_id"]))
+		{
+			returnWithError("User not logged in.");
+		}
+		else
+		{
+			$user_id = $_SESSION["user_id"];
+		}
+
 		$sql = "SELECT first_name, last_name FROM contacts where contact_id = '" . $contactID . "' AND user_id = '" . $userID . "'";
 		$result = $conn->query($sql);
 		if ($result->num_rows <= 0)

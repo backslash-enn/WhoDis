@@ -71,4 +71,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }
     }
 
+function editcontactinfo(){
+
+    var editmode = document.getElementById("notes").disabled;
+    if (editmode){
+        document.getElementById("notes").disabled = false;
+        document.getElementById("phone").disabled = false;
+        document.getElementById("email").disabled = false;
+        document.getElementById("address").disabled = false;
+        document.getElementById("color").disabled = false;
+        document.getElementById("birthday").disabled = false;
+        console.log("enabled");
+    }
+    else{
+        document.getElementById("notes").disabled = true;
+        document.getElementById("phone").disabled = true;
+        document.getElementById("email").disabled = true;
+        document.getElementById("address").disabled = true;
+        document.getElementById("color").disabled = true;
+        document.getElementById("birthday").disabled = true;
+        console.log("disabled");
+    }
+    
+}
+
+
 }, false);
