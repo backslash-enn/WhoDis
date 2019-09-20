@@ -21,7 +21,7 @@
                     <img src="img/test.png" alt="">
                 </div>
                 <div class="contactitem">
-                    <button onclick="displayContactInfo(this)" id="Harry Otter 2">Harry Otter 2<br><span>(111) 111 - 1111</span></button>
+                    <button onclick="displayContactInfo(this)" id="Harry Otter">Harry Otter 2<br><span>(111) 111 - 1111</span></button>
                     <img src="img/test.png" alt="">
                 </div>
                 <div class="contactitem">
@@ -82,7 +82,7 @@
             </div>
             <div class="contactdetails" id="contactdetails">
                 <h1>
-                    <button class="smolbutton edit" type="button"></button>
+                    <button class="smolbutton edit" type="button" onclick="editcontactinfo()"></button>
                     <button class="smolbutton delete" type="button"></button>  
                 </h1>
                 <h2>
@@ -92,20 +92,33 @@
                 </h2>  
                 <h3>
                     <img src="img/phonenumbericon.png">
-                    <text>000-005-9709</text>
+                    <!--<text>000-005-9709</text>-->
+                    <input disabled class="phone" type="tel" id="phone" name="phone" placeholder="XXX-XXX-XXXX"pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
                     <br> <br>
                     <img src="img/emailicon.png">
-                    <text>otty@yahoo.com</text>
+                    <!--<text>otty@yahoo.com</text>-->
+                    <input disabled class="email" type="email" id="email" pattern=".+@yahoo.com">
                     <br> <br>
                     <img src="img/addressicon.png">
-                    <text>1234 Waterbay Creek</text>
+                    <!--<text>1234 Waterbay Creek</text>-->
+                    <input disabled class="address" id="address" type="text">
                     <br> <br>
                     <img src="img/favcoloricon.png">
-                    <text>Orange</text>
-                    <img src="img/birthdayicon.png">
-                    <text>01-01-2001</text>
+                    <!--<text>Orange</text>-->
+                    <select disabled class="favcolor" id="color">
+                        <option value="Red">Red</option>
+                        <option value="Pink">Pink</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Green">Green</option>
+                        <option value="Yellow">Yellow</option>
+                        <option value="Orange">Orange</option>
+                        <option value="Purple">Purple</option>
+                    </select>
+                    <img class="bday" src="img/birthdayicon.png">
+                    <!--<text>01-01-2001</text>-->
+                    <input disabled="disabled" class="birthday" id="birthday" type="date">
                     <br> <br>
-                    <textarea class="notes" type="text" placeholder="Notes" spellcheck="true" rows="3" cols="57"></textarea>
+                    <textarea disabled="disabled" class="notes" id="notes" type="text" placeholder="Notes" spellcheck="true" rows="3" cols="57"></textarea>
                 </h3>
                 <footer>
                 </footer>          
