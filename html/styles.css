@@ -336,6 +336,34 @@ button:hover {
     text-overflow: ellipsis;
 }
 
+h2 .contactdetailsitem:disabled {
+    background: none;
+    border-block-color: none;
+    color: whitesmoke;
+    font-weight: 300;
+    transition-duration: 200ms;
+    border: 0;
+    -moz-appearance: none; /* Firefox */
+    -webkit-appearance: none; /* Safari and Chrome */
+}
+
+h2 input {
+    position: absolute;
+    top: 80%;
+    left: 40%;
+    font-size: 55px; 
+    font-style: normal;
+    font-weight: 50;
+    color: #232323;
+    font-family: sans-serif;
+    letter-spacing: 7px;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 67%;
+    text-overflow: ellipsis;
+    outline-color: #5da4e1;
+}
+
 h3 .contactdetailsitem:disabled {
     background: none;
     color: #232323;

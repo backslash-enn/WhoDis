@@ -8,7 +8,7 @@
     </head>
     <body>
         <div class="rightpanel">
-            <button class="logo" id="logo" alt="logo" onclick="displayContactInfo(this)"></button>
+            <button class="logo" id="logo" alt="logo" onclick="displayWelcomePanel(this)"></button>
             <button class="smolbutton add" type="button"></button>
             <button class="smolbutton favorites" type="button"></button>
             <input class="searchbox" type="text" placeholder="Search" spellcheck="false"></input>
@@ -28,12 +28,13 @@
             <div class="contactdetails" id="contactdetails">
                 <h1>
                     <button class="smolbutton edit" type="button" onclick="editcontactinfo()"></button>
-                    <button class="smolbutton delete" type="button"></button>  
+                    <button class="smolbutton delete" type="button" onclick="deletecontactinfo(this)"></button>  
                 </h1>
                 <h2>
                     <img class="pp-frame pp-picture" src="img/testpp.png">
                     <img class="pp-frame" src="img/frame.png">
-                    <text>Otty Osbourne</text>   
+                    <!--<text>Otty Osbourne</text>-->
+                    <input disabled class="name contactdetailsitem" id="name" type="text">
                 </h2>  
                 <h3>
                     <img src="img/phonenumbericon.png">
