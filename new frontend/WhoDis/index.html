@@ -8,66 +8,11 @@
     </head>
     <body>
         <div class="rightpanel">
-            <button class="logo" alt="logo">
+            <button class="logo" alt="logo"></button>
             <button class="smolbutton add" type="button"></button>
             <button class="smolbutton favorites" type="button"></button>
-            <input class="searchbox" type="text" placeholder="Search" spellcheck="false">
-            <div class="contactitemlist">
-                <div class="contactletterdiv">
-                    <span>H</span>
-                </div>
-                <div class="contactitem">
-                    <button onclick="displayContactInfo(this)" id="Harry Otter">Harry Otter<br><span>(000) 000 - 0000</span></button>
-                    <img src="img/test.png" alt="">
-                </div>
-                <div class="contactitem">
-                    <button onclick="displayContactInfo(this)" id="Harry Otter 2">Harry Otter 2<br><span>(111) 111 - 1111</span></button>
-                    <img src="img/test.png" alt="">
-                </div>
-                <div class="contactitem">
-                    <button>Harry Otter 2<br><span>(111) 111 - 1111</span></button>
-                    <img src="img/test.png" alt="">
-                </div>
-                <div class="contactitem">
-                    <button>Harry Otter 2<br><span>(111) 111 - 1111</span></button>
-                    <img src="img/test.png" alt="">
-                </div>
-                <div class="contactitem">
-                    <button>Harry Otter 2<br><span>(111) 111 - 1111</span></button>
-                    <img src="img/test.png" alt="">
-                </div>
-                <div class="contactletterdiv">
-                    <span>J</span>
-                </div>
-                <div class="contactitem">
-                    <button>Jerry Otter<br><span>(111) 111 - 1111</span></button>
-                    <img src="img/test.png" alt="">
-                </div>
-                <div class="contactitem">
-                    <button>Jerry Otter 2<br><span>(111) 111 - 1111</span></button>
-                    <img src="img/test.png" alt="">
-                </div>
-                <div class="contactitem">
-                    <button>Jerry Otter 2<br><span>(111) 111 - 1111</span></button>
-                    <img src="img/test.png" alt="">
-                </div>
-                <div class="contactitem">
-                    <button>Jerry Otter 2<br><span>(111) 111 - 1111</span></button>
-                    <img src="img/test.png" alt="">
-                </div>
-                <div class="contactletterdiv">
-                    <span>P</span>
-                </div>
-                <div class="contactitem">
-                    <button>Perry Otter<br><span>(111) 111 - 1111</span></button>
-                    <img src="img/test.png" alt="">
-                </div>
-                <div class="contactitem">
-                    <button>Perry Otter 2<br><span>(111) 111 - 1111</span></button>
-                    <img src="img/test.png" alt="">
-                </div>
-                </div>
-            </div>
+            <input class="searchbox" type="text" placeholder="Search" spellcheck="false"></input>
+            <div class="contactitemlist" id="contactitemlist"> </div>
         </div>
 
         <div class="leftpanel" id="leftpanel">
@@ -111,5 +56,17 @@
                 </footer>          
             </div>
         </div>
+        
+        <template id="contactletterdivtemplate">
+            <div class="contactletterdiv">
+                <span>H</span>
+            </div>
+        </template>
+        <template id="contactitemtemplate">
+            <div class="contactitem">
+                <button onclick="displayContactInfo(this)" id="Harry Otter">Harry Otter<br><span>(000) 000 - 0000</span></button>
+                <img src="img/test.png" alt="">
+            </div>
+        </template>
     </body>
 </html>
