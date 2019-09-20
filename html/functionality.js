@@ -1,35 +1,81 @@
 var contactlist = [
-    {name: "Otty Osbourne", number: "(904) 607 - 3083", color: "red", address: "1234 The Street"},
-    {name: "Cat", number: "(786) 009 - 2089", color: "pink", address: "4321 Waterbay Creek"},
-    {name: "Time Arrow", number: "(000) 000 - 1994", color: "orange", address: "1234 The Street"}
+    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "pink", address: "4321 Waterbay Creek", notes: "", favorite: true},
+    {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false},
+    {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false},
+    {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true}
 ]
 
+    var itemlist;
+    var contactitemtemplate;
+    var contactletterdivtemplate;
+    var fav_button;
+
+    var favoritesOnly = false;
+
 document.addEventListener("DOMContentLoaded", function(event) { 
+    itemlist = document.getElementById("contactitemlist");
+    contactitemtemplate = document.getElementById("contactitemtemplate");
+    contactletterdivtemplate = document.getElementById("contactletterdivtemplate");
+    fav_button = document.getElementById("favorites");
 
-    var itemlist = document.getElementById("contactitemlist");
-    var contactitemtemplate = document.getElementById("contactitemtemplate");
-    var contactletterdivtemplate = document.getElementById("contactletterdivtemplate");
-
-    displayContacts();
-
-    function displayContacts() {
-        
-        while (itemlist.firstChild) {
-            itemlist.removeChild(itemlist.firstChild);
-        }
-
-        for(let i = 0; i < contactlist.length; i++) {
-            var clon = contactitemtemplate.content.cloneNode(true);
-            clon.children[0].children[0].innerHTML = `${contactlist[i].name}<br><span>${contactlist[i].number}</span>`;
-            clon.children[0].children[0].style.backgroundColor = contactlist[i].color;
-            clon.children[0].children[0].style.color = contactlist[i].color;
-            clon.children[0].id = i;
-
-            itemlist.appendChild(clon);
-        }
-    }
+    displayContacts("");
 }, false);
 
+function displayContacts(searchString) {
+        
+    while (itemlist.firstChild) {
+        itemlist.removeChild(itemlist.firstChild);
+    }
+
+    let lastChar = 'A';
+    let currentChar = 'A';
+
+    for(let i = 0; i < contactlist.length; i++) {
+        if(searchString.length > 0) {
+            let lowerCaseSearchString = searchString.toLowerCase();
+            if(!contactlist[i].name.toLowerCase().includes(lowerCaseSearchString) &&
+               !contactlist[i].number.toLowerCase().includes(lowerCaseSearchString) &&
+               !contactlist[i].email.toLowerCase().includes(lowerCaseSearchString) &&
+               !contactlist[i].address.toLowerCase().includes(lowerCaseSearchString) &&
+               !contactlist[i].notes.toLowerCase().includes(lowerCaseSearchString)) 
+               { continue };
+        }
+
+        if(favoritesOnly == true && contactlist[i].favorite == false) {
+            continue;
+        }
+
+        let clon = contactitemtemplate.content.cloneNode(true);
+        clon.children[0].children[0].innerHTML = `${contactlist[i].name}<br><span>${contactlist[i].number}</span>`;
+        clon.children[0].children[0].style.backgroundColor = contactlist[i].color;
+        clon.children[0].children[0].style.color = contactlist[i].color;
+        clon.children[0].id = i;
+        if(contactlist[i].favorite == true) {
+            clon.children[0].children[2].style.display = "initial";
+        }
+
+        currentChar = contactlist[i].name[0].toUpperCase();
+        if(lastChar != currentChar) {
+            let clon2 = contactletterdivtemplate.content.cloneNode(true);
+            clon2.children[0].children[0].innerHTML = currentChar;
+            itemlist.append(clon2);
+            lastChar = currentChar;
+        }
+
+        itemlist.appendChild(clon);
+    }
+}
+
+function toggleFavoritesOnly(searchString) {
+    favoritesOnly = !favoritesOnly;
+    fav_button.style.boxShadow = (
+        favoritesOnly == true ? 
+        "0 0 5px 2px #5da4e1" : 
+        "0 0 4px -1px #040404");
+
+    displayContacts(searchString);
+}
 
 function displayContactInfo(b){
 
@@ -50,9 +96,12 @@ function displayContactInfo(b){
     setTimeout(function() {
         contact_details.style.display = "block";
         welcome_msg.style.display = "none";
-        document.getElementById('address').value = contactlist[i].address;
-        document.getElementById('phone').value = contactlist[i].number;
+
         document.getElementById('name').value = contactlist[i].name;
+        document.getElementById('phone').value = contactlist[i].number;
+        document.getElementById('email').value = contactlist[i].email;
+        document.getElementById('address').value = contactlist[i].address;
+        document.getElementById('notes').value = contactlist[i].notes;
     }, 100); 
 }
 

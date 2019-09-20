@@ -48,7 +48,6 @@ button:hover {
     border: none;
     outline: none;
     box-shadow: 0 0 4px -1px #040404;
-    z-index: 5;
 
     background-repeat: no-repeat;
     background-size: 24px;
@@ -77,6 +76,7 @@ button:hover {
 }
 .favorites:hover {
     background-color: #dc82d6;
+
 }
 .favorites:active {
     background-color: #c273bd;
@@ -102,7 +102,7 @@ button:hover {
     font-size: 20px;
 }
 
-/* Contact Stuff */
+/* Contact List Stuff */
 .contactitemlist {
     position: relative;
     float: right;
@@ -179,11 +179,19 @@ button:hover {
     letter-spacing: 3px;
 }
 
-.contactitem img {
+.contactitempp {
     position: absolute;
     width: 143px;
     height: 100%;
     clip-path: polygon(0% 0%, 74% 0%, 100% 100%, 28% 100%);
+}
+
+.contactitemfav {
+    position: absolute;
+    height: 25%;
+    right: .5%;
+    top: 4%;
+    display: none;
 }
 
 .contactletterdiv {
@@ -192,7 +200,6 @@ button:hover {
     left: 20px;
     top: 40px;
     height: 30px;
-    color: white;
     font-size: 50px;
     white-space: nowrap;
     color: #5da4e1;
@@ -263,12 +270,14 @@ button:hover {
 
 .welcome {
     display: block;
-    margin-top: 32.25%;
+    width: 100%;
+    height: 100%;
+    margin-top: 37%;
     margin-left: 3%;
     text-align: left;
 }
 
-.welcome h1 text{
+.welcome text:first-child{
     color: whitesmoke;
     font-family: sans-serif;
     font-size: 80px;
@@ -276,12 +285,13 @@ button:hover {
     letter-spacing: 10px;
 }
 
-.welcome h2 text{
+.welcome text:last-child{
     color: #232323;
     font-family: sans-serif;
     font-size: 80px;
     font-weight: 30;
     letter-spacing: 7px;
+    line-height: 150%;
 }
 
 .contactdetails {
