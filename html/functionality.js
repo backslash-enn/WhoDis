@@ -34,18 +34,18 @@ var contactlist = [
 
 // Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
-    left_panel = document.getElementById('leftpanel');
-    left_panel_cover = document.getElementById('leftpanelcover');
-    itemlist = document.getElementById("contactitemlist");
     contactitemtemplate = document.getElementById("contactitemtemplate");
     contactletterdivtemplate = document.getElementById("contactletterdivtemplate");
+    itemlist = document.getElementById("contactitemlist");
+    
+    left_panel = document.getElementById('leftpanel');
+    left_panel_cover = document.getElementById('leftpanelcover');
+    contact_details = document.getElementById('contactdetails');
     fav_button = document.getElementById("favorites");
     save_button = document.getElementById("save");
-    contact_details = document.getElementById('contactdetails');
     welcome_msg = document.getElementById('welcome');
     popup = document.getElementById("popup");
     left_panel = document.getElementById('leftpanel');
-    contact_details = document.getElementById('contactdetails');
     welcome_msg = document.getElementById('welcome');
 
     name_detail = document.getElementById('name');
@@ -55,6 +55,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     color_detail = document.getElementById("color");
     birthday_detail = document.getElementById("birthday");
     notes_detail = document.getElementById('notes');
+
+
     //login_tab = document.getElementById('logintab');
     //register_tab = document.getElementById('registertab');
 
@@ -214,12 +216,12 @@ function editcontactinfo(){
         address_detail.disabled = false;
         color_detail.disabled = false;
         birthday_detail.disabled = false;
-        document.getElementById("name").disabled = false;
+        name_detail.disabled = false;
         notes_detail.disabled = false;
     }
     else{
         
-        var name = document.getElementById("name").value;
+        var name = name_detail.value;
         var phone = phone_detail.value;
         var email = email_detail.value;
         var address = address_detail.value;
@@ -227,7 +229,12 @@ function editcontactinfo(){
         var birthday = birthday_detail.value;
         var notes = notes_detail.value;
         
-        var JSONPayload = '{ "name" : "' + name + '", "fav_color" : "' + color + '", "notes" : "' + notes + '", "primary_street_addr" : "", "phone_number" : "' + phone + '", "birthday" : "2019-10-1", "favorite" : "1", "contact_id" : "12" }';
+        var JSONPayload = '{ "name" : "' + name_detail.value + 
+                          '", "fav_color" : "' + color_detail.value + 
+                          '", "notes" : "' + notes_detail.value + 
+                          '", "primary_street_addr" : "", "phone_number" : "' + phone_detail.value + 
+                          '", "birthday" : "2019-10-1", "favorite" : "1", "contact_id" : "12" }';
+
         var url = "https://managerofcontacts.live/api/Edit.php";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
@@ -257,41 +264,38 @@ function editcontactinfo(){
             email_detail.value = "cc";
         }
         
-        document.getElementById("notes").disabled = true;
+        name_detail.disabled = true;
         phone_detail.disabled = true;
         email_detail.disabled = true;
         address_detail.disabled = true;
         color_detail.disabled = true;
         birthday_detail.disabled = true;
-        document.getElementById("name").disabled = true;
-        document.getElementById("save").disabled = false;
+        notes_detail.disabled = true;
+        save_button.disabled = false;
     }
 
 }
 
 function savecontactinfo(){
-        document.getElementById("notes").disabled = true;
+        name_detail.disabled = true;
         phone_detail.disabled = true;
         email_detail.disabled = true;
         address_detail.disabled = true;
         color_detail.disabled = true;
         birthday_detail.disabled = true;
-        document.getElementById("name").disabled = true;
+        notes_detail.disabled = true;
 
         name_detail.value = contactlist[i].name;
         phone_detail.value = contactlist[i].number;
         email_detail.value = contactlist[i].email;
         address_detail.value = contactlist[i].address;
-        document.getElementById('color').value = contactlist[i].color;
-        document.getElementById('birthday').value = contactlist[i].birthday;        
+        color_detail.value = contactlist[i].color;
+        birthday_detail.value = contactlist[i].birthday;        
         notes_detail.value = contactlist[i].notes;
-        document.getElementById("save").style.display = "none";
+        save_button.style.display = "none";
 }
 
 function addcontactinfo() {
-    var left_panel = document.getElementById('leftpanel');
-    var contact_details = document.getElementById('contactdetails');
-
     left_panel.style.animation = 'none';
     left_panel.offsetHeight;
 
@@ -302,16 +306,16 @@ function addcontactinfo() {
     phone_detail.value = "";
     email_detail.value = "";
     address_detail.value = "";
-    document.getElementById('birthday').value = "";        
+    birthday_detail.value = "";        
     notes_detail.value = "";
 
-    document.getElementById("notes").disabled = false;
+    name_detail.disabled = false;
     phone_detail.disabled = false;
     email_detail.disabled = false;
     address_detail.disabled = false;
     color_detail.disabled = false;
     birthday_detail.disabled = false;
-    document.getElementById("name").disabled = false;
+    notes_detail.disabled = false;
     //disable the right panel so changes can not be made to other contacts 
     //change visibility of the save btn to true 
     //pls do these 
@@ -325,7 +329,7 @@ function addcontactinfo() {
         phone_detail.defaultValue;
         email_detail.defaultValue;
         address_detail.defaultValue;
-        document.getElementById('birthday').defaultValue;        
+        birthday_detail.defaultValue;        
         notes_detail.defaultValue;
 
     }, 100);    
