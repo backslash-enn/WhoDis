@@ -26,6 +26,7 @@ else
 	if (!isset($_SESSION["user_id"]))
 	{
 		returnWithError("User not logged in.");
+		return;
 	}
 	else
 	{
@@ -33,7 +34,7 @@ else
 	}
 
 	//First check that the contact actually exists in the user's list
-	$sql = "SELECT first_name, last_name FROM contacts where contact_id = '" . $contactID . "' AND user_id = '" . $userID . "'";
+	$sql = "SELECT name FROM `contacts` where contact_id = '" . $contactID . "' AND user_id = '" . $user_id . "'";
 	$result = $conn->query($sql);
 	if ($result->num_rows <= 0)
 	{
@@ -42,7 +43,7 @@ else
 	else
 	{
 		//Delete the contact based on the contact id given
-		$sql = "DELETE FROM contacts where contact_id = '" . $contactID . "' AND user_id = '" . $userID . "'";
+		$sql = "DELETE FROM `contacts` where contact_id = '" . $contactID . "' AND user_id = '" . $user_id . "'";
 		if($conn->query($sql) === FALSE)
 		{
 			returnWithError("Error deleting contact.");
