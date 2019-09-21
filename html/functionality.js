@@ -8,6 +8,7 @@ var contactlist = [
 //<script language="javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
 
     var left_panel;
+    var left_panel_cover;
     var contact_details;
     var welcome_msg;
     var itemlist;
@@ -23,11 +24,12 @@ var contactlist = [
 
 // Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
+    left_panel = document.getElementById('leftpanel');
+    left_panel_cover = document.getElementById('leftpanelcover');
     itemlist = document.getElementById("contactitemlist");
     contactitemtemplate = document.getElementById("contactitemtemplate");
     contactletterdivtemplate = document.getElementById("contactletterdivtemplate");
     fav_button = document.getElementById("favorites");
-    left_panel = document.getElementById('leftpanel');
     contact_details = document.getElementById('contactdetails');
     welcome_msg = document.getElementById('welcome');
     //login_tab = document.getElementById('logintab');
@@ -151,6 +153,8 @@ function displayWelcomePanel(b) {
 
 function deletecontactinfo(b){
     document.getElementById("popup").style.display = "block";
+    left_panel_cover.style.display = "initial";
+    left_panel_cover.style.opacity = "0.8";
 }
 
 function editcontactinfo(){

@@ -7,7 +7,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body>
-
         <div class="rightpanel">
             <button class="logo" id="logo" alt="logo" onclick="displayWelcomePanel(this)"></button>
             <button class="smolbutton add" type="button"></button>
@@ -15,6 +14,7 @@
             <input class="searchbox" id="searchbox" type="text" placeholder="Search" spellcheck="false" onchange="displayContacts(this.value)"></input>
             <div class="contactitemlist" id="contactitemlist"> </div>
         </div>
+        <div class="leftpanelcover" id="leftpanelcover"></div>
         <div class="leftpanel" id="leftpanel">
             <!--
             <div class="login">
@@ -76,19 +76,6 @@
                 </footer>          
             </div>
         </div>
-        
-        <template id="contactletterdivtemplate">
-            <div class="contactletterdiv">
-                <span>H</span>
-            </div>
-        </template>
-        <template id="contactitemtemplate">
-            <div class="contactitem">
-                <button onclick="displayContactInfo(this)"></button>
-                <img class="contactitempp" src="img/test.png" alt="">
-                <img class="contactitemfav" src="img/favoriteiconpink.png" alt="">
-            </div>
-        </template>
 
         <div class="popup" id="popup">
             <img src="img/popuppanel.png">
@@ -99,5 +86,18 @@
             </div>
             <div class="pun">You otter be sure.</div>
         </div>
+
+        <template id="contactletterdivtemplate">
+                <div class="contactletterdiv">
+                    <span>H</span>
+                </div>
+            </template>
+            <template id="contactitemtemplate">
+                <div class="contactitem">
+                    <button onclick="displayContactInfo(this)"></button>
+                    <img class="contactitempp" src="img/test.png" alt="">
+                    <img class="contactitemfav" src="img/favoriteiconpink.png" alt="">
+                </div>
+            </template>
     </body>
 </html>
