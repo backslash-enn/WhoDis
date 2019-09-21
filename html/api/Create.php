@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 $inData = getRequestInfo();
@@ -10,20 +11,14 @@ $db_pw = "simpleyetEffective2019!";
 $db_name = "user";
 
 //Contact's parameters
-$firstName = $inData["first_name"];
-$lastName = $inData["last_name"];
+$name = $inData["name"];
 $favColor = $inData["fav_color"];
 $notes = $inData["notes"];
 $primStrAddr = $inData["primary_street_addr"];
-$sndStrAddr = $inData["second_street_addr"];
-$city = $inData["city"];
-$state = $inData["state"];
-$country = $inData["country"];
-$zip = $inData["zip"];
 $phoneNumber = $inData["phone_number"];
 $birthday = $inData["birthday"];
 $favorite = $inData["favorite"];
-$user_id = -1;
+$user_id = 1;
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
@@ -37,6 +32,7 @@ else
 	if (!isset($_SESSION["user_id"]))
 	{
 		returnWithError("User not logged in.");
+		return;
 	}
 	else
 	{
@@ -44,9 +40,9 @@ else
 	}
 
 	//Create the contact with given information
-	$sql = "INSERT INTO `contacts` (first_name, last_name, fav_color, notes, primary_street_addr, second_street_addr, city, state, country, zip, phone_number, birthday, favorite, user_id) 
-			VALUES ('" . $firstName . "', '" . $lastName . "', '" . $favColor . "', '" . $notes . "', '" . $primStrAddr . "', '" . $sndStrAddr . "', '" . $city . "', '" . $state . "',
-					'" . $country . "', $zip, $phoneNumber, $birthday, $favorite, $user_id)";
+	$sql = "INSERT INTO `contacts` (name, fav_color, notes, primary_street_addr, phone_number, birthday, favorite, user_id) 
+			VALUES ('" . $name . "', '" . $favColor . "', '" . $notes . "', '" . $primStrAddr . "', '" . $phoneNumber . "', 
+					'" . $birthday . "', '" . $favorite . "', '" . $user_id . "')";
 
 	if ($conn->query($sql) === FALSE)
 	{

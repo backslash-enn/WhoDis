@@ -162,6 +162,7 @@ function deletecontactinfo(b){
 function editcontactinfo(){
 
     var editmode = document.getElementById("notes").disabled;
+    
     if (editmode){
         document.getElementById("notes").disabled = false;
         document.getElementById("phone").disabled = false;
@@ -172,6 +173,45 @@ function editcontactinfo(){
         document.getElementById("name").disabled = false;
     }
     else{
+        
+        var name = document.getElementById("name").value;
+        var phone = document.getElementById("phone").value;
+        var email = document.getElementById("email").value;
+        var address = document.getElementById("address").value;
+        var color = document.getElementById("color").value;
+        var birthday = document.getElementById("birthday").value;
+        var notes = document.getElementById("notes").value;
+        
+        var JSONPayload = '{ "name" : "' + name + '", "fav_color" : "' + color + '", "notes" : "' + notes + '", "primary_street_addr" : "", "phone_number" : "' + phone + '", "birthday" : "2019-10-1", "favorite" : "1", "contact_id" : "12" }';
+        var url = "https://managerofcontacts.live/api/Edit.php";
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        
+        try {
+            
+//            xhr.send(JSONPayload);
+            document.getElementById("address").value = "ttt";
+//            var jsonObject = JSON.parse( xhr.responseText );
+//            document.getElementById("email").value = "aaa";
+            xhr.onreadystatechange = function()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                    {
+                        document.getElementById("email").value = "bb";
+                        var jsonObject = JSON.parse( xhr.responseText );
+//                        document.getElementById("email").value = xhr.responseText;
+                    }
+            }
+            xhr.send(JSONPayload);
+            
+        }
+        catch (err)
+        {
+//            document.getElementById("email").value = err.message;
+            document.getElementById("email").value = "cc";
+        }
+        
         document.getElementById("notes").disabled = true;
         document.getElementById("phone").disabled = true;
         document.getElementById("email").disabled = true;
