@@ -278,6 +278,17 @@ function savecontactinfo(){
         birthday_detail.disabled = true;
         document.getElementById("name").disabled = true;
 
+        var new_contact = {
+            name: "Cat", 
+            number: "(786) 009 - 2089", 
+            email: "familyfriendly@ottmail.com", 
+            color: "pink", 
+            address: "4321 Waterbay Creek", 
+            notes: "", 
+            favorite: false
+        };
+
+        contactlist.push(new_contact);
         name_detail.value = contactlist[i].name;
         phone_detail.value = contactlist[i].number;
         email_detail.value = contactlist[i].email;
@@ -285,7 +296,6 @@ function savecontactinfo(){
         document.getElementById('color').value = contactlist[i].color;
         document.getElementById('birthday').value = contactlist[i].birthday;        
         notes_detail.value = contactlist[i].notes;
-        document.getElementById("save").style.display = "none";
 }
 
 function addcontactinfo() {
@@ -316,9 +326,10 @@ function addcontactinfo() {
     //change visibility of the save btn to true 
     //pls do these 
     
-    save_button.style.display = 'initial';
-    document.getElementById("rightpanel").disabled = true;    
-
+    save_button.style.display = 'block';
+   /*
+    document.getElementById("rightpanel").disabled = true;    */
+    console.log("hello");
     setTimeout(function() {
         contact_details.style.display = "initial";
         name_detail.defaultValue;
