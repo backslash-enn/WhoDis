@@ -15,6 +15,7 @@ var contactlist = [
     var contactitemtemplate;
     var contactletterdivtemplate;
     var fav_button;
+    var save_button;
     var login_tab;
     var register_tab;
     var popup;
@@ -31,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     contactitemtemplate = document.getElementById("contactitemtemplate");
     contactletterdivtemplate = document.getElementById("contactletterdivtemplate");
     fav_button = document.getElementById("favorites");
+    save_button = document.getElementById("save");
     contact_details = document.getElementById('contactdetails');
     welcome_msg = document.getElementById('welcome');
     popup = document.getElementById("popup");
@@ -297,7 +299,8 @@ function addcontactinfo() {
     //disable the right panel so changes can not be made to other contacts 
     //change visibility of the save btn to true 
     //pls do these 
-    document.getElementById('savecontactinfo').style.visibility = 'visible';
+    
+    save_button.style.display = 'initial';
     document.getElementById("rightpanel").disabled = true;    
 
     setTimeout(function() {
