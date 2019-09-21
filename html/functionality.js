@@ -20,6 +20,14 @@ var contactlist = [
     var register_tab;
     var popup;
 
+    var name_detail;
+    var phone_detail;
+    var email_detail;
+    var address_detail;
+    var color_detail;
+    var birthday_detail;
+    var notes_detail;
+
     var favoritesOnly = false;
     var loggedIn = false;
     var currentLoginTab = "";
@@ -36,6 +44,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     contact_details = document.getElementById('contactdetails');
     welcome_msg = document.getElementById('welcome');
     popup = document.getElementById("popup");
+    left_panel = document.getElementById('leftpanel');
+    contact_details = document.getElementById('contactdetails');
+    welcome_msg = document.getElementById('welcome');
+
+    name_detail = document.getElementById('name');
+    phone_detail = document.getElementById('phone');
+    email_detail = document.getElementById('email');
+    address_detail = document.getElementById('address');
+    color_detail = document.getElementById("color");
+    birthday_detail = document.getElementById("birthday");
+    notes_detail = document.getElementById('notes');
     //login_tab = document.getElementById('logintab');
     //register_tab = document.getElementById('registertab');
 
@@ -117,10 +136,6 @@ function toggleFavoritesOnly(searchString) {
 
 function displayContactInfo(b){
 
-    left_panel = document.getElementById('leftpanel');
-    contact_details = document.getElementById('contactdetails');
-    welcome_msg = document.getElementById('welcome');
-
     let i = b.parentNode.id;
 
     // Animate in
@@ -134,11 +149,11 @@ function displayContactInfo(b){
         contact_details.style.display = "block";
         welcome_msg.style.display = "none";
 
-        document.getElementById('name').value = contactlist[i].name;
-        document.getElementById('phone').value = contactlist[i].number;
-        document.getElementById('email').value = contactlist[i].email;
-        document.getElementById('address').value = contactlist[i].address;
-        document.getElementById('notes').value = contactlist[i].notes;
+        name_detail.value = contactlist[i].name;
+        phone_detail.value = contactlist[i].number;
+        email_detail.value = contactlist[i].email;
+        address_detail.value = contactlist[i].address;
+        notes_detail.value = contactlist[i].notes;
 
         //scaleFontSize('name contact_detailsitem');
     }, 100); 
@@ -191,26 +206,26 @@ function deletecontactinfo(b){
 
 function editcontactinfo(){
 
-    var editmode = document.getElementById("notes").disabled;
+    var editmode = notes_detail.disabled;
     
     if (editmode){
-        document.getElementById("notes").disabled = false;
-        document.getElementById("phone").disabled = false;
-        document.getElementById("email").disabled = false;
-        document.getElementById("address").disabled = false;
-        document.getElementById("color").disabled = false;
-        document.getElementById("birthday").disabled = false;
+        phone_detail.disabled = false;
+        email_detail.disabled = false;
+        address_detail.disabled = false;
+        color_detail.disabled = false;
+        birthday_detail.disabled = false;
         document.getElementById("name").disabled = false;
+        notes_detail.disabled = false;
     }
     else{
         
         var name = document.getElementById("name").value;
-        var phone = document.getElementById("phone").value;
-        var email = document.getElementById("email").value;
-        var address = document.getElementById("address").value;
-        var color = document.getElementById("color").value;
-        var birthday = document.getElementById("birthday").value;
-        var notes = document.getElementById("notes").value;
+        var phone = phone_detail.value;
+        var email = email_detail.value;
+        var address = address_detail.value;
+        var color = color_detail.value;
+        var birthday = birthday_detail.value;
+        var notes = notes_detail.value;
         
         var JSONPayload = '{ "name" : "' + name + '", "fav_color" : "' + color + '", "notes" : "' + notes + '", "primary_street_addr" : "", "phone_number" : "' + phone + '", "birthday" : "2019-10-1", "favorite" : "1", "contact_id" : "12" }';
         var url = "https://managerofcontacts.live/api/Edit.php";
@@ -221,16 +236,16 @@ function editcontactinfo(){
         try {
             
 //            xhr.send(JSONPayload);
-            document.getElementById("address").value = "ttt";
+            address_detail.value = "ttt";
 //            var jsonObject = JSON.parse( xhr.responseText );
-//            document.getElementById("email").value = "aaa";
+//            email_detail.value = "aaa";
             xhr.onreadystatechange = function()
             {
                 if (this.readyState == 4 && this.status == 200)
                     {
-                        document.getElementById("email").value = "bb";
+                        email_detail.value = "bb";
                         var jsonObject = JSON.parse( xhr.responseText );
-//                        document.getElementById("email").value = xhr.responseText;
+//                        email_detail.value = xhr.responseText;
                     }
             }
             xhr.send(JSONPayload);
@@ -238,16 +253,16 @@ function editcontactinfo(){
         }
         catch (err)
         {
-//            document.getElementById("email").value = err.message;
-            document.getElementById("email").value = "cc";
+//            email_detail.value = err.message;
+            email_detail.value = "cc";
         }
         
         document.getElementById("notes").disabled = true;
-        document.getElementById("phone").disabled = true;
-        document.getElementById("email").disabled = true;
-        document.getElementById("address").disabled = true;
-        document.getElementById("color").disabled = true;
-        document.getElementById("birthday").disabled = true;
+        phone_detail.disabled = true;
+        email_detail.disabled = true;
+        address_detail.disabled = true;
+        color_detail.disabled = true;
+        birthday_detail.disabled = true;
         document.getElementById("name").disabled = true;
         document.getElementById("save").disabled = false;
     }
@@ -256,21 +271,20 @@ function editcontactinfo(){
 
 function savecontactinfo(){
         document.getElementById("notes").disabled = true;
-        document.getElementById("phone").disabled = true;
-        document.getElementById("email").disabled = true;
-        document.getElementById("address").disabled = true;
-        document.getElementById("color").disabled = true;
-        document.getElementById("birthday").disabled = true;
+        phone_detail.disabled = true;
+        email_detail.disabled = true;
+        address_detail.disabled = true;
+        color_detail.disabled = true;
+        birthday_detail.disabled = true;
         document.getElementById("name").disabled = true;
 
-        document.getElementById('name').value = contactlist[i].name;
-        document.getElementById('phone').value = contactlist[i].number;
-        document.getElementById('email').value = contactlist[i].email;
-        document.getElementById('address').value = contactlist[i].address;
+        name_detail.value = contactlist[i].name;
+        phone_detail.value = contactlist[i].number;
+        email_detail.value = contactlist[i].email;
+        address_detail.value = contactlist[i].address;
         document.getElementById('color').value = contactlist[i].color;
         document.getElementById('birthday').value = contactlist[i].birthday;        
-        document.getElementById('notes').value = contactlist[i].notes;
-
+        notes_detail.value = contactlist[i].notes;
         document.getElementById("save").style.display = "none";
 }
 
@@ -284,19 +298,19 @@ function addcontactinfo() {
     left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
     left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
 
-    document.getElementById('name').value = "";
-    document.getElementById('phone').value = "";
-    document.getElementById('email').value = "";
-    document.getElementById('address').value = "";
+    name_detail.value = "";
+    phone_detail.value = "";
+    email_detail.value = "";
+    address_detail.value = "";
     document.getElementById('birthday').value = "";        
-    document.getElementById('notes').value = "";
+    notes_detail.value = "";
 
     document.getElementById("notes").disabled = false;
-    document.getElementById("phone").disabled = false;
-    document.getElementById("email").disabled = false;
-    document.getElementById("address").disabled = false;
-    document.getElementById("color").disabled = false;
-    document.getElementById("birthday").disabled = false;
+    phone_detail.disabled = false;
+    email_detail.disabled = false;
+    address_detail.disabled = false;
+    color_detail.disabled = false;
+    birthday_detail.disabled = false;
     document.getElementById("name").disabled = false;
     //disable the right panel so changes can not be made to other contacts 
     //change visibility of the save btn to true 
@@ -307,12 +321,12 @@ function addcontactinfo() {
 
     setTimeout(function() {
         contact_details.style.display = "initial";
-        document.getElementById('name').defaultValue;
-        document.getElementById('phone').defaultValue;
-        document.getElementById('email').defaultValue;
-        document.getElementById('address').defaultValue;
+        name_detail.defaultValue;
+        phone_detail.defaultValue;
+        email_detail.defaultValue;
+        address_detail.defaultValue;
         document.getElementById('birthday').defaultValue;        
-        document.getElementById('notes').defaultValue;
+        notes_detail.defaultValue;
 
     }, 100);    
 }
