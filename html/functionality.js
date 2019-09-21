@@ -5,22 +5,54 @@ var contactlist = [
     {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false},
     {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true}
 ]
+//<script language="javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
 
+    var left_panel;
+    var contact_details;
+    var welcome_msg;
     var itemlist;
     var contactitemtemplate;
     var contactletterdivtemplate;
     var fav_button;
+    var login_tab;
+    var register_tab;
 
     var favoritesOnly = false;
+    var loggedIn = false;
+    var currentLoginTab = "";
 
+// Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
     itemlist = document.getElementById("contactitemlist");
     contactitemtemplate = document.getElementById("contactitemtemplate");
     contactletterdivtemplate = document.getElementById("contactletterdivtemplate");
     fav_button = document.getElementById("favorites");
+    left_panel = document.getElementById('leftpanel');
+    contact_details = document.getElementById('contactdetails');
+    welcome_msg = document.getElementById('welcome');
+    //login_tab = document.getElementById('logintab');
+    //register_tab = document.getElementById('registertab');
 
     displayContacts("");
+    //changeLoginTab("login");
 }, false);
+
+function changeLoginTab(newLoginTab) {
+    if(newLoginTab == currentLoginTab) {
+        return;
+    }
+
+    currentLoginTab = newLoginTab;
+
+    if(currentLoginTab == "login") {
+        login_tab.style.borderColor = "#ffe760";
+        register_tab.style.borderColor = "#232323";
+    }
+    else {
+        login_tab.style.borderColor = "#232323";
+        register_tab.style.borderColor = "#ffe760";
+    }
+}
 
 function displayContacts(searchString) {
         
@@ -79,12 +111,11 @@ function toggleFavoritesOnly(searchString) {
 
 function displayContactInfo(b){
 
-    var contact_details = document.getElementById('contactdetails');
-    var left_panel = document.getElementById('leftpanel');
-    var welcome_msg = document.getElementById('welcome');
+    left_panel = document.getElementById('leftpanel');
+    contact_details = document.getElementById('contactdetails');
+    welcome_msg = document.getElementById('welcome');
 
     let i = b.parentNode.id;
-    console.log(i);
 
     // Animate in
     left_panel.style.animation = 'none';
@@ -106,10 +137,6 @@ function displayContactInfo(b){
 }
 
 function displayWelcomePanel(b) {
-    var left_panel = document.getElementById('leftpanel');
-    var contact_details = document.getElementById('contactdetails');
-    var welcome_msg = document.getElementById('welcome');
-
     left_panel.style.animation = 'none';
     left_panel.offsetHeight;
 
