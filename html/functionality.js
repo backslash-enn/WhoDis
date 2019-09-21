@@ -5,22 +5,54 @@ var contactlist = [
     {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false},
     {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true}
 ]
+//<script language="javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
 
+    var left_panel;
+    var contact_details;
+    var welcome_msg;
     var itemlist;
     var contactitemtemplate;
     var contactletterdivtemplate;
     var fav_button;
+    var login_tab;
+    var register_tab;
 
     var favoritesOnly = false;
+    var loggedIn = false;
+    var currentLoginTab = "";
 
+// Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
     itemlist = document.getElementById("contactitemlist");
     contactitemtemplate = document.getElementById("contactitemtemplate");
     contactletterdivtemplate = document.getElementById("contactletterdivtemplate");
     fav_button = document.getElementById("favorites");
+    left_panel = document.getElementById('leftpanel');
+    contact_details = document.getElementById('contactdetails');
+    welcome_msg = document.getElementById('welcome');
+    //login_tab = document.getElementById('logintab');
+    //register_tab = document.getElementById('registertab');
 
     displayContacts("");
+    //changeLoginTab("login");
 }, false);
+
+function changeLoginTab(newLoginTab) {
+    if(newLoginTab == currentLoginTab) {
+        return;
+    }
+
+    currentLoginTab = newLoginTab;
+
+    if(currentLoginTab == "login") {
+        login_tab.style.borderColor = "#ffe760";
+        register_tab.style.borderColor = "#232323";
+    }
+    else {
+        login_tab.style.borderColor = "#232323";
+        register_tab.style.borderColor = "#ffe760";
+    }
+}
 
 function displayContacts(searchString) {
         
@@ -79,12 +111,11 @@ function toggleFavoritesOnly(searchString) {
 
 function displayContactInfo(b){
 
-    var contact_details = document.getElementById('contactdetails');
-    var left_panel = document.getElementById('leftpanel');
-    var welcome_msg = document.getElementById('welcome');
+    left_panel = document.getElementById('leftpanel');
+    contact_details = document.getElementById('contactdetails');
+    welcome_msg = document.getElementById('welcome');
 
     let i = b.parentNode.id;
-    console.log(i);
 
     // Animate in
     left_panel.style.animation = 'none';
@@ -106,10 +137,6 @@ function displayContactInfo(b){
 }
 
 function displayWelcomePanel(b) {
-    var left_panel = document.getElementById('leftpanel');
-    var contact_details = document.getElementById('contactdetails');
-    var welcome_msg = document.getElementById('welcome');
-
     left_panel.style.animation = 'none';
     left_panel.offsetHeight;
 
@@ -129,6 +156,7 @@ function deletecontactinfo(b){
 function editcontactinfo(){
 
     var editmode = document.getElementById("notes").disabled;
+    
     if (editmode){
         document.getElementById("notes").disabled = false;
         document.getElementById("phone").disabled = false;
@@ -139,6 +167,45 @@ function editcontactinfo(){
         document.getElementById("name").disabled = false;
     }
     else{
+        
+        var name = document.getElementById("name").value;
+        var phone = document.getElementById("phone").value;
+        var email = document.getElementById("email").value;
+        var address = document.getElementById("address").value;
+        var color = document.getElementById("color").value;
+        var birthday = document.getElementById("birthday").value;
+        var notes = document.getElementById("notes").value;
+        
+        var JSONPayload = '{ "name" : "' + name + '", "fav_color" : "' + color + '", "notes" : "' + notes + '", "primary_street_addr" : "", "phone_number" : "' + phone + '", "birthday" : "2019-10-1", "favorite" : "1", "contact_id" : "12" }';
+        var url = "https://managerofcontacts.live/api/Edit.php";
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        
+        try {
+            
+//            xhr.send(JSONPayload);
+            document.getElementById("address").value = "ttt";
+//            var jsonObject = JSON.parse( xhr.responseText );
+//            document.getElementById("email").value = "aaa";
+            xhr.onreadystatechange = function()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                    {
+                        document.getElementById("email").value = "bb";
+                        var jsonObject = JSON.parse( xhr.responseText );
+//                        document.getElementById("email").value = xhr.responseText;
+                    }
+            }
+            xhr.send(JSONPayload);
+            
+        }
+        catch (err)
+        {
+//            document.getElementById("email").value = err.message;
+            document.getElementById("email").value = "cc";
+        }
+        
         document.getElementById("notes").disabled = true;
         document.getElementById("phone").disabled = true;
         document.getElementById("email").disabled = true;
