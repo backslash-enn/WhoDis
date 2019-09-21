@@ -9,7 +9,8 @@
     <body>
         <div class="rightpanel">
             <button class="logo" id="logo" alt="logo" onclick="displayWelcomePanel(this)"></button>
-            <button class="smolbutton add" type="button"></button>
+            <button class="smolbutton add" type="button" onclick="
+                addcontactinfo()"></button>
             <button class="smolbutton favorites" id="favorites" type="button" onclick="toggleFavoritesOnly(getElementById('searchbox').value)"></button>
             <input class="searchbox" id="searchbox" type="text" placeholder="Search" spellcheck="false" onchange="displayContacts(this.value)"></input>
             <div class="contactitemlist" id="contactitemlist"> </div>
@@ -72,9 +73,8 @@
                     <input disabled="disabled" class="birthday contactdetailsitem" id="birthday" type="date">
                     <br> <br>
                     <textarea disabled="disabled" class="notes" id="notes" type="text" placeholder="Notes" spellcheck="true" rows="3" cols="57"></textarea>
-                </h3>
-                <footer>
-                </footer>          
+                    <button class="smolbutton save" type="button" onclick="savecontactinfo(this)"></button>
+                </h3>       
             </div>
         </div>
 

@@ -137,7 +137,18 @@ function displayContactInfo(b){
         document.getElementById('email').value = contactlist[i].email;
         document.getElementById('address').value = contactlist[i].address;
         document.getElementById('notes').value = contactlist[i].notes;
+
+        //scaleFontSize('name contact_detailsitem');
     }, 100); 
+}
+
+function scaleFontSize(element) {
+    var container = document.getElementById(element)
+
+    container.style.fontSize = "100%"; 
+
+    if (container.scrollWidth > container.clientWidth)
+        container.style.fontSize = "%70"; 
 }
 
 function displayWelcomePanel(b) {
@@ -236,6 +247,67 @@ function editcontactinfo(){
         document.getElementById("color").disabled = true;
         document.getElementById("birthday").disabled = true;
         document.getElementById("name").disabled = true;
+        document.getElementById("save").disabled = false;
     }
 
+}
+
+function savecontactinfo(){
+        document.getElementById("notes").disabled = true;
+        document.getElementById("phone").disabled = true;
+        document.getElementById("email").disabled = true;
+        document.getElementById("address").disabled = true;
+        document.getElementById("color").disabled = true;
+        document.getElementById("birthday").disabled = true;
+        document.getElementById("name").disabled = true;
+
+        document.getElementById('name').value = contactlist[i].name;
+        document.getElementById('phone').value = contactlist[i].number;
+        document.getElementById('email').value = contactlist[i].email;
+        document.getElementById('address').value = contactlist[i].address;
+        document.getElementById('color').value = contactlist[i].color;
+        document.getElementById('birthday').value = contactlist[i].birthday;        
+        document.getElementById('notes').value = contactlist[i].notes;
+}
+
+function addcontactinfo() {
+    var left_panel = document.getElementById('leftpanel');
+    var contact_details = document.getElementById('contactdetails');
+
+    left_panel.style.animation = 'none';
+    left_panel.offsetHeight;
+
+    left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
+    left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+
+    document.getElementById('name').value = "";
+    document.getElementById('phone').value = "";
+    document.getElementById('email').value = "";
+    document.getElementById('address').value = "";
+    document.getElementById('birthday').value = "";        
+    document.getElementById('notes').value = "";
+
+    document.getElementById("notes").disabled = false;
+    document.getElementById("phone").disabled = false;
+    document.getElementById("email").disabled = false;
+    document.getElementById("address").disabled = false;
+    document.getElementById("color").disabled = false;
+    document.getElementById("birthday").disabled = false;
+    document.getElementById("name").disabled = false;
+    //disable the right panel so changes can not be made to other contacts 
+    //change visibility of the save btn to true 
+    //pls do these 
+    document.getElementById('savecontactinfo').style.visibility = 'visible';
+    document.getElementById("rightpanel").disabled = true;    
+
+    setTimeout(function() {
+        contact_details.style.display = "initial";
+        document.getElementById('name').defaultValue;
+        document.getElementById('phone').defaultValue;
+        document.getElementById('email').defaultValue;
+        document.getElementById('address').defaultValue;
+        document.getElementById('birthday').defaultValue;        
+        document.getElementById('notes').defaultValue;
+
+    }, 100);    
 }
