@@ -152,7 +152,13 @@ function displayWelcomePanel(b) {
 }
 
 function deletecontactinfo(b){
-    document.getElementById("popup").style.display = "block";
+
+    if (b.id == "deleteicon")
+        document.getElementById("popup").style.display = "block";
+    else if (b.id == "abort")
+        document.getElementById("popup").style.display = "none";
+    else if (b.id == "yes")
+        setTimeout("location.reload(true);", 100);
     left_panel_cover.style.display = "initial";
     left_panel_cover.style.opacity = "0.8";
 }

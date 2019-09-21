@@ -34,7 +34,7 @@
             <div class="contactdetails" id="contactdetails">
                 <h1>
                     <button class="smolbutton edit" type="button" onclick="editcontactinfo()"></button>
-                    <button class="smolbutton delete" type="button" onclick="deletecontactinfo(this)"></button>  
+                    <button class="smolbutton delete" id="deleteicon" type="button" onclick="deletecontactinfo(this)"></button>  
                 </h1>
                 <h2>
                     <img class="pp-frame pp-picture" src="img/testpp.png">
@@ -81,8 +81,8 @@
             <img src="img/popuppanel.png">
             <div class="deletemsg">Are you sure you wish to delete this contact from your contact list?</div>
             <div class="button">
-                <button class="btn1">Of Course!</button>
-                <button class="btn2">No, Abort!</button>
+                <button class="btn1" id="yes" onclick="deletecontactinfo(this)">Of Course!</button>
+                <button class="btn2" id="abort" onclick="deletecontactinfo(this)">No, Abort!</button>
             </div>
             <div class="pun">You otter be sure.</div>
         </div>
