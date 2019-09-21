@@ -17,6 +17,7 @@ var contactlist = [
     var fav_button;
     var login_tab;
     var register_tab;
+    var popup;
 
     var favoritesOnly = false;
     var loggedIn = false;
@@ -32,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     fav_button = document.getElementById("favorites");
     contact_details = document.getElementById('contactdetails');
     welcome_msg = document.getElementById('welcome');
+    popup = document.getElementById("popup");
     //login_tab = document.getElementById('logintab');
     //register_tab = document.getElementById('registertab');
 
@@ -152,15 +154,26 @@ function displayWelcomePanel(b) {
 }
 
 function deletecontactinfo(b){
+    if (b.id == "deleteicon") {
+        left_panel_cover.style.display = "initial";
+        left_panel_cover.style.opacity = "0.8";
+        popup.style.display = "block";
 
-    if (b.id == "deleteicon")
-        document.getElementById("popup").style.display = "block";
-    else if (b.id == "abort")
-        document.getElementById("popup").style.display = "none";
-    else if (b.id == "yes")
+        popup.style.animation = 'none';
+        left_panel.offsetHeight;
+        
+        popup.style.animation = "popup-grace-the-room-with-its-presence .4s linear forwards";
+        popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+    }
+    else if (b.id == "abort") {
+        popup.style.display = "none";
+        left_panel_cover.style.display = "none";
+        left_panel_cover.style.opacity = "0";
+    }
+    else if (b.id == "yes") {
         setTimeout("location.reload(true);", 100);
-    left_panel_cover.style.display = "initial";
-    left_panel_cover.style.opacity = "0.8";
+    }
+
 }
 
 function editcontactinfo(){

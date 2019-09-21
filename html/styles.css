@@ -337,6 +337,26 @@ button:hover {
     text-align: left;
 }
 
+.welcome button {
+    position: absolute;
+    width: 150px;
+    height: 100px;
+    top: 0;
+
+    background-image: url("img/logouticon.png");
+    background-color: #00000000;
+    background-repeat: no-repeat;
+    background-size: 30%;
+    border: none;
+    outline: none;
+    background-position-y: 47%;
+
+
+    font-size: 175%;
+    color: whitesmoke;
+    padding-left: 5%;
+}
+
 .welcome text:first-child{
     color: whitesmoke;
     font-family: sans-serif;
@@ -548,7 +568,7 @@ h3 input {
     position: relative;
     display: none;
     width: 43%;
-    z-index: 10;
+    z-index: 10;    
 }
 
 .popup img {
@@ -624,4 +644,16 @@ h3 input {
 
 .popup .btn2:hover{
     background-color: black;
+}
+
+@keyframes popup-grace-the-room-with-its-presence {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
