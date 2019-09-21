@@ -270,6 +270,8 @@ function savecontactinfo(){
         document.getElementById('color').value = contactlist[i].color;
         document.getElementById('birthday').value = contactlist[i].birthday;        
         document.getElementById('notes').value = contactlist[i].notes;
+
+        document.getElementById("save").style.display = "none";
 }
 
 function addcontactinfo() {
