@@ -154,7 +154,8 @@ function editcontactinfo(){
         var color = document.getElementById("color").value;
         var birthday = document.getElementById("birthday").value;
         var notes = document.getElementById("notes").value;
-        var JSONPayload = '{ "name" : "' + name + '", "fav_color" : "' + color + '", "notes" : "' + notes + '", "primary_street_addr" : "", "second_street_addr" : "", "city" : "", "state" : "", "country" : "", "zip" : "5", "phone_number" : "' + phone + '", "birthday" : "' + birthday + '", "favorite" : "1", "contact_id" : "12" }';
+        
+        var JSONPayload = '{ "name" : "' + name + '", "fav_color" : "' + color + '", "notes" : "' + notes + '", "primary_street_addr" : "", "phone_number" : "' + phone + '", "birthday" : "2019-10-1", "favorite" : "1", "contact_id" : "12" }';
         var url = "https://managerofcontacts.live/api/Edit.php";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
@@ -170,8 +171,9 @@ function editcontactinfo(){
             {
                 if (this.readyState == 4 && this.status == 200)
                     {
+                        document.getElementById("email").value = "bb";
                         var jsonObject = JSON.parse( xhr.responseText );
-                        document.getElementById("email").value = "aaa";
+//                        document.getElementById("email").value = xhr.responseText;
                     }
             }
             xhr.send(JSONPayload);
@@ -179,7 +181,8 @@ function editcontactinfo(){
         }
         catch (err)
         {
-            document.getElementById("email").value = err.message;
+//            document.getElementById("email").value = err.message;
+            document.getElementById("email").value = "cc";
         }
         
         document.getElementById("notes").disabled = true;
