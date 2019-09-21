@@ -215,7 +215,8 @@ button:hover {
     position: absolute;
     left: -1050px;
     transform: translateX(1050px);
-    opacity: 1;    width: 50%;
+    opacity: 1;
+    width: 50%;
     height: 100%;
     background-image: url("img/sidepanel.png");
     background-size: 100% 100%;
@@ -480,4 +481,87 @@ h3 input {
 }
 .edit:active {
     background-color: #998b3a;
+}
+
+/*Pop-up Panel*/
+
+.popup {
+    position: relative;
+    display: none;
+    width: 43%;
+}
+
+.popup img {
+    width: 100%;
+    height: auto;
+}
+
+.popup .btn1 {
+    position: absolute;
+    top: 55%;
+    left: 36%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #232323;
+    color: whitesmoke;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: 20px;
+    letter-spacing: 7px;
+}
+
+.popup .deletemsg {
+    position: absolute;
+    top: 43%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: sans-serif;
+    color: #232323;
+    font-size: 20px;
+    font-weight: 20px;
+    letter-spacing: 7px;
+    width: 50%;
+}
+
+.popup .pun {
+    position: absolute;
+    top: 67.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: whitesmoke;
+}
+
+.popup .btn2 {
+    position: absolute;
+    top: 55%;
+    left: 63%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #232323;
+    color: whitesmoke;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: 20px;
+    letter-spacing: 7px;
+}
+
+
+
+.popup .btn1:hover{
+    background-color: black;
+}
+
+.popup .btn2:hover{
+    background-color: black;
 }

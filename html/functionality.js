@@ -123,13 +123,7 @@ function displayWelcomePanel(b) {
 }
 
 function deletecontactinfo(b){
-    var contact_details = document.getElementById('contactdetails');
-    var welcome_msg = document.getElementById('welcome');
-    var itemlist = document.getElementById("contactitemlist");
-
-
-    contact_details.style.display = "none";
-    welcome_msg.style.display = "block";
+    document.getElementById("popup").style.display = "block";
 }
 
 function editcontactinfo(){
