@@ -54,7 +54,7 @@ button:hover {
     background-size: 24px;
     background-position: 4px 4px;
     transition-duration: 200ms;
-    z-index: 20;
+    z-index: 5;
 }
 
 .add {
