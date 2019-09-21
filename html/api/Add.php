@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 $inData = getRequestInfo();
 
 //Database parameters
@@ -34,8 +32,18 @@ else
 	{
 		//Insert the user's information into the database
 		$sql = "INSERT INTO `login` (name, username, password) VALUES ('" . $name . "', '" . $username . "', '" . $password . "')";
+		
+		if($conn->query($sql) == FALSE)
+		{
+			returnWithError("Unable to add user.");
+		}
+		else
+		{
+			returnWithError("User successfully added.");
+		}
+		/*
 		$result = $conn->query($sql);
-		if($result->num_rows > 0)
+		if($result->num_rows >= 0)
 		{
 			$row = $result->fetch_assoc();
 			$user_id = $row["user_id"];
@@ -45,6 +53,7 @@ else
 		{
 			returnWithError("Unable to add user.");
 		}
+		*/
 	}
 
 	$conn->close();
