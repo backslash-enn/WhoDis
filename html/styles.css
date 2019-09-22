@@ -199,6 +199,7 @@ button:hover {
     background-size: 100%;
     background-repeat: no-repeat;
     background-color: #00000000;
+    outline: none;
     border: none;
 }
 

@@ -202,7 +202,7 @@ async function displayContacts(searchString) {
         clon.children[0].children[0].style.color = contactlist[i].color;
         clon.children[0].id = i;
         if(contactlist[i].favorite == true) {
-            clon.children[0].children[2].style.display = "initial";
+            clon.children[0].children[2].style.backgroundImage = 'url("img/favoriteiconpink.png")'; 
         }
 
         currentChar = contactlist[i].name[0].toUpperCase();
@@ -251,13 +251,14 @@ function displayContactInfo(b){
     }, 100); 
 }
 
-function scaleFontSize(element) {
-    var container = document.getElementById(element)
+function select_fav(b) {
+    let i = b.parentNode.id; 
 
-    container.style.fontSize = "100%"; 
-
-    if (container.scrollWidth > container.clientWidth)
-        container.style.fontSize = "%70"; 
+    contactlist[i].favorite = !contactlist[i].favorite;
+    b.style.backgroundImage = 
+        contactlist[i].favorite ?
+        'url("img/favoriteiconpink.png")' :
+        'url("img/favoriteiconyellow.png")';
 }
 
 function displayWelcomePanel(b) {
