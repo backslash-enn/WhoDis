@@ -6,7 +6,7 @@
         <script src="functionality.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
-        <input type="hidden" id="contact_id" value="12">
+        <input type="hidden" id="contact_id" value="-1">
     <body onresize="adaptToScreen()">
         <div class="rightpanel" id="rightpanel">
             <button class="logo" id="logo" alt="logo" onclick="displayWelcomePanel(this)"></button>
@@ -76,6 +76,7 @@
                     <img src="img/favcoloricon.png">
                     <!--<text>Orange</text>-->
                     <select disabled class="favcolor contactdetailsitem" id="color">
+                        <option value="White"></option>
                         <option value="Red">Red</option>
                         <option value="Orange">Orange</option>
                         <option value="Pink">Pink</option>
