@@ -328,6 +328,17 @@ function canceledit(){
     if (lastClicked === -1){
         // cancel editing for a new contact
         // does not create new contact, and instead goes to welcome page
+        left_panel.style.animation = 'none';
+        left_panel.offsetHeight;
+
+        contact_details.style.display = "none";
+        left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
+        left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+
+        setTimeout(function() {
+            welcome_msg.style.display = "block";
+        }, 100);   
+        
     }
     else {
         // cancel editing for an existing contact
@@ -358,6 +369,11 @@ function canceledit(){
     //reveal edit and delete buttons after user clicks cancel button
     edit_button.style.display = "block";
     delete_button.style.display = "block";
+
+    //gets rid of fade out for right panel
+    left_panel_cover.style.display = "none";
+    left_panel_cover.style.opacity = "0";
+    left_panel.style.zIndex = "7";
 }
 
 function editcontactinfo(){
