@@ -21,14 +21,19 @@
                 <button id="logintab" onclick="changeLoginTab('login')">Login</button>
                 <button id="registertab" onclick="changeLoginTab('register')">Register</button>
                 <form class="loginform" id="loginform">
-                    USERNAME: <input type="text" name="username"><br>
-                    PASSWORD: <input type="password" name="password"><br>
+                    USERNAME: <input type="text" name="username" required="">
+                    <br>
+                    PASSWORD: <input type="password" name="password" required="">
+                    <br>
                     <input class="loginbutton" type="button" onclick="getLoggedIn()" value="LOGIN">
                 </form>
                 <form class="registerform" id="registerform">
-                    <text>NAME:</text> <input type="text" name="name"><br>
-                             USERNAME: <input type="text" name="username"><br>
-                             PASSWORD: <input type="password" name="password"><br>
+                    <text>NAME:</text> <input type="text" name="name" required="">
+                        <br>
+                        USERNAME: <input type="text" name="username" required="">
+                        <br>
+                        PASSWORD: <input type="password" name="password" required="">
+                        <br>
                     <input class="loginbutton" type="submit" value="REGISTER">
                 </form>
                 <img src="img/logo.png" alt="logo">
