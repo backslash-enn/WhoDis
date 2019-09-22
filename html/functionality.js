@@ -328,6 +328,17 @@ function canceledit(){
     if (lastClicked === -1){
         // cancel editing for a new contact
         // does not create new contact, and instead goes to welcome page
+        left_panel.style.animation = 'none';
+        left_panel.offsetHeight;
+
+        contact_details.style.display = "none";
+        left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
+        left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+
+        setTimeout(function() {
+            welcome_msg.style.display = "block";
+        }, 100);   
+        
     }
     else {
         // cancel editing for an existing contact
@@ -358,6 +369,11 @@ function canceledit(){
     //reveal edit and delete buttons after user clicks cancel button
     edit_button.style.display = "block";
     delete_button.style.display = "block";
+
+    //gets rid of fade out for right panel
+    left_panel_cover.style.display = "none";
+    left_panel_cover.style.opacity = "0";
+    left_panel.style.zIndex = "7";
 }
 
 function editcontactinfo(){
@@ -537,8 +553,16 @@ function savecontactinfo(){
             notes_detail.value = contactlist[lastClicked].notes;
         }
         
-       
-        
+        //hide placeholders if user does not input anything in the field
+        if (email_detail.value === "")
+            email_detail.placeholder = "";
+        if (address_detail.value === "")
+            address_detail.placeholder = "";
+        if (color_detail.value === "")
+            color_detail.placeholder = "";
+        if (birthday_detail.value === "")
+            birthday_detail.placeholder = "";
+            
         //hide save and cancel buttons after user clicks save
         save_button.style.display = "none";
         cancel_button.style.display = "none";
@@ -571,6 +595,7 @@ function compare(a, b) {
 }
 
 function addcontactinfo() {
+    // animation
     left_panel.style.animation = 'none';
     left_panel.offsetHeight;
     contact_details.style.display = "none";
@@ -586,14 +611,22 @@ function addcontactinfo() {
     left_panel.style.animation = "swap-leftpanel-slide .4s forwards";
     left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
 
+    // makes sure welcome msg is not displayed
     document.getElementById('welcome').style.display = "none"; 
 
+    // empties the text fields, so user can type in new values
     name_detail.value = "";
     phone_detail.value = "";
     email_detail.value = "";
     address_detail.value = "";
     birthday_detail.value = "";        
     notes_detail.value = "";
+
+    // creates placeholders, so users know what each input field is
+    name_detail.placeholder = "Name";
+    phone_detail.placeholder = "(XXX) XXX - XXXX";
+    email_detail.placeholder = "Otty@Otmail.com";
+    address_detail.placeholder = "1234 The Address";
 
     setTimeout(function() {
         contact_details.style.display = "initial";

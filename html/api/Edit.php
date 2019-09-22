@@ -19,7 +19,7 @@ $notes = $inData["notes"];
 $primStrAddr = $inData["primary_street_addr"];
 $birthday = $inData["birthday"];
 $favorite = $inData["favorite"];
-$contactID = $inData["contact_id"];
+$contactID = "12";
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
@@ -34,7 +34,7 @@ else
 	{
 		//returnWithError("User not logged in.");
 		//return;
-        $user_id = 1;
+		$user_id = 1;
 	}
 	else
 	{
