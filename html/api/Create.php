@@ -19,7 +19,7 @@ $notes = $inData["notes"];
 $primStrAddr = $inData["primary_street_addr"];
 $birthday = $inData["birthday"];
 $favorite = $inData["favorite"];
-$user_id = -1;
+$user_id = 1;
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
@@ -32,8 +32,9 @@ else
 	//Checking for valid session
 	if (!isset($_SESSION["user_id"]))
 	{
-		returnWithError("User not logged in.");
-		return;
+		//returnWithError("User not logged in.");
+		//return;
+        $user_id = 1;
 	}
 	else
 	{
@@ -41,9 +42,7 @@ else
 	}
 
 	//Create the contact with given information
-	$sql = "INSERT INTO `contacts` (name, phone_number, email, fav_color, notes, primary_street_addr, birthday, favorite, user_id) 
-			VALUES ('" . $name . "', '" . $phoneNumber . "', '" . $email . "', '" . $favColor . "', '" . $notes . "', '" . $primStrAddr . "', 
-					'" . $birthday . "', '" . $favorite . "', '" . $user_id . "')";
+	$sql = "INSERT INTO `contacts` (name, phone_number, email, fav_color, notes, primary_street_addr, birthday, favorite, user_id) VALUES ('" . $name . "', '" . $phoneNumber . "', '" . $email . "', '" . $favColor . "', '" . $notes . "', '" . $primStrAddr . "', '" . $birthday . "', '" . $favorite . "', '" . $user_id . "')";
 
 	if ($conn->query($sql) === FALSE)
 	{
