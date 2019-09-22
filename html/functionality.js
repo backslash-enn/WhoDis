@@ -367,6 +367,43 @@ function savecontactinfo(){
         birthday_detail.disabled = true;
         notes_detail.disabled = true;
 
+        //testing
+        var JSONPayload = '{ "name" : "' + name_detail.value + 
+                              '", "fav_color" : "' + color_detail.value + 
+                              '", "notes" : "' + notes_detail.value + 
+                              '", "email" : "' + email_detail.value + 
+                              '", "primary_street_addr" : "' +address_detail.value+ '", "phone_number" : "' + phone_detail.value + 
+                              '", "birthday" : "' + birthday_detail.value +'", "favorite" : "0"}';
+            var url = "https://managerofcontacts.live/api/Create.php";
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+            try {
+
+    //            xhr.send(JSONPayload);
+    //            document.getElementById("address").value = "ttt";
+    //            var jsonObject = JSON.parse( xhr.responseText );
+    //            email_detail.value = "aaa";
+                xhr.onreadystatechange = function()
+                {
+                    if (this.readyState == 4 && this.status == 200)
+                        {
+                            //set some success message
+    //                        document.getElementById("email").value = "bb";
+                            var jsonObject = JSON.parse( xhr.responseText );
+    //                        email_detail.value = "aa";
+                            console.log(jsonObject);
+                        }
+                }
+                xhr.send(JSONPayload);
+
+            }
+            catch (err)
+            {
+                email_detail.value = "error while creating contact";
+            }
+
         var new_contact = {
             name: "", 
             number: "", 
