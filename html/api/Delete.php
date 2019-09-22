@@ -7,12 +7,12 @@ $inData = getRequestInfo();
 //Database parameters
 $db_user = "localhost";
 $db_username = "frontend";
-$db_pw = "simpleyetEffective2019!";
+$db_pw = "simpleyetEffective2019!";	
 $db_name = "user";
 
 //Contact's parameters
 $contactID = $inData["contact_id"];
-$user_id = -1;
+$user_id = 1;
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
@@ -25,8 +25,8 @@ else
 	//Checking for valid sessions
 	if (!isset($_SESSION["user_id"]))
 	{
-		returnWithError("User not logged in.");
-		return;
+		//returnWithError("User not logged in.");
+		//return;
 	}
 	else
 	{
@@ -50,7 +50,7 @@ else
 		}
 		else
 		{
-			returnWithInfo("Successfully deleted contact.")
+			returnWithError("Successfully deleted contact.");
 		}
 	}
 
@@ -71,12 +71,6 @@ function sendAsJSON($obj)
 function returnWithError($err)
 {
 	$retValue = '{"error":"' . $err . '"}';
-	sendAsJson( $retValue );
-}
-
-function returnWithInfo($message)
-{
-	$retValue = '{"message":"' . $message . '"}';				  
 	sendAsJson( $retValue );
 }
 
