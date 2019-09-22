@@ -9,6 +9,8 @@ var contactlist = [
 ]
 //<script language="javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
 
+    var name = "Otto Mobile";
+
     var right_panel;
     var contactitemtemplate;
     var contactletterdivtemplate;
@@ -22,6 +24,7 @@ var contactlist = [
     var register_form;
     var contact_details;
     var welcome_msg;
+    var welcome_name;
     var fav_button;
     var save_button;
     var login_tab;
@@ -60,6 +63,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     fav_button = document.getElementById("favorites");
     save_button = document.getElementById("save");
     welcome_msg = document.getElementById('welcome');
+    welcome_name = document.getElementById('welcomename');
     popup = document.getElementById("popup");
     left_panel = document.getElementById('leftpanel');
     welcome_msg = document.getElementById('welcome');
@@ -130,7 +134,6 @@ function changeLoginTab(newLoginTab) {
     register_form.style.animation = 'none';
     register_form.offsetHeight;
     
-
     if(currentLoginTab == "login") {
         login_tab.style.borderColor = "#ffe760";
         register_tab.style.borderColor = "#232323";
@@ -156,7 +159,21 @@ function getLoggedIn() {
     right_panel.style.display = "initial";
 
     // LOAD CONTACTS FROM DATABASE 
+    // also fill in the name variable here
 
+    welcome_name.innerHTML = name;
+    contactlist.sort(compare);
+    displayContacts("");
+}
+
+function getLoggedOut() {
+    login_panel.style.display = "initial";
+    welcome_msg.style.display = "none";
+    right_panel.style.display = "none";
+
+    name = "";
+
+    contactlist = [];
     displayContacts("");
 }
 
