@@ -600,7 +600,7 @@ h3 input {
     font-weight: 100;
     letter-spacing: 7px;
     resize: none;
-
+    width: 84%;
     transition-duration: 200ms;
 }
 
@@ -625,7 +625,7 @@ h3 input {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    width: 15%;
+    width: 25%;
     resize: none;
 }
 
@@ -638,8 +638,10 @@ h3 input {
     font-size: 30px;
     font-weight: 100;
     letter-spacing: 7px;
-    width: 42%;
+    width: 40%;
     resize: none;
+    overflow: auto;
+    float: right;
 }
 
 .contactdetails h3 {
@@ -677,6 +679,7 @@ h3 input {
     color: whitesmoke;
     font-size:20px;
     resize: none;
+    width: 94.5%;
 }
 
 .edit {

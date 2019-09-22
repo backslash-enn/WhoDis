@@ -277,7 +277,12 @@ function displayContactInfo(b){
         email_detail.value = contactlist[i].email;
         address_detail.value = contactlist[i].address;
         notes_detail.value = contactlist[i].notes;
-        birthday_detail.value = contactlist[i].birthday;
+        if (birthday_detail.value === "") {
+            birthday_detail.style.display = 'none';
+        }
+        else {
+            birthday_detail.value = contactlist[i].birthday;            
+        }
         color_detail.value = contactlist[i].color;
         
         //scaleFontSize('name contact_detailsitem');
@@ -392,6 +397,8 @@ function editcontactinfo(){
     cancel_button.style.display = 'block';
     save_button.style.display = 'block';
     save_button.style.display = "block";
+
+    birthday_detail.style.display = 'block';
 
     left_panel_cover.style.display = "initial";
     left_panel_cover.style.opacity = "0.8";
@@ -616,7 +623,7 @@ function savecontactinfo(){
         if (color_detail.value === "")
             color_detail.placeholder = "";
         if (birthday_detail.value === "")
-            birthday_detail.placeholder = "";
+            birthday_detail.style.display = 'none';
 
         //load right panel with updated contact list
         contactlist.sort(compare);
