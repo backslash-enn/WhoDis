@@ -188,7 +188,7 @@ button:hover {
     clip-path: polygon(0% 0%, 74% 0%, 100% 100%, 28% 100%);
 }
 
-.contactitemfav {
+.contactitemfav{
     position: absolute;
     height: 25%;
     right: .5%;
@@ -271,7 +271,7 @@ button:hover {
 
 .delete {
     float: left;
-    margin-left: 6px;
+    margin-left: 12px;
     background-color: #f03737;
     background-image: url("img/trashicon.png");
 }
@@ -551,7 +551,7 @@ h3 input {
 
 .edit {
     float: left;
-    margin-left: 12px;
+    margin-left: 6px;
     background-color: #ffe760;
     background-image: url("img/editicon.png");
 }
