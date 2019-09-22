@@ -23,6 +23,8 @@ var contactlist = [
     var contact_details;
     var welcome_msg;
     var fav_button;
+    var edit_button;
+    var cancel_button;
     var save_button;
     var login_tab;
     var register_tab;
@@ -58,6 +60,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
     left_panel_cover = document.getElementById('leftpanelcover');
     contact_details = document.getElementById('contactdetails');
     fav_button = document.getElementById("favorites");
+    edit_button = document.getElementById("edit");
+    cancel_button = document.getElementById("cancel");
     save_button = document.getElementById("save");
     welcome_msg = document.getElementById('welcome');
     popup = document.getElementById("popup");
@@ -300,6 +304,12 @@ function deletecontactinfo(b){
 function editcontactinfo(){
 
     var editmode = notes_detail.disabled;
+
+    edit_button.style.display = 'none';
+    deleteicon.style.display = 'none';
+
+    cancel_button.style.display = 'block';
+    save_button.style.display = 'block';
     
     if (editmode){
         phone_detail.disabled = false;
@@ -345,7 +355,7 @@ function editcontactinfo(){
         {
             email_detail.value = "errow while diting";
         }
-        
+
         name_detail.disabled = true;
         phone_detail.disabled = true;
         email_detail.disabled = true;
@@ -432,6 +442,11 @@ function addcontactinfo() {
 
     setTimeout(function() {
         contact_details.style.display = "initial";
+        edit_button.style.display = 'none';
+        deleteicon.style.display = 'none';
+
+        cancel_button.style.display = 'block';
+        save_button.style.display = 'block';
     }, 100);   
 
     name_detail.disabled = false;
