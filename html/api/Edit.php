@@ -19,7 +19,7 @@ $notes = $inData["notes"];
 $primStrAddr = $inData["primary_street_addr"];
 $birthday = $inData["birthday"];
 $favorite = $inData["favorite"];
-$contactID = "12";
+$contactID = $inData["contact_id"];
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
