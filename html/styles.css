@@ -17,7 +17,7 @@ button:hover {
 
 ::selection {
     background-color: #8dd4f1;
-    color: white;
+    color: whitesmoke;
   }
 
 
@@ -27,7 +27,7 @@ button:hover {
     padding-right: 150px;
     padding-bottom: 1.2%;
     float: right;
-    height: 92%;
+    height: 93%;
 }
 
 .logo {
@@ -42,6 +42,7 @@ button:hover {
 }
 
 .smolbutton {
+    position: relative;
     margin-top: 15px;
     width: 31px;
     height: 31px;
@@ -53,6 +54,7 @@ button:hover {
     background-size: 24px;
     background-position: 4px 4px;
     transition-duration: 200ms;
+    z-index: 5;
 }
 
 .add {
@@ -174,7 +176,7 @@ button:hover {
 }
 
 .contactitem button span{
-    color: #ececec;
+    color: whitesmoke;
     font-size: 20px;
     letter-spacing: 3px;
 }
@@ -212,16 +214,28 @@ button:hover {
 
 /* Left Panel */
 .leftpanel {
-    position: absolute;
+    position: fixed;
     left: -1050px;
     transform: translateX(1050px);
-    opacity: 1;    width: 50%;
+    opacity: 1;
+    width: 50%;
     height: 100%;
     background-image: url("img/sidepanel.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
 
     animation-timing-function: cubic-bezier(0, .85, .31, .99);
+}
+
+.leftpanelcover {
+    display: none;
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: .8;
+    transition-duration: 1000ms;
+    z-index: 8;
 }
 
 @keyframes initial-leftpanel-slide {
@@ -268,13 +282,82 @@ button:hover {
     background-color: #aa2020;
 }
 
+.login button {
+    width: 20%;
+    height: 65px;
+    margin-top: 40%; 
+    top: 100px;
+    font-size: 35px;
+    color: whitesmoke;
+    background-color: #232323;
+    outline: none;
+    border-width: 0 0 5px 0;
+    border-style: solid;
+    border-color: #232323;
+    transition-duration: 200ms;
+}
+.login button:hover {
+    background-color: #292929;
+}
+
+.login form {
+    margin-top: 3%;
+    margin-left: 5.5%;
+    font-size: 35px; 
+    font-style: normal;
+    font-weight: 50;
+    color: #232323;
+    font-family: sans-serif;
+    line-height: 265%;
+}
+
+.login form input {
+    font-size: 40px; 
+    width: 40%;
+    padding-left: 1%;
+    font-style: normal;
+    font-weight: 50;
+    background-color: #232323;
+    border: none;
+    color: whitesmoke;
+    font-family: sans-serif;
+    vertical-align: -8%;
+}
+
+.login form .loginbutton {
+    position: relative;
+    font-size: 30px;
+    height: 60px;
+    width: 65.5%;
+}
+
 .welcome {
-    display: block;
     width: 100%;
-    height: 100%;
+    height: 1vh;
     margin-top: 37%;
     margin-left: 3%;
+    margin-bottom: 0%;
     text-align: left;
+}
+
+.welcome button {
+    position: absolute;
+    width: 150px;
+    height: 100px;
+    top: 0;
+
+    background-image: url("img/logouticon.png");
+    background-color: #00000000;
+    background-repeat: no-repeat;
+    background-size: 30%;
+    border: none;
+    outline: none;
+    background-position-y: 47%;
+
+
+    font-size: 175%;
+    color: whitesmoke;
+    padding-left: 5%;
 }
 
 .welcome text:first-child{
@@ -295,13 +378,13 @@ button:hover {
 }
 
 .contactdetails {
+    display: none;
     position: absolute;
     left: 0;
     width: 90%;
     height: 100%;
     opacity: 1;
     transition: 1s opacity;
-    display: none;
 }
 
 .contactdetails h1 {
@@ -321,7 +404,7 @@ button:hover {
     display: inline-block;
     height: 100%;
     left: 0;
-    z-index: 5;
+    z-index: -1;
 }
 .pp-picture {
     left: 3.5%;
@@ -331,9 +414,10 @@ button:hover {
 }
 
 .contactdetails h2 text {
-    position: absolute;
+    position: relative;
     top: 80%;
     left: 40%;
+    width: 200%;
     font-size: 55px; 
     font-style: normal;
     font-weight: 50;
@@ -342,8 +426,6 @@ button:hover {
     letter-spacing: 7px;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 67%;
-    text-overflow: ellipsis;
 }
 
 h2 .contactdetailsitem:disabled {
@@ -362,6 +444,7 @@ h2 input {
     top: 80%;
     left: 40%;
     font-size: 55px; 
+    font-size: 3.5vw;
     font-style: normal;
     font-weight: 50;
     color: #232323;
@@ -370,7 +453,6 @@ h2 input {
     overflow: hidden;
     white-space: nowrap;
     max-width: 67%;
-    text-overflow: ellipsis;
     outline-color: #5da4e1;
 }
 
@@ -422,7 +504,7 @@ h3 input {
     outline-color: #5da4e1;
     border-width: 0px;
     color: whitesmoke;
-    font-size:30px;
+    font-size: 30px;
     font-weight: 100;
     letter-spacing: 7px;
     width: 42%;
@@ -434,6 +516,7 @@ h3 input {
     top: 47.5%;
     letter-spacing: 20px;
     margin-top: 35px;
+    margin-bottom: 0px;
 }
 
 .contactdetails h3 img {
@@ -449,10 +532,6 @@ h3 input {
     font-weight: 100;
     letter-spacing: 7px;
     font-family: sans-serif;
-}
-
-.contactdetails footer {
-    float: left;
 }
 
 .notes {
@@ -480,4 +559,121 @@ h3 input {
 }
 .edit:active {
     background-color: #998b3a;
+}
+
+/*Pop-up Panel*/
+
+.popup {
+    position: relative;
+    display: none;
+    width: 43%;
+    z-index: 10;    
+}
+
+.popup img {
+    width: 100%;
+    height: auto;
+}
+
+.popup .btn1 {
+    position: absolute;
+    top: 55%;
+    left: 36%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #232323;
+    color: whitesmoke;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: 20px;
+    letter-spacing: 7px;
+}
+
+.popup .deletemsg {
+    position: absolute;
+    top: 43%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: sans-serif;
+    color: #232323;
+    font-size: 20px;
+    font-weight: 20px;
+    letter-spacing: 7px;
+    width: 50%;
+}
+
+.popup .pun {
+    position: absolute;
+    top: 67.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: whitesmoke;
+}
+
+.popup .btn2 {
+    position: absolute;
+    top: 55%;
+    left: 63%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #232323;
+    color: whitesmoke;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: 20px;
+    letter-spacing: 7px;
+}
+
+
+
+.popup .btn1:hover{
+    background-color: black;
+}
+
+.popup .btn2:hover{
+    background-color: black;
+}
+
+@keyframes popup-grace-the-room-with-its-presence {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.save {
+    position: absolute;
+    top : 80%;
+    left: 97%;
+    width: 40px;
+    height: 40px;
+    background-size: 32px;
+    background-color: #0d71fc;
+    background-image: url("img/saveicon.png");
+    display: none;
+}
+.save:hover {
+    background-color: #0650b8;
+}
+.save:active {
+    background-color: #054196;
+}
+.save:disable {
+    opacity: 0; 
 }

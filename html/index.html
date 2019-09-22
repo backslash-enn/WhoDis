@@ -9,21 +9,34 @@
     <body>
         <div class="rightpanel">
             <button class="logo" id="logo" alt="logo" onclick="displayWelcomePanel(this)"></button>
-            <button class="smolbutton add" type="button"></button>
+            <button class="smolbutton add" type="button" onclick="
+                addcontactinfo()"></button>
             <button class="smolbutton favorites" id="favorites" type="button" onclick="toggleFavoritesOnly(getElementById('searchbox').value)"></button>
             <input class="searchbox" id="searchbox" type="text" placeholder="Search" spellcheck="false" onchange="displayContacts(this.value)"></input>
             <div class="contactitemlist" id="contactitemlist"> </div>
         </div>
-
+        <div class="leftpanelcover" id="leftpanelcover"></div>
         <div class="leftpanel" id="leftpanel">
+            <!--
+            <div class="login">
+                <button id="logintab" onclick="changeLoginTab('login')">Login</button>
+                <button id="registertab" onclick="changeLoginTab('register')">Register</button>
+                <form method="post">
+                    USERNAME: <input type="text" name="username"><br>
+                    PASSWORD: <input type="password" name="password"><br>
+                    <input class="loginbutton" type="submit" value="LOGIN">
+                </form>
+            </div>
+            -->
             <div class="welcome" id="welcome">
                     <text>Welcome,<br></text>
+                    <button>Logout</button>
                     <text>Emma Otson</text>
             </div>
             <div class="contactdetails" id="contactdetails">
                 <h1>
                     <button class="smolbutton edit" type="button" onclick="editcontactinfo()"></button>
-                    <button class="smolbutton delete" type="button" onclick="deletecontactinfo(this)"></button>  
+                    <button class="smolbutton delete" id="deleteicon" type="button" onclick="deletecontactinfo(this)"></button>  
                 </h1>
                 <h2>
                     <img class="pp-frame pp-picture" src="img/testpp.png">
@@ -34,49 +47,58 @@
                 <h3>
                     <img src="img/phonenumbericon.png">
                     <!--<text>000-005-9709</text>-->
-                    <input disabled class="phone contactdetailsitem" type="tel" id="phone" name="phone" placeholder="XXX-XXX-XXXX"pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                    <input disabled class="phone contactdetailsitem" type="tel" id="phone" name="phone" placeholder="(XXX) XXX-XXXX" pattern="([0-9]{3}) [0-9]{3}-[0-9]{4}" required>
                     <br> <br>
                     <img src="img/emailicon.png">
                     <!--<text>otty@yahoo.com</text>-->
-                    <input disabled class="email contactdetailsitem" type="email" id="email" pattern=".+@yahoo.com">
+                    <input disabled class="email contactdetailsitem" type="email" id="email" placeholder="otty@otmail.com">
                     <br> <br>
                     <img src="img/addressicon.png">
                     <!--<text>1234 Waterbay Creek</text>-->
-                    <input disabled class="address contactdetailsitem" id="address" type="text">
+                    <input disabled class="address contactdetailsitem" id="address" type="text" placeholder="1234 The Street">
                     <br> <br>
                     <img src="img/favcoloricon.png">
                     <!--<text>Orange</text>-->
                     <select disabled class="favcolor contactdetailsitem" id="color">
                         <option value="Red">Red</option>
+                        <option value="Orange">Orange</option>
                         <option value="Pink">Pink</option>
+                        <option value="Purple">Purple</option>
                         <option value="Blue">Blue</option>
                         <option value="Green">Green</option>
                         <option value="Yellow">Yellow</option>
-                        <option value="Orange">Orange</option>
-                        <option value="Purple">Purple</option>
                     </select>
                     <img class="bday contactdetailsitem" src="img/birthdayicon.png">
                     <!--<text>01-01-2001</text>-->
-                    <input disabled="disabled" class="birthday contactdetailsitem" id="birthday" type="date">
+                    <input disabled="disabled" class="birthday contactdetailsitem" placeholder="01/01/2001" id="birthday" type="date">
                     <br> <br>
                     <textarea disabled="disabled" class="notes" id="notes" type="text" placeholder="Notes" spellcheck="true" rows="3" cols="57"></textarea>
-                </h3>
-                <footer>
-                </footer>          
+                    <button class="smolbutton save" id="save" type="button" onclick="savecontactinfo(this)"></button>
+                </h3>       
             </div>
         </div>
-        
+
+        <div class="popup" id="popup">
+            <img src="img/popuppanel.png">
+            <div class="deletemsg">Are you sure you wish to delete this contact from your contact list?</div>
+            <div class="button">
+                <button class="btn1" id="yes" onclick="deletecontactinfo(this)">Of Course!</button>
+                <button class="btn2" id="abort" onclick="deletecontactinfo(this)">No, Abort!</button>
+            </div>
+            <div class="pun">You otter be sure.</div>
+        </div>
+
         <template id="contactletterdivtemplate">
-            <div class="contactletterdiv">
-                <span>H</span>
-            </div>
-        </template>
-        <template id="contactitemtemplate">
-            <div class="contactitem">
-                <button onclick="displayContactInfo(this)"></button>
-                <img class="contactitempp" src="img/test.png" alt="">
-                <img class="contactitemfav" src="img/favoriteiconpink.png" alt="">
-            </div>
-        </template>
+                <div class="contactletterdiv">
+                    <span>H</span>
+                </div>
+            </template>
+            <template id="contactitemtemplate">
+                <div class="contactitem">
+                    <button onclick="displayContactInfo(this)"></button>
+                    <img class="contactitempp" src="img/test.png" alt="">
+                    <img class="contactitemfav" src="img/favoriteiconpink.png" alt="">
+                </div>
+            </template>
     </body>
 </html>
