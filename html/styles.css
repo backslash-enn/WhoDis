@@ -5,6 +5,7 @@ body {
 html, body {
     height: 99%;
     margin: 0;
+    padding: 0;
 }
 
 body {
@@ -12,6 +13,9 @@ body {
 }
 
 button:hover {
+    cursor: pointer;
+}
+.loginbutton:hover {
     cursor: pointer;
 }
 
@@ -231,7 +235,6 @@ button:hover {
     left: -1050px;
     transform: translateX(1050px);
     opacity: 1;
-    width: 50%;
     height: 100%;
     background-image: url("img/sidepanel.png");
     background-size: 100% 100%;
@@ -296,11 +299,15 @@ button:hover {
     background-color: #aa2020;
 }
 
+.login {
+    height: 47.5%;
+}
+
 .login button {
     width: 20%;
-    height: 65px;
-    margin-top: 40%; 
-    top: 100px;
+    height: 8%;
+    position: absolute;
+    top: 38.7%;
     font-size: 35px;
     color: whitesmoke;
     background-color: #232323;
@@ -314,9 +321,13 @@ button:hover {
     background-color: #292929;
 }
 
+.login button.register {
+    left: 20%;
+}
+
 .login form {
     position: absolute;
-    margin-top: 3%;
+    top: 48%;
     margin-left: 5.5%;
     font-size: 35px; 
     font-style: normal;
@@ -324,7 +335,7 @@ button:hover {
     color: #232323;
     font-family: sans-serif;
     line-height: 265%;
-    width: 100%;
+    width: 65%;
 }
 
 .login form.loginform {
@@ -332,7 +343,6 @@ button:hover {
 }
 
 .login form.registerform {
-    width: 100%;
     left: 70%;
     animation-timing-function: cubic-bezier(0, .85, .31, .99);
     opacity: 0;
@@ -345,13 +355,13 @@ button:hover {
     }
     to {
         opacity: 0;
-        transform: translateX(-70%);
+        transform: translateX(-108%);
     }
 }
 @keyframes loginform-in {
     from {
         opacity: 0;
-        transform: translateX(-70%);
+        transform: translateX(-108%);
     }
     to {
         opacity: 1;
@@ -365,13 +375,13 @@ button:hover {
     }
     to {
         opacity: 1;
-        transform: translateX(-70%);
+        transform: translateX(-108%);
     }
 }
 @keyframes registerform-out {
     from {
         opacity: 1;
-        transform: translateX(-70%);
+        transform: translateX(-108%);
     }
     to {
         opacity: 0;
@@ -382,7 +392,7 @@ button:hover {
 
 .login form input {
     font-size: 40px; 
-    width: 40%;
+    width: 99%;
     padding-left: 1%;
     font-style: normal;
     font-weight: 50;
@@ -397,7 +407,7 @@ button:hover {
     position: relative;
     font-size: 30px;
     height: 60px;
-    width: 64%;
+    width: 100%;
 }
 
 .login form text {
