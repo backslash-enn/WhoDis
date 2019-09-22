@@ -13,9 +13,9 @@ $db_name = "user";
 //User parameters
 $username = $inData["username"];
 $password = $inData["password"];
-$user_id = -1;
-$username = "kart";
-$password = "hahah";
+//$user_id = -1;
+//$username = "kart";
+//$password = "hahah";
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
@@ -34,7 +34,13 @@ else
 		//Create new session based on the user's id
 		$user_id = $row["user_id"];
 		$_SESSION["user_id"] = $user_id;
-		returnWithInfo($username, $user_id);
+//		returnWithInfo($username, $user_id);
+        if(isset($_SESSION["user_id"])){
+            returnWithError("Success");
+        }
+        else{
+            returnWithError("Failure");
+        }
 	}
 	else
 	{

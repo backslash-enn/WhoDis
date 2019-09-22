@@ -169,19 +169,138 @@ function changeLoginTab(newLoginTab) {
 }
 
 function getLoggedIn() {
-    login_panel.style.display = "none";
-    welcome_msg.style.display = "block";
-    right_panel.style.display = "initial";
+    var username_login = document.getElementById("username_login");
+    var password_login = document.getElementById("password_login");
+    var error;
+    var JSONPayload =            '{ "username" : "' + username_login.value + 
+                                '", "password" : "' +  password_login.value + '"}';
+            var url = "https://managerofcontacts.live/api/Login.php";
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        
+            try {
+                xhr.onreadystatechange = function()
+                {
+                    if (this.readyState == 4 && this.status == 200)
+                        {
+                            var jsonObject = JSON.parse( xhr.responseText );
+                            console.log("login log: ");
+                            console.log(jsonObject);
+                            error = jsonObject.error;
+                            if(error === "No records found"){
+                                left_panel_cover.style.display = "initial";
+                                left_panel_cover.style.opacity = "0.8";
+                                document.getElementById("deletemsg").textContent = "Invalid Credentials, please login again";
+                                document.getElementById("yes").textContent = "NO";
+                                 document.getElementById("yes").style.visibility = "hidden";
+//                                document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
+                                document.getElementById("abort").textContent = "LoginAgain";
+                                document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+                                popup.style.display = "block";
 
-    // LOAD CONTACTS FROM DATABASE 
-    // also fill in the name variable here
+                                popup.style.animation = 'none';
+                                left_panel.offsetHeight;
 
-    welcome_name.innerHTML = name;
-    contactlist.sort(compare);
-    displayContacts("");
+                                popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
+                                popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+                            }
+                            else{
+                                login_panel.style.display = "none";
+                                welcome_msg.style.display = "block";
+                                right_panel.style.display = "initial";
+
+
+                                welcome_name.innerHTML = name;
+                                contactlist.sort(compare);
+                                displayContacts("");
+                            }
+                            
+                        }
+                }
+                xhr.send(JSONPayload);
+            }
+            catch (err)
+            {
+                email_detail.value = "error while creating contact";
+            }
+    console.log("errrrrror");
+                            console.log(error);
+}
+
+function getRegistered() {
+    var username_register = document.getElementById("username_register");
+    var password_register = document.getElementById("password_register");
+    var name_register = document.getElementById("name_register")
+
+    var JSONPayload =            '{ "username" : "' + username_register.value + 
+                                '", "password" : "' +  password_register.value + 
+                                '", "name" : "' + name_register.value + '"}';
+            var url = "https://managerofcontacts.live/api/Add.php";
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        
+            try {
+                xhr.onreadystatechange = function()
+                {
+                    if (this.readyState == 4 && this.status == 200)
+                        {
+                            var jsonObject = JSON.parse( xhr.responseText );
+                            console.log("register log: ");
+                            console.log(jsonObject);
+                        }
+                }
+                xhr.send(JSONPayload);
+            }
+            catch (err)
+            {
+                email_detail.value = "error while creating contact";
+            }
+    
+    
+
+            setTimeout("location.reload(true);", 5000);
+
+//    login_panel.style.display = "none";
+//    welcome_msg.style.display = "block";
+//    right_panel.style.display = "initial";
+//
+//    // LOAD CONTACTS FROM DATABASE 
+//    // also fill in the name variable here
+//
+//
+//    welcome_name.innerHTML = name;
+//    contactlist.sort(compare);
+//    displayContacts("");
 }
 
 function getLoggedOut() {
+
+            var JSONPayload = '{"message" : "sent"}';
+            var url = "https://managerofcontacts.live/api/Logout.php";
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+            console.log("555");
+            try {
+                xhr.onreadystatechange = function()
+                {
+                    console.log("333");
+                    if (this.readyState == 4 && this.status == 200)
+                        {
+                            var jsonObject = JSON.parse( xhr.responseText );
+                            console.log("logout log: ");
+                            console.log(jsonObject);
+                        }
+                }
+                xhr.send(JSONPayload);
+            }
+            catch (err)
+            {
+                email_detail.value = "error while creating contact";
+            }
+
     login_panel.style.display = "initial";
     welcome_msg.style.display = "none";
     right_panel.style.display = "none";
@@ -314,6 +433,11 @@ function deletecontactinfo(b){
     if (b.id == "delete") {
         left_panel_cover.style.display = "initial";
         left_panel_cover.style.opacity = "0.8";
+        document.getElementById("deletemsg").textContent = "Are you sure you wish to delete this contact from your contact list?";
+        document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
+        document.getElementById("yes").textContent = "Of Course!";
+        document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+        document.getElementById("abort").textContent = "No, Abort!";
         popup.style.display = "block";
 
         popup.style.animation = 'none';
