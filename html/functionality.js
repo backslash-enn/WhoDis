@@ -306,19 +306,15 @@ function savecontactinfo(){
         birthday_detail.value = new_contact.birthday;        
         notes_detail.value = new_contact.notes;
 
-        console.log("name = " + name_detail.value);
-        console.log("phone = " + phone_detail.value);
-        console.log("email = " + email_detail.value);
-        console.log("address = " + address_detail.value);
-        console.log("fav color = " + color_detail.value);
-        console.log("birthday = " + birthday_detail.value); 
-        console.log("notes = " + notes_detail.value);
-
         contactlist.push(new_contact);
         contactlist.sort(compare);
         save_button.style.display = "none";
         displayContacts("");
         search_box.value = "";
+
+        left_panel_cover.style.display = "none";
+        left_panel_cover.style.opacity = "0";
+        left_panel.style.zIndex = "7";
 }
 
 function compare(a, b) {
@@ -328,16 +324,25 @@ function compare(a, b) {
 function addcontactinfo() {
     left_panel.style.animation = 'none';
     left_panel.offsetHeight;
+    contact_details.style.display = "none";
+    document.getElementById("welcome").style.display = "none";
+    left_panel_cover.style.display = "initial";
+    left_panel_cover.style.opacity = "0.8";
+    left_panel.style.zIndex = "8";
 
     left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
     left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
-
+      
     name_detail.value = "";
     phone_detail.value = "";
     email_detail.value = "";
     address_detail.value = "";
     birthday_detail.value = "";        
     notes_detail.value = "";
+
+    setTimeout(function() {
+        contact_details.style.display = "initial";
+    }, 100);   
 
     name_detail.disabled = false;
     phone_detail.disabled = false;
@@ -349,11 +354,12 @@ function addcontactinfo() {
     //disable the right panel so changes can not be made to other contacts 
     //change visibility of the save btn to true 
     //pls do these 
+
+
     
     save_button.style.display = 'block';
    /*
     document.getElementById("rightpanel").disabled = true;    */
-    console.log("hello");
     setTimeout(function() {
         contact_details.style.display = "initial";
         name_detail.defaultValue;
