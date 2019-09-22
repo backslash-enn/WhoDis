@@ -21,6 +21,7 @@ else
     {
 //        errorReturn("User not logged in!");
         $session_id = 1;
+//        return;
     }
     else
     {
@@ -38,12 +39,14 @@ else
     $name_given = $inData["search"];
     if (strlen($name_given) <= 0)
     {
-        $query = "SELECT * from `contacts` where user_id = ".$session_id;
+        $query = 'SELECT * from `contacts` where user_id = "1"';
+//        $query = "SELECT * from `contacts` where user_id = ".$session_id;
     }
     else
     {
     //getting the results from searching
-    $query = "SELECT * from `contacts` where user_id = ".$session_id." AND (first_name LIKE '%".$inData["search"]."%' OR last_name LIKE '%".$inData["search"]."%' OR fullname LIKE '%".$inData["search"]."%')";
+//    $query = "SELECT * from `contacts` where user_id = ".$session_id." AND name LIKE '%".$inData["search"]."%'";
+    $query = "SELECT * from `contacts` where user_id = 1 AND name LIKE '%".$inData["search"]."%'";
     }
     $result = $connection->query($query);
     if($result->num_rows > 0)
@@ -55,7 +58,7 @@ else
                 $searchResults .= ",";
             }
             $searchCount++;
-            $searchResults .= '"' . $row["first_name"] . '", "' . $row["last_name"] . '", "' . $row["fav_color"] . '", "' . $row["phone_number"] . '", "' . $row["birthday"] . '", "' . $row["notes"] . '", "' . $row["parimary_street_addr"] . '", "' . $row["second_street_addr"] . '", "' . $row["city"] . '", "' . $row["state"] . '", "' . $row["country"] . '", "' . $row["zip"] . '", "' . $row["favorite"] . '"';
+            $searchResults .= '{"name" : "' . $row["name"] . '", "fav_color" : "' . $row["fav_color"] . '", "phone_number" : "' . $row["phone_number"] . '", "email" : "' . $row["email"] . '","birthday" : "' . $row["birthday"] . '", "notes" : "' . $row["notes"] . '", "primary_street_addr" : "' . $row["primary_street_addr"] . '", "contact_id" : "' . $row["contact_id"] . '", "favorite" : "' . $row["favorite"] . '"}';
         }
     }
     else

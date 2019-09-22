@@ -14,6 +14,8 @@ $db_name = "user";
 $username = $inData["username"];
 $password = $inData["password"];
 $user_id = -1;
+$username = "kart";
+$password = "hahah";
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
