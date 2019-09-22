@@ -53,7 +53,7 @@ var contactlist = [];
 
 // Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
-
+    // Get document elements
     right_panel = document.getElementById('rightpanel');
     search_box = document.getElementById("searchbox");
     contactitemtemplate = document.getElementById("contactitemtemplate");
@@ -88,6 +88,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     login_tab = document.getElementById('logintab');
     register_tab = document.getElementById('registertab');
 
+    // This responsive design function is called every time the screen is resized, but must also be called initially
+    adaptToScreen();
+
+    // Initialize login page
     changeLoginTab("login");
 }, false);
 
@@ -573,8 +577,16 @@ function savecontactinfo(){
             
         }
         
-       
-        
+        //hide placeholders if user does not input anything in the field
+        if (email_detail.value === "")
+            email_detail.placeholder = "";
+        if (address_detail.value === "")
+            address_detail.placeholder = "";
+        if (color_detail.value === "")
+            color_detail.placeholder = "";
+        if (birthday_detail.value === "")
+            birthday_detail.placeholder = "";
+            
         //hide save and cancel buttons after user clicks save
         save_button.style.display = "none";
         cancel_button.style.display = "none";
@@ -584,13 +596,22 @@ function savecontactinfo(){
         delete_button.style.display = "block";
 
         //load right panel with updated contact list
-        contactlist.sort(compare);
-        displayContacts("");
-        search_box.value = "";
+        if (name_detail.value !== "" && phone_detail.value !== "") {
+            contactlist.sort(compare);
+            displayContacts("");
+            search_box.value = "";            
+        }
+        else {
+            document.getElementById('name_errormsg').style.display = 'block';
+            document.getElementById('phone_errormsg').style.display = 'block';
+        }
+
+        console.log("end of save");
 
         left_panel_cover.style.display = "none";
         left_panel_cover.style.opacity = "0";
         left_panel.style.zIndex = "7";
+        document.getElementById("edit").style.display = "block";
 }
 
 function compare(a, b) {
@@ -598,6 +619,7 @@ function compare(a, b) {
 }
 
 function addcontactinfo() {
+    // animation
     left_panel.style.animation = 'none';
     left_panel.offsetHeight;
     contact_details.style.display = "none";
@@ -613,14 +635,22 @@ function addcontactinfo() {
     left_panel.style.animation = "swap-leftpanel-slide .4s forwards";
     left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
 
+    // makes sure welcome msg is not displayed
     document.getElementById('welcome').style.display = "none"; 
 
+    // empties the text fields, so user can type in new values
     name_detail.value = "";
     phone_detail.value = "";
     email_detail.value = "";
     address_detail.value = "";
     birthday_detail.value = "";        
     notes_detail.value = "";
+
+    // creates placeholders, so users know what each input field is
+    name_detail.placeholder = "Name";
+    phone_detail.placeholder = "(XXX) XXX - XXXX";
+    email_detail.placeholder = "Otty@Otmail.com";
+    address_detail.placeholder = "1234 The Address";
 
     setTimeout(function() {
         contact_details.style.display = "initial";
@@ -658,4 +688,9 @@ function addcontactinfo() {
         notes_detail.defaultValue;
 
     }, 100);    
+}
+
+function adaptToScreen() {
+    // Make left panel width proportional to height
+    left_panel.style.width = left_panel.offsetHeight.toString() + "px";
 }
