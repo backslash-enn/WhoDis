@@ -168,9 +168,15 @@ button:hover {
     text-align: left;
     font-size:40px;
     color: #319626;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
     line-height: 25px;
     transition-duration: 200ms;
 }
+
 .contactitem .base:focus {
     background-image: url("img/contactpanelselected.png");
     box-shadow: 0 0 8px 2px #5da4e1;

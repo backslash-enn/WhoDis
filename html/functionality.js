@@ -29,6 +29,7 @@ var contactlist = [
     var edit_button;
     var cancel_button;
     var save_button;
+    var delete_button;
     var login_tab;
     var register_tab;
     var popup;
@@ -68,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     edit_button = document.getElementById("edit");
     cancel_button = document.getElementById("cancel");
     save_button = document.getElementById("save");
+    delete_button = document.getElementById("delete");
     welcome_msg = document.getElementById('welcome');
     welcome_name = document.getElementById('welcomename');
     popup = document.getElementById("popup");
@@ -300,7 +302,7 @@ function displayWelcomePanel(b) {
 }
 
 function deletecontactinfo(b){
-    if (b.id == "deleteicon") {
+    if (b.id == "delete") {
         left_panel_cover.style.display = "initial";
         left_panel_cover.style.opacity = "0.8";
         popup.style.display = "block";
@@ -322,12 +324,48 @@ function deletecontactinfo(b){
 
 }
 
+function canceledit(){
+    if (lastClicked === -1){
+        // cancel editing for a new contact
+        // does not create new contact, and instead goes to welcome page
+    }
+    else {
+        // cancel editing for an existing contact
+        name_detail.value = contactlist[lastClicked].name;
+        phone_detail.value = contactlist[lastClicked].number;
+        email_detail.value = contactlist[lastClicked].email;
+        address_detail.value = contactlist[lastClicked].address;
+        color_detail.value = contactlist[lastClicked].color;
+        birthday_detail.value = contactlist[lastClicked].birthday;        
+        notes_detail.value = contactlist[lastClicked].notes;
+    
+    }
+
+    //disables text fields, so user cannot keep editing them
+    name_detail.disabled = true;
+    phone_detail.disabled = true;
+    email_detail.disabled = true;
+    address_detail.disabled = true;
+    color_detail.disabled = true;
+    birthday_detail.disabled = true;
+    notes_detail.disabled = true;
+    save_button.disabled = false;
+
+    //hide save and cancel buttons after user clicks cancel button
+    save_button.style.display = "none";
+    cancel_button.style.display = "none";
+
+    //reveal edit and delete buttons after user clicks cancel button
+    edit_button.style.display = "block";
+    delete_button.style.display = "block";
+}
+
 function editcontactinfo(){
 
     var editmode = notes_detail.disabled;
 
     edit_button.style.display = 'none';
-    deleteicon.style.display = 'none';
+    delete_button.style.display = 'none';
 
     cancel_button.style.display = 'block';
     save_button.style.display = 'block';
@@ -499,17 +537,23 @@ function savecontactinfo(){
         }
         
        
-        contactlist.sort(compare);
+        
+        //hide save and cancel buttons after user clicks save
         save_button.style.display = "none";
+        cancel_button.style.display = "none";
+
+        //reveal edit and delete buttons after user clicks save
+        edit_button.style.display = "block";
+        delete_button.style.display = "block";
+
+        //load right panel with updated contact list
+        contactlist.sort(compare);
         displayContacts("");
         search_box.value = "";
-
-        console.log("end of save");
 
         left_panel_cover.style.display = "none";
         left_panel_cover.style.opacity = "0";
         left_panel.style.zIndex = "7";
-        document.getElementById("editicon").style.display = "block";
 }
 
 function compare(a, b) {
@@ -523,7 +567,7 @@ function addcontactinfo() {
     lastClicked = -1;
 
     document.getElementById("welcome").style.display = "none";
-    document.getElementById("editicon").style.display = "none";
+    document.getElementById("edit").style.display = "none";
 
     left_panel_cover.style.display = "initial";
     left_panel_cover.style.opacity = "0.8";
@@ -544,7 +588,7 @@ function addcontactinfo() {
     setTimeout(function() {
         contact_details.style.display = "initial";
         edit_button.style.display = 'none';
-        deleteicon.style.display = 'none';
+        delete_button.style.display = 'none';
 
         cancel_button.style.display = 'block';
         save_button.style.display = 'block';
