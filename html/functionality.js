@@ -7,13 +7,15 @@ var contactlist = [
 ]
 //<script language="javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
 
+    var search_box;
+    var contactitemtemplate;
+    var contactletterdivtemplate;
+    var itemlist;
+
     var left_panel;
     var left_panel_cover;
     var contact_details;
     var welcome_msg;
-    var itemlist;
-    var contactitemtemplate;
-    var contactletterdivtemplate;
     var fav_button;
     var save_button;
     var login_tab;
@@ -34,6 +36,7 @@ var contactlist = [
 
 // Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
+    search_box = document.getElementById("searchbox");
     contactitemtemplate = document.getElementById("contactitemtemplate");
     contactletterdivtemplate = document.getElementById("contactletterdivtemplate");
     itemlist = document.getElementById("contactitemlist");
@@ -219,16 +222,7 @@ function editcontactinfo(){
         name_detail.disabled = false;
         notes_detail.disabled = false;
     }
-    else{
-        
-        var name = name_detail.value;
-        var phone = phone_detail.value;
-        var email = email_detail.value;
-        var address = address_detail.value;
-        var color = color_detail.value;
-        var birthday = birthday_detail.value;
-        var notes = notes_detail.value;
-        
+    else{        
         var JSONPayload = '{ "name" : "' + name_detail.value + 
                           '", "fav_color" : "' + color_detail.value + 
                           '", "notes" : "' + notes_detail.value + 
@@ -286,24 +280,49 @@ function savecontactinfo(){
         notes_detail.disabled = true;
 
         var new_contact = {
-            name: "Cat", 
-            number: "(786) 009 - 2089", 
-            email: "familyfriendly@ottmail.com", 
-            color: "pink", 
-            address: "4321 Waterbay Creek", 
+            name: "", 
+            number: "", 
+            email: "", 
+            color: "", 
+            address: "", 
             notes: "", 
+            birthday: "",
             favorite: false
         };
 
+        new_contact.name = document.getElementById("name").value;
+        new_contact.number = document.getElementById("phone").value;
+        new_contact.email = document.getElementById("email").value;
+        new_contact.address = document.getElementById("address").value;
+        new_contact.color = document.getElementById("color").value;
+        new_contact.birthday = document.getElementById("birthday").value;
+        new_contact.notes = document.getElementById("notes").value;
+        
+        name_detail.value = new_contact.name;
+        phone_detail.value = new_contact.number;
+        email_detail.value = new_contact.email;
+        address_detail.value = new_contact.address;
+        color_detail.value = new_contact.color;
+        birthday_detail.value = new_contact.birthday;        
+        notes_detail.value = new_contact.notes;
+
+        console.log("name = " + name_detail.value);
+        console.log("phone = " + phone_detail.value);
+        console.log("email = " + email_detail.value);
+        console.log("address = " + address_detail.value);
+        console.log("fav color = " + color_detail.value);
+        console.log("birthday = " + birthday_detail.value); 
+        console.log("notes = " + notes_detail.value);
+
         contactlist.push(new_contact);
-        name_detail.value = contactlist[i].name;
-        phone_detail.value = contactlist[i].number;
-        email_detail.value = contactlist[i].email;
-        address_detail.value = contactlist[i].address;
-        color_detail.value = contactlist[i].color;
-        birthday_detail.value = contactlist[i].birthday;        
-        notes_detail.value = contactlist[i].notes;
+        contactlist.sort(compare);
         save_button.style.display = "none";
+        displayContacts("");
+        search_box.value = "";
+}
+
+function compare(a, b) {
+    return a.name.localeCompare(b.name);
 }
 
 function addcontactinfo() {
