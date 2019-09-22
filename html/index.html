@@ -40,8 +40,8 @@
             </div>
             <div class="contactdetails" id="contactdetails">
                 <h1>
-                    <button class="smolbutton edit" type="button" onclick="editcontactinfo()"></button>
                     <button class="smolbutton delete" id="deleteicon" type="button" onclick="deletecontactinfo(this)"></button>  
+                    <button class="smolbutton edit" type="button" onclick="editcontactinfo()"></button>
                 </h1>
                 <h2>
                     <img class="pp-frame pp-picture" src="img/testpp.png">
@@ -52,15 +52,15 @@
                 <h3>
                     <img src="img/phonenumbericon.png">
                     <!--<text>000-005-9709</text>-->
-                    <input disabled class="phone contactdetailsitem" type="tel" id="phone" name="phone" placeholder="XXX-XXX-XXXX"pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                    <input disabled class="phone contactdetailsitem" type="tel" id="phone" name="phone" placeholder="(XXX) XXX-XXXX" pattern="([0-9]{3}) [0-9]{3}-[0-9]{4}" required>
                     <br> <br>
                     <img src="img/emailicon.png">
                     <!--<text>otty@yahoo.com</text>-->
-                    <input disabled class="email contactdetailsitem" type="email" id="email" pattern=".+@yahoo.com">
+                    <input disabled class="email contactdetailsitem" type="email" id="email" placeholder="otty@otmail.com">
                     <br> <br>
                     <img src="img/addressicon.png">
                     <!--<text>1234 Waterbay Creek</text>-->
-                    <input disabled class="address contactdetailsitem" id="address" type="text">
+                    <input disabled class="address contactdetailsitem" id="address" type="text" placeholder="1234 The Street">
                     <br> <br>
                     <img src="img/favcoloricon.png">
                     <!--<text>Orange</text>-->
@@ -70,13 +70,12 @@
                         <option value="Pink">Pink</option>
                         <option value="Purple">Purple</option>
                         <option value="Blue">Blue</option>
-                        <option value="Teal">Teal</option>
                         <option value="Green">Green</option>
                         <option value="Yellow">Yellow</option>
                     </select>
                     <img class="bday contactdetailsitem" src="img/birthdayicon.png">
                     <!--<text>01-01-2001</text>-->
-                    <input disabled="disabled" class="birthday contactdetailsitem" id="birthday" type="date">
+                    <input disabled="disabled" class="birthday contactdetailsitem" placeholder="01/01/2001" id="birthday" type="date">
                     <br> <br>
                     <textarea disabled="disabled" class="notes" id="notes" type="text" placeholder="Notes" spellcheck="true" rows="3" cols="57"></textarea>
                     <button class="smolbutton save" id="save" type="button" onclick="savecontactinfo(this)"></button>
