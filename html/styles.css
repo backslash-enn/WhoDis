@@ -28,7 +28,7 @@ button:hover {
 /* Right Panel */
 .rightpanel {
     padding-top: 50px;
-    padding-right: 150px;
+    padding-right: 8%;
     padding-bottom: 1.2%;
     float: right;
     height: 93%;
@@ -67,6 +67,7 @@ button:hover {
     clear: right;
     background-color: #46cd38;
     background-image: url("img/plusicon.png");
+    z-index: 0;
 }
 .add:hover {
     background-color: #3db431;
@@ -80,6 +81,7 @@ button:hover {
     margin-right: 6px;
     background-color: #f591ef;
     background-image: url("img/favoriteiconwhite.png");
+    z-index: 0;
 }
 .favorites:hover {
     background-color: #dc82d6;
@@ -310,7 +312,7 @@ button:hover {
     top: 38.7%;
     font-size: 32px;
     color: whitesmoke;
-    background-color: #232323;
+    background-color: #23232300;
     outline: none;
     border-width: 0 0 5px 0;
     border-style: solid;
@@ -318,7 +320,7 @@ button:hover {
     transition-duration: 200ms;
 }
 .login button:hover {
-    background-color: #292929;
+    background-color: #292929ff;
 }
 
 .login button.register {
@@ -424,11 +426,7 @@ button:hover {
 .welcome {
     display: none;
     width: 100%;
-    height: 1vh;
-    margin-top: 37%;
-    margin-left: 3%;
-    margin-bottom: 0%;
-    text-align: left;
+    height: 100%;
 }
 
 .welcome button {
@@ -436,6 +434,7 @@ button:hover {
     width: 150px;
     height: 100px;
     top: 0;
+    left: 3%;
 
     background-image: url("img/logouticon.png");
     background-color: #00000000;
@@ -453,20 +452,25 @@ button:hover {
 
 
 .welcome text:first-child{
+    position: absolute;
+    top: 40%;
+    left: 3%;
     color: whitesmoke;
     font-family: sans-serif;
-    font-size: 80px;
+    font-size: 5rem;
     font-weight: 30;
-    letter-spacing: 10px;
+    letter-spacing: 5%;
+    transform: translateY(-50%);
 }
 
 .welcome text:last-child{
+    position: absolute;
+    top: 49%;
+    left: 3%;
     color: #232323;
     font-family: sans-serif;
     font-size: 80px;
     font-weight: 30;
-    letter-spacing: 7px;
-    line-height: 150%;
 }
 
 .contactdetails {
@@ -600,7 +604,7 @@ h3 input {
     font-weight: 100;
     letter-spacing: 7px;
     resize: none;
-
+    width: 84%;
     transition-duration: 200ms;
 }
 
@@ -625,7 +629,7 @@ h3 input {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    width: 15%;
+    width: 25%;
     resize: none;
 }
 
@@ -638,12 +642,15 @@ h3 input {
     font-size: 30px;
     font-weight: 100;
     letter-spacing: 7px;
-    width: 42%;
+    width: 40%;
     resize: none;
+    overflow: auto;
+    float: right;
 }
 
 .contactdetails h3 {
     position: absolute;
+    width: 88%;
     top: 47.5%;
     letter-spacing: 20px;
     margin-top: 2%;
@@ -651,10 +658,9 @@ h3 input {
 }
 
 .contactdetails h3 img {
-    margin-left: 20px;
-    margin-right: 5px;
-    width: 40px;
-    height: 40px;
+    margin-left: 3%;
+    margin-right: 0%;
+    width: 6%;
     vertical-align: -10px; 
 }
 
@@ -677,6 +683,7 @@ h3 input {
     color: whitesmoke;
     font-size:20px;
     resize: none;
+    width: 94.5%;
 }
 
 .edit {
