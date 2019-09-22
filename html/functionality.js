@@ -42,6 +42,7 @@ var contactlist = [];
     var color_detail;
     var birthday_detail;
     var notes_detail;
+    var contact_id;
 
     var favoritesOnly = false;
     var firstLogin = true;
@@ -84,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     color_detail = document.getElementById("color");
     birthday_detail = document.getElementById("birthday");
     notes_detail = document.getElementById('notes');
+    contact_id = document.getElementById('contact_id');
 
     login_tab = document.getElementById('logintab');
     register_tab = document.getElementById('registertab');
@@ -277,6 +279,7 @@ function displayContactInfo(b){
         email_detail.value = contactlist[i].email;
         address_detail.value = contactlist[i].address;
         notes_detail.value = contactlist[i].notes;
+        contact_id.value = contactlist[i].contact_id;
         birthday_detail.value = contactlist[i].birthday;
         color_detail.value = contactlist[i].color;
         
@@ -325,6 +328,30 @@ function deletecontactinfo(b){
         left_panel_cover.style.opacity = "0";
     }
     else if (b.id == "yes") {
+
+        var JSONPayload = '{ "contact_id" : "' + contact_id.value + '"}';
+        var url = "https://managerofcontacts.live/api/Delete.php";
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        
+        try {
+            xhr.onreadystatechange = function()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                    {
+                        var jsonObject = JSON.parse( xhr.responseText );
+                        console.log("delete log: ");
+                        console.log(jsonObject);
+                    }
+            }
+            xhr.send(JSONPayload);
+        }
+        catch (err)
+        {
+            email_detail.value = "error while deleting";
+        }
+
         setTimeout("location.reload(true);", 250);
     }
 
@@ -344,6 +371,7 @@ function canceledit(){
         color_detail.value = contactlist[lastClicked].color;
         birthday_detail.value = contactlist[lastClicked].birthday;        
         notes_detail.value = contactlist[lastClicked].notes;
+        contact_id.value = contactlist[lastClicked].contact_id;
     
     }
 
@@ -394,7 +422,7 @@ function editcontactinfo(){
         notes_detail.disabled = false;
     }
     else{        
-        console.log("cc: " + contactlist[lastClicked].contact_id);
+//        console.log("cc: " + contactlist[lastClicked].contact_id);
 //        var JSONPayload = '{ "name" : "' + name_detail.value + 
 //                          '", "fav_color" : "' + color_detail.value + 
 //                          '", "notes" : "' + notes_detail.value + 
@@ -481,7 +509,7 @@ function savecontactinfo(){
                             //set some success message
 //                          document.getElementById("email").value = "bb";
                             var jsonObject = JSON.parse( xhr.responseText );
-//                          email_detail.value = "aa";
+                            console.log("create log: ");
                             console.log(jsonObject);
                         }
                 }
@@ -533,6 +561,7 @@ function savecontactinfo(){
             contactlist[lastClicked].color = document.getElementById("color").value;
             contactlist[lastClicked].birthday = document.getElementById("birthday").value;
             contactlist[lastClicked].notes = document.getElementById("notes").value;
+            contactlist[lastClicked].contact_id = document.getElementById("contact_id").value;
             
             name_detail.value = contactlist[lastClicked].name;
             phone_detail.value = contactlist[lastClicked].number;
@@ -541,6 +570,7 @@ function savecontactinfo(){
             color_detail.value = contactlist[lastClicked].color;
             birthday_detail.value = contactlist[lastClicked].birthday;        
             notes_detail.value = contactlist[lastClicked].notes;
+            contact_id.value = contactlist[lastClicked].contact_id;
             
             
             // Save changes for a new Contact
@@ -550,7 +580,7 @@ function savecontactinfo(){
                           '", "email" : "' + email_detail.value + 
                           '", "primary_street_addr" : "' + address_detail.value + '", "phone_number" : "' + phone_detail.value + 
                           '", "birthday" : "' + birthday_detail.value +
-                          '", "favorite" : "1", "contact_id" : "12" }';
+                          '", "favorite" : "1", "contact_id" : "' + contact_id.value + '"}';
             var url = "https://managerofcontacts.live/api/Edit.php";
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url, true);
@@ -563,7 +593,7 @@ function savecontactinfo(){
                         {
                             var jsonObject = JSON.parse( xhr.responseText );
                             console.log("save log:");
-                            console.log(jsonObject);
+                            console.log(JSONPayload);
                         }
                 }
                 xhr.send(JSONPayload);
@@ -645,6 +675,7 @@ function addcontactinfo() {
     address_detail.value = "";
     birthday_detail.value = "";        
     notes_detail.value = "";
+    contact_id.value = "";
 
     // creates placeholders, so users know what each input field is
     name_detail.placeholder = "Name";
@@ -686,6 +717,7 @@ function addcontactinfo() {
         address_detail.defaultValue;
         birthday_detail.defaultValue;        
         notes_detail.defaultValue;
+        contact_id.value = "-1";
 
     }, 100);    
 }
