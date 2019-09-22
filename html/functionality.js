@@ -3,7 +3,7 @@ var contactlist = [
     {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "Red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false, contact_id: 1001, birthday: ""},
     {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "Orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false, contact_id: 1002, birthday: ""},
     {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1003, birthday: ""},
-    {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "Blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true, contact_id: 1004, birthday: ""}
+    {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "Blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true, contact_id: 1004, birthday: ""},
     {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1005, birthday: ""},
     {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1006, birthday: ""}
 ]
@@ -38,7 +38,6 @@ var contactlist = [
     var color_detail;
     var birthday_detail;
     var notes_detail;
-    var contact_id_detail;
 
     var favoritesOnly = false;
     var firstLogin = true;
@@ -78,8 +77,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     color_detail = document.getElementById("color");
     birthday_detail = document.getElementById("birthday");
     notes_detail = document.getElementById('notes');
-    contact_id_detail = document.getElementById('contact_id');
-
 
     login_tab = document.getElementById('logintab');
     register_tab = document.getElementById('registertab');
@@ -270,9 +267,7 @@ function displayContactInfo(b){
         notes_detail.value = contactlist[i].notes;
         birthday_detail.value = contactlist[i].birthday;
         color_detail.value = contactlist[i].color;
-        contact_id_detail.value = contactlist[i].contact_id;
         
-
         //scaleFontSize('name contact_detailsitem');
     }, 100); 
 }
@@ -345,14 +340,14 @@ function editcontactinfo(){
         notes_detail.disabled = false;
     }
     else{        
-        console.log("cc: " + contact_id_detail.value);
+        console.log("cc: " + contactlist[lastClicked].contact_id);
         var JSONPayload = '{ "name" : "' + name_detail.value + 
                           '", "fav_color" : "' + color_detail.value + 
                           '", "notes" : "' + notes_detail.value + 
                           '", "email" : "' + email_detail.value + 
                           '", "primary_street_addr" : "' + address_detail.value + '", "phone_number" : "' + phone_detail.value + 
                           '", "birthday" : "' + birthday_detail.value +
-                          '", "favorite" : "1", "contact_id" : "' + contact_id_detail.value + '" }';
+                          '", "favorite" : "1", "contact_id" : "' + contactlist[lastClicked].contact_id + '" }';
         var url = "https://managerofcontacts.live/api/Edit.php";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
@@ -409,81 +404,69 @@ function savecontactinfo(){
             // Save changes for a new Contact
             
             //testing
-    var JSONPayload = '{ "name" : "' + name_detail.value + 
-                          '", "fav_color" : "' + color_detail.value + 
-                          '", "notes" : "' + notes_detail.value + 
-                          '", "email" : "' + email_detail.value + 
-                          '", "primary_street_addr" : "", "phone_number" : "' + phone_detail.value + 
-                          '", "birthday" : "' + birthday_detail.value +'", "favorite" : "0"}';
-        var url = "https://managerofcontacts.live/api/Create.php";
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+            var JSONPayload = '{ "name" : "' + name_detail.value + 
+                                '", "fav_color" : "' + color_detail.value + 
+                                '", "notes" : "' + notes_detail.value + 
+                                '", "email" : "' + email_detail.value + 
+                                '", "primary_street_addr" : "", "phone_number" : "' + phone_detail.value + 
+                                '", "birthday" : "' + birthday_detail.value +'", "favorite" : "0"}';
+            var url = "https://managerofcontacts.live/api/Create.php";
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
         
-        try {
-            
-//            xhr.send(JSONPayload);
-//            document.getElementById("address").value = "ttt";
-//            var jsonObject = JSON.parse( xhr.responseText );
-//            email_detail.value = "aaa";
-            xhr.onreadystatechange = function()
-            {
-                if (this.readyState == 4 && this.status == 200)
-                    {
-                        //set some success message
-//                        document.getElementById("email").value = "bb";
-                        var jsonObject = JSON.parse( xhr.responseText );
-//                        email_detail.value = "aa";
-                        console.log(jsonObject);
-                    }
+            try {
+//              xhr.send(JSONPayload);
+//              document.getElementById("address").value = "ttt";
+//              var jsonObject = JSON.parse( xhr.responseText )
+//              email_detail.value = "aaa";
+                xhr.onreadystatechange = function()
+                {
+                    if (this.readyState == 4 && this.status == 200)
+                        {
+                            //set some success message
+//                          document.getElementById("email").value = "bb";
+                            var jsonObject = JSON.parse( xhr.responseText );
+//                          email_detail.value = "aa";
+                            console.log(jsonObject);
+                        }
+                }
+                xhr.send(JSONPayload);
             }
-            xhr.send(JSONPayload);
-            
-        }
-        catch (err)
-        {
-            email_detail.value = "error while creating contact";
-        }
-        console.log("birthday = " + birthday_detail.value); 
-            name: "", 
-            number: "", 
-            email: "", 
-            color: "", 
-            address: "", 
-            notes: "", 
-            birthday: "",
-            contact_id: ""
-            favorite: false
+            catch (err)
+            {
+                email_detail.value = "error while creating contact";
+            }
+
+            new_contact = {
+                name: "", 
+                number: "", 
+                email: "", 
+                color: "", 
+                address: "", 
+                notes: "", 
+                birthday: "",
+                contact_id: "",
+                favorite: false
             };
 
-        new_contact.name = document.getElementById("name").value;
-        new_contact.number = document.getElementById("phone").value;
-        new_contact.email = document.getElementById("email").value;
-        new_contact.address = document.getElementById("address").value;
-        new_contact.color = document.getElementById("color").value;
-        new_contact.birthday = document.getElementById("birthday").value;
-        new_contact.notes = document.getElementById("notes").value;
-        new_contact.contact_id = document.getElementById("contact_id").value;
-        
-         name_detail.value = new_contact.name;
-        phone_detail.value = new_contact.number;
-        email_detail.value = new_contact.email;
-        address_detail.value = new_contact.address;
-        color_detail.value = new_contact.color;
-        birthday_detail.value = new_contact.birthday;        
-        notes_detail.value = new_contact.notes;
-        contact_id_detail.value = new_contact.contact_id;
+            new_contact.name = document.getElementById("name").value;
+            new_contact.number = document.getElementById("phone").value;
+            new_contact.email = document.getElementById("email").value;
+            new_contact.address = document.getElementById("address").value;
+            new_contact.color = document.getElementById("color").value;
+            new_contact.birthday = document.getElementById("birthday").value;
+            new_contact.notes = document.getElementById("notes").value;
+            
+            name_detail.value = new_contact.name;
+            phone_detail.value = new_contact.number;
+            email_detail.value = new_contact.email;
+            address_detail.value = new_contact.address;
+            color_detail.value = new_contact.color;
+            birthday_detail.value = new_contact.birthday;        
+            notes_detail.value = new_contact.notes;
 
-        console.log("name = " + name_detail.value);
-        console.log("phone = " + phone_detail.value);
-        console.log("email = " + email_detail.value);
-        console.log("address = " + address_detail.value);
-        console.log("fav color = " + color_detail.value);
-        console.log("birthday = " + birthday_detail.value); 
-        console.log("notes = " + notes_detail.value);
-        console.log("cotact_id = " + contact_id_detail.value);
-
-        contactlist.push(new_contact);
+            contactlist.push(new_contact);
         }
         else {
             console.log("existing contact");
@@ -547,7 +530,6 @@ function addcontactinfo() {
     address_detail.value = "";
     birthday_detail.value = "";        
     notes_detail.value = "";
-    contact_id_detail.value = "";
 
     setTimeout(function() {
         contact_details.style.display = "initial";
@@ -565,14 +547,11 @@ function addcontactinfo() {
     //pls do these 
 
 
-    
     save_button.style.display = 'block';
-   /*
-    document.getElementById("rightpanel").disabled = true;*/
 
     console.log("hello");
 
-    document.getElementById("rightpanel").disabled = true;    */
+    document.getElementById("rightpanel").disabled = true;
     setTimeout(function() {
         contact_details.style.display = "initial";
         name_detail.defaultValue;
