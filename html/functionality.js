@@ -1,11 +1,11 @@
 var contactlist = [
-    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "pink", address: "4321 Waterbay Creek", notes: "", favorite: true},
-    {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false},
-    {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false},
-    {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false}
+    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "Pink", address: "4321 Waterbay Creek", notes: "", favorite: true, birthday: ""},
+    {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "Red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false, birthday: ""},
+    {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "Orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false, birthday: ""},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, birthday: ""},
+    {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "Blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true, birthday: ""},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, birthday: ""},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, birthday: ""}
 ]
 //<script language="javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
 
@@ -36,6 +36,8 @@ var contactlist = [
     var jsonObject2;
     var loggedIn = false;
     var currentLoginTab = "";
+
+    var lastClicked;
 
 // Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
@@ -132,7 +134,7 @@ async function displayContacts(searchString) {
         setTimeout(() => res("Now it's done!"), 350)
     });
     if(!fetchContacts()){
-        console.log("fakse");
+        console.log("false");
     }
     else{
         console.log("true");
@@ -144,8 +146,8 @@ async function displayContacts(searchString) {
         itemlist.removeChild(itemlist.firstChild);
     }
 
-    let lastChar = 'A';
-    let currentChar = 'A';
+    let lastChar = '@';
+    let currentChar = '@';
 
     for(let i = 0; i < contactlist.length; i++) {
         if(searchString.length > 0) {
@@ -196,6 +198,7 @@ function toggleFavoritesOnly(searchString) {
 function displayContactInfo(b){
 
     let i = b.parentNode.id;
+    lastClicked = i;
 
     // Animate in
     left_panel.style.animation = 'none';
@@ -213,6 +216,8 @@ function displayContactInfo(b){
         email_detail.value = contactlist[i].email;
         address_detail.value = contactlist[i].address;
         notes_detail.value = contactlist[i].notes;
+        birthday_detail.value = contactlist[i].birthday;
+        color_detail.value = contactlist[i].color;
 
         //scaleFontSize('name contact_detailsitem');
     }, 100); 
@@ -266,6 +271,14 @@ function deletecontactinfo(b){
 function editcontactinfo(){
 
     var editmode = notes_detail.disabled;
+    save_button.style.display = "block";
+
+    left_panel_cover.style.display = "initial";
+    left_panel_cover.style.opacity = "0.8";
+    left_panel.style.zIndex = "8";
+
+    left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
+    left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
     
     if (editmode){
         phone_detail.disabled = false;
@@ -276,7 +289,8 @@ function editcontactinfo(){
         name_detail.disabled = false;
         notes_detail.disabled = false;
     }
-    else{        
+    else{    
+        
         var JSONPayload = '{ "name" : "' + name_detail.value + 
                           '", "fav_color" : "' + color_detail.value + 
                           '", "notes" : "' + notes_detail.value + 
@@ -321,7 +335,6 @@ function editcontactinfo(){
         notes_detail.disabled = true;
         save_button.disabled = false;
     }
-
 }
 
 function savecontactinfo(){
@@ -333,7 +346,13 @@ function savecontactinfo(){
         birthday_detail.disabled = true;
         notes_detail.disabled = true;
 
-        var new_contact = {
+        console.log("lastClicked = " + lastClicked);
+
+        if (lastClicked === -1)
+        {
+            // Save changes for a new Contact
+            console.log("new contact");
+            var new_contact = {
             name: "", 
             number: "", 
             email: "", 
@@ -342,33 +361,57 @@ function savecontactinfo(){
             notes: "", 
             birthday: "",
             favorite: false
-        };
+            };
 
-        new_contact.name = document.getElementById("name").value;
-        new_contact.number = document.getElementById("phone").value;
-        new_contact.email = document.getElementById("email").value;
-        new_contact.address = document.getElementById("address").value;
-        new_contact.color = document.getElementById("color").value;
-        new_contact.birthday = document.getElementById("birthday").value;
-        new_contact.notes = document.getElementById("notes").value;
+            new_contact.name = document.getElementById("name").value;
+            new_contact.number = document.getElementById("phone").value;
+            new_contact.email = document.getElementById("email").value;
+            new_contact.address = document.getElementById("address").value;
+            new_contact.color = document.getElementById("color").value;
+            new_contact.birthday = document.getElementById("birthday").value;
+            new_contact.notes = document.getElementById("notes").value;
+            
+            name_detail.value = new_contact.name;
+            phone_detail.value = new_contact.number;
+            email_detail.value = new_contact.email;
+            address_detail.value = new_contact.address;
+            color_detail.value = new_contact.color;
+            birthday_detail.value = new_contact.birthday;        
+            notes_detail.value = new_contact.notes;
+
+            contactlist.push(new_contact);
+        }
+        else {
+            // Save changes to an existing contact
+            console.log("existing contact");
+            contactlist[lastClicked].name = document.getElementById("name").value;
+            contactlist[lastClicked].number = document.getElementById("phone").value;
+            contactlist[lastClicked].email = document.getElementById("email").value;
+            contactlist[lastClicked].address = document.getElementById("address").value;
+            contactlist[lastClicked].color = document.getElementById("color").value;
+            contactlist[lastClicked].birthday = document.getElementById("birthday").value;
+            contactlist[lastClicked].notes = document.getElementById("notes").value;
+            
+            name_detail.value = contactlist[lastClicked].name;
+            phone_detail.value = contactlist[lastClicked].number;
+            email_detail.value = contactlist[lastClicked].email;
+            address_detail.value = contactlist[lastClicked].address;
+            color_detail.value = contactlist[lastClicked].color;
+            birthday_detail.value = contactlist[lastClicked].birthday;        
+            notes_detail.value = contactlist[lastClicked].notes;
+        }
         
-        name_detail.value = new_contact.name;
-        phone_detail.value = new_contact.number;
-        email_detail.value = new_contact.email;
-        address_detail.value = new_contact.address;
-        color_detail.value = new_contact.color;
-        birthday_detail.value = new_contact.birthday;        
-        notes_detail.value = new_contact.notes;
-
-        contactlist.push(new_contact);
         contactlist.sort(compare);
         save_button.style.display = "none";
         displayContacts("");
         search_box.value = "";
 
+        console.log("end of save");
+
         left_panel_cover.style.display = "none";
         left_panel_cover.style.opacity = "0";
         left_panel.style.zIndex = "7";
+        document.getElementById("editicon").style.display = "block";
 }
 
 function compare(a, b) {
@@ -379,7 +422,11 @@ function addcontactinfo() {
     left_panel.style.animation = 'none';
     left_panel.offsetHeight;
     contact_details.style.display = "none";
+    lastClicked = -1;
+
     document.getElementById("welcome").style.display = "none";
+    document.getElementById("editicon").style.display = "none";
+
     left_panel_cover.style.display = "initial";
     left_panel_cover.style.opacity = "0.8";
     left_panel.style.zIndex = "8";
