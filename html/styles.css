@@ -28,7 +28,7 @@ button:hover {
 /* Right Panel */
 .rightpanel {
     padding-top: 50px;
-    padding-right: 150px;
+    padding-right: 8%;
     padding-bottom: 1.2%;
     float: right;
     height: 93%;
@@ -67,6 +67,7 @@ button:hover {
     clear: right;
     background-color: #46cd38;
     background-image: url("img/plusicon.png");
+    z-index: 0;
 }
 .add:hover {
     background-color: #3db431;
@@ -80,6 +81,7 @@ button:hover {
     margin-right: 6px;
     background-color: #f591ef;
     background-image: url("img/favoriteiconwhite.png");
+    z-index: 0;
 }
 .favorites:hover {
     background-color: #dc82d6;
@@ -310,7 +312,7 @@ button:hover {
     top: 38.7%;
     font-size: 32px;
     color: whitesmoke;
-    background-color: #232323;
+    background-color: #23232300;
     outline: none;
     border-width: 0 0 5px 0;
     border-style: solid;
@@ -318,7 +320,7 @@ button:hover {
     transition-duration: 200ms;
 }
 .login button:hover {
-    background-color: #292929;
+    background-color: #292929ff;
 }
 
 .login button.register {
@@ -648,6 +650,7 @@ h3 input {
 
 .contactdetails h3 {
     position: absolute;
+    width: 88%;
     top: 47.5%;
     letter-spacing: 20px;
     margin-top: 2%;
@@ -655,10 +658,9 @@ h3 input {
 }
 
 .contactdetails h3 img {
-    margin-left: 20px;
-    margin-right: 5px;
-    width: 40px;
-    height: 40px;
+    margin-left: 3%;
+    margin-right: 0%;
+    width: 6%;
     vertical-align: -10px; 
 }
 
