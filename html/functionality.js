@@ -380,10 +380,13 @@ function canceledit(){
     //reveal edit and delete buttons after user clicks cancel button
     edit_button.style.display = "block";
     delete_button.style.display = "block";
+
+    left_panel_cover.style.display = "none";
 }
 
 function editcontactinfo(){
 
+    // animations
     var editmode = notes_detail.disabled;
 
     edit_button.style.display = 'none';
@@ -408,6 +411,12 @@ function editcontactinfo(){
         birthday_detail.disabled = false;
         name_detail.disabled = false;
         notes_detail.disabled = false;
+
+        //reveals placeholders when editing
+        name_detail.placeholder = "Name";
+        phone_detail.placeholder = "(XXX) XXX - XXXX";
+        email_detail.placeholder = "Otty@Otmail.com";
+        address_detail.placeholder = "1234 The Address";
     }
     else{        
         console.log("cc: " + contactlist[lastClicked].contact_id);
