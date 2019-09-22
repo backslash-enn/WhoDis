@@ -95,9 +95,10 @@
             </template>
             <template id="contactitemtemplate">
                 <div class="contactitem">
-                    <button onclick="displayContactInfo(this)"></button>
+                    <button class="base" onclick="displayContactInfo(this)"></button>
                     <img class="contactitempp" src="img/test.png" alt="">
-                    <img class="contactitemfav" src="img/favoriteiconpink.png" alt="">
+                    <button class="fav" id="select_fav" 
+                    onclick="select_fav(this)"></button>
                 </div>
             </template>
     </body>
