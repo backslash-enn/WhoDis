@@ -457,6 +457,7 @@ function savecontactinfo(){
             new_contact.color = document.getElementById("color").value;
             new_contact.birthday = document.getElementById("birthday").value;
             new_contact.notes = document.getElementById("notes").value;
+            // Fill in new_contact.contact_id with value returned by jsonObject (xhr.responseText) here
             
             name_detail.value = new_contact.name;
             phone_detail.value = new_contact.number;
