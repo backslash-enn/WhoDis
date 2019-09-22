@@ -12,6 +12,7 @@ var contactlist = [
     var fav_button;
 
     var favoritesOnly = false;
+    var jsonObject2;
 
 document.addEventListener("DOMContentLoaded", function(event) { 
     itemlist = document.getElementById("contactitemlist");
@@ -22,8 +23,60 @@ document.addEventListener("DOMContentLoaded", function(event) {
     displayContacts("");
 }, false);
 
-function displayContacts(searchString) {
+function fetchContacts(){
+//    var add2 = {name: "Dog", number: "(111) 119 - 0000", email: "owl@ottmail.com", color: "red", address: "not address", notes: "aa", favorite: false};
+//    console.log(contactlist);
+//    
+////    contactlist.push(add2);
+    var JSONPayload2 = '{ "search" : ""}';
+        var url = "https://managerofcontacts.live/api/Search.php";
+        var xhr2 = new XMLHttpRequest();
+        xhr2.open("POST", url, true);
+        xhr2.setRequestHeader("Content-type", "application/json; charset=UTF-8");
         
+        try {
+            xhr2.onreadystatechange = function()
+            {
+                if (this.readyState == 4 && this.status == 200)
+                    {
+                        jsonObject2 = JSON.parse( xhr2.responseText );
+//                        console.log(jsonObject2);
+                          for(i = 0; i < jsonObject2.results.length; i++)
+                                {
+                                    var add = {name: jsonObject2.results[i]["name"], number: jsonObject2.results[i]["phone_number"], email: jsonObject2.results[i]["email"], color: jsonObject2.results[i]["fav_color"], address: jsonObject2.results[i]["primary_street_addr"], notes: jsonObject2.results[i]["notes"], favorite: false};
+                                    console.log(jsonObject2.results[i]["name"]);
+                                    console.log(add);
+                                    contactlist.push(add);
+                                    console.log("here");
+                                }
+                    }
+                
+            }
+            xhr2.send(JSONPayload2);
+            
+        }
+        catch (err)
+        {
+//            document.getElementById("email").value = err.message;
+            document.getElementById("email").value = "error while editing";
+        }
+    return true;
+}
+
+async function displayContacts(searchString) {
+    
+    let promise = new Promise((res, rej) => {
+        setTimeout(() => res("Now it's done!"), 350)
+    });
+    if(!fetchContacts()){
+        console.log("fakse");
+    }
+    else{
+        console.log("true");
+    }
+    let result = await promise;
+//    alert(result);
+    
     while (itemlist.firstChild) {
         itemlist.removeChild(itemlist.firstChild);
     }
@@ -155,7 +208,7 @@ function editcontactinfo(){
         var birthday = document.getElementById("birthday").value;
         var notes = document.getElementById("notes").value;
         
-        var JSONPayload = '{ "name" : "' + name + '", "fav_color" : "' + color + '", "notes" : "' + notes + '", "primary_street_addr" : "", "phone_number" : "' + phone + '", "birthday" : "2019-10-1", "favorite" : "1", "contact_id" : "12" }';
+        var JSONPayload = '{ "name" : "' + name + '", "fav_color" : "' + color + '", "notes" : "' + notes + '", "primary_street_addr" : "", "phone_number" : "' + phone + '", "birthday" : "'+birthday+'", "favorite" : "1", "contact_id" : "12" }';
         var url = "https://managerofcontacts.live/api/Edit.php";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
@@ -164,16 +217,18 @@ function editcontactinfo(){
         try {
             
 //            xhr.send(JSONPayload);
-            document.getElementById("address").value = "ttt";
+//            document.getElementById("address").value = "ttt";
 //            var jsonObject = JSON.parse( xhr.responseText );
 //            document.getElementById("email").value = "aaa";
             xhr.onreadystatechange = function()
             {
                 if (this.readyState == 4 && this.status == 200)
                     {
-                        document.getElementById("email").value = "bb";
+                        //set some success message
+//                        document.getElementById("email").value = "bb";
                         var jsonObject = JSON.parse( xhr.responseText );
-//                        document.getElementById("email").value = xhr.responseText;
+                        document.getElementById("email").value = "aa";
+                        console.log(jsonObject);
                     }
             }
             xhr.send(JSONPayload);
@@ -182,7 +237,7 @@ function editcontactinfo(){
         catch (err)
         {
 //            document.getElementById("email").value = err.message;
-            document.getElementById("email").value = "cc";
+            document.getElementById("email").value = "error while editing";
         }
         
         document.getElementById("notes").disabled = true;
