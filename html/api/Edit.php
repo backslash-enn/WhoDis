@@ -34,6 +34,7 @@ else
 	{
 		//returnWithError("User not logged in.");
 		//return;
+        $user_id = 1;
 	}
 	else
 	{
