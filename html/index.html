@@ -35,19 +35,21 @@
             </div>
             <div class="welcome" id="welcome">
                     <text>Welcome,<br></text>
-                    <button>Logout</button>
-                    <text>Emma Otson</text>
+                    <button onclick="getLoggedOut()">Logout</button>
+                    <text id="welcomename"></text>
             </div>
             <div class="contactdetails" id="contactdetails">
                 <h1>
-                    <button class="smolbutton delete" id="deleteicon" type="button" onclick="deletecontactinfo(this)"></button>  
-                    <button class="smolbutton edit" type="button" onclick="editcontactinfo()"></button>
+                    <button class="smolbutton delete" id="delete" type="button" onclick="deletecontactinfo(this)"></button>  
+                    <button class="smolbutton edit" id="edit" type="button" onclick="editcontactinfo()"></button>
+                    <button class="smolbutton cancel" id="cancel" type="button" onclick="canceledit()"></button>                    
+                    <button class="smolbutton save" id="save" type="button" onclick="savecontactinfo(this)"></button>
                 </h1>
                 <h2>
                     <img class="pp-frame pp-picture" src="img/testpp.png">
                     <img class="pp-frame" src="img/frame.png">
                     <!--<text>Otty Osbourne</text>-->
-                    <input disabled class="name contactdetailsitem" id="name" type="text">
+                    <input disabled class="name contactdetailsitem" id="name" type="text" required>
                 </h2>  
                 <h3>
                     <img src="img/phonenumbericon.png">
@@ -78,8 +80,6 @@
                     <input disabled="disabled" class="birthday contactdetailsitem" placeholder="01/01/2001" id="birthday" type="date">
                     <br> <br>
                     <textarea disabled="disabled" class="notes" id="notes" type="text" placeholder="Notes" spellcheck="true" rows="3" cols="57"></textarea>
-                    <input id="contact_id" name="contact_id" type="hidden" value="1">
-                    <button class="smolbutton save" id="save" type="button" onclick="savecontactinfo(this)"></button>
                 </h3>       
             </div>
         </div>
