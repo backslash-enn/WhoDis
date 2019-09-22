@@ -308,7 +308,7 @@ button:hover {
     height: 8%;
     position: absolute;
     top: 38.7%;
-    font-size: 35px;
+    font-size: 32px;
     color: whitesmoke;
     background-color: #232323;
     outline: none;
@@ -334,7 +334,7 @@ button:hover {
     font-weight: 50;
     color: #232323;
     font-family: sans-serif;
-    line-height: 265%;
+    line-height: 235%;
     width: 65%;
 }
 
