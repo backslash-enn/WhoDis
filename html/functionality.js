@@ -9,13 +9,17 @@ var contactlist = [
 ]
 //<script language="javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
 
-    var search_box;
+    var right_panel;
     var contactitemtemplate;
     var contactletterdivtemplate;
     var itemlist;
 
+    var search_box;
     var left_panel;
     var left_panel_cover;
+    var login_panel;
+    var login_form;
+    var register_form;
     var contact_details;
     var welcome_msg;
     var fav_button;
@@ -33,18 +37,24 @@ var contactlist = [
     var notes_detail;
 
     var favoritesOnly = false;
+    var firstLogin = true;
     var jsonObject2;
     var loggedIn = false;
     var currentLoginTab = "";
 
 // Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
+
+    right_panel = document.getElementById('rightpanel');
     search_box = document.getElementById("searchbox");
     contactitemtemplate = document.getElementById("contactitemtemplate");
     contactletterdivtemplate = document.getElementById("contactletterdivtemplate");
     itemlist = document.getElementById("contactitemlist");
     
     left_panel = document.getElementById('leftpanel');
+    login_panel = document.getElementById('login');
+    login_form = document.getElementById('loginform');
+    register_form = document.getElementById('registerform');    
     left_panel_cover = document.getElementById('leftpanelcover');
     contact_details = document.getElementById('contactdetails');
     fav_button = document.getElementById("favorites");
@@ -63,11 +73,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     notes_detail = document.getElementById('notes');
 
 
-    //login_tab = document.getElementById('logintab');
-    //register_tab = document.getElementById('registertab');
+    login_tab = document.getElementById('logintab');
+    register_tab = document.getElementById('registertab');
 
-    displayContacts("");
-    //changeLoginTab("login");
+    changeLoginTab("login");
 }, false);
 
 function fetchContacts(){
@@ -116,14 +125,39 @@ function changeLoginTab(newLoginTab) {
 
     currentLoginTab = newLoginTab;
 
+    login_form.style.animation = 'none';
+    login_form.offsetHeight;
+    register_form.style.animation = 'none';
+    register_form.offsetHeight;
+    
+
     if(currentLoginTab == "login") {
         login_tab.style.borderColor = "#ffe760";
         register_tab.style.borderColor = "#232323";
+        login_form.style.animation = "loginform-in .4s forwards";
+        if(firstLogin == false) {
+            register_form.style.animation = "registerform-out .4s forwards";
+        }
+        else{
+            firstLogin = false;
+        }
     }
     else {
         login_tab.style.borderColor = "#232323";
         register_tab.style.borderColor = "#ffe760";
+        login_form.style.animation = "loginform-out .4s forwards";
+        register_form.style.animation = "registerform-in .4s forwards";
     }
+}
+
+function getLoggedIn() {
+    login_panel.style.display = "none";
+    welcome_msg.style.display = "block";
+    right_panel.style.display = "initial";
+
+    // LOAD CONTACTS FROM DATABASE 
+
+    displayContacts("");
 }
 
 async function displayContacts(searchString) {
@@ -201,8 +235,7 @@ function displayContactInfo(b){
     left_panel.style.animation = 'none';
     left_panel.offsetHeight;
     
-    left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
-    left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+    left_panel.style.animation = "swap-leftpanel-slide .4s forwards";
 
     setTimeout(function() {
         contact_details.style.display = "block";
@@ -231,7 +264,7 @@ function displayWelcomePanel(b) {
     left_panel.style.animation = 'none';
     left_panel.offsetHeight;
 
-    left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
+    left_panel.style.animation = "swap-leftpanel-slide .4s forwards";
     left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
 
     setTimeout(function() {
@@ -249,7 +282,7 @@ function deletecontactinfo(b){
         popup.style.animation = 'none';
         left_panel.offsetHeight;
         
-        popup.style.animation = "popup-grace-the-room-with-its-presence .4s linear forwards";
+        popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
         popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
     }
     else if (b.id == "abort") {
@@ -360,19 +393,15 @@ function savecontactinfo(){
         birthday_detail.value = new_contact.birthday;        
         notes_detail.value = new_contact.notes;
 
-        console.log("name = " + name_detail.value);
-        console.log("phone = " + phone_detail.value);
-        console.log("email = " + email_detail.value);
-        console.log("address = " + address_detail.value);
-        console.log("fav color = " + color_detail.value);
-        console.log("birthday = " + birthday_detail.value); 
-        console.log("notes = " + notes_detail.value);
-
         contactlist.push(new_contact);
         contactlist.sort(compare);
         save_button.style.display = "none";
         displayContacts("");
         search_box.value = "";
+
+        left_panel_cover.style.display = "none";
+        left_panel_cover.style.opacity = "0";
+        left_panel.style.zIndex = "7";
 }
 
 function compare(a, b) {
@@ -382,8 +411,13 @@ function compare(a, b) {
 function addcontactinfo() {
     left_panel.style.animation = 'none';
     left_panel.offsetHeight;
+    contact_details.style.display = "none";
+    document.getElementById("welcome").style.display = "none";
+    left_panel_cover.style.display = "initial";
+    left_panel_cover.style.opacity = "0.8";
+    left_panel.style.zIndex = "8";
 
-    left_panel.style.animation = "swap-leftpanel-slide .4s linear forwards";
+    left_panel.style.animation = "swap-leftpanel-slide .4s forwards";
     left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
 
     document.getElementById('welcome').style.display = "none"; 
@@ -395,6 +429,10 @@ function addcontactinfo() {
     birthday_detail.value = "";        
     notes_detail.value = "";
 
+    setTimeout(function() {
+        contact_details.style.display = "initial";
+    }, 100);   
+
     name_detail.disabled = false;
     phone_detail.disabled = false;
     email_detail.disabled = false;
@@ -405,11 +443,12 @@ function addcontactinfo() {
     //disable the right panel so changes can not be made to other contacts 
     //change visibility of the save btn to true 
     //pls do these 
+
+
     
     save_button.style.display = 'block';
    /*
     document.getElementById("rightpanel").disabled = true;    */
-    console.log("hello");
     setTimeout(function() {
         contact_details.style.display = "initial";
         name_detail.defaultValue;
