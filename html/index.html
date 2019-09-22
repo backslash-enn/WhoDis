@@ -6,7 +6,7 @@
         <script src="functionality.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
-    <body>
+    <body onresize="adaptToScreen()">
         <div class="rightpanel" id="rightpanel">
             <button class="logo" id="logo" alt="logo" onclick="displayWelcomePanel(this)"></button>
             <button class="smolbutton add" type="button" onclick="
@@ -19,16 +19,16 @@
         <div class="leftpanel" id="leftpanel">
             <div class="login" id="login">
                 <button id="logintab" onclick="changeLoginTab('login')">Login</button>
-                <button id="registertab" onclick="changeLoginTab('register')">Register</button>
+                <button id="registertab" class="register" onclick="changeLoginTab('register')">Register</button>
                 <form class="loginform" id="loginform">
-                    USERNAME: <input type="text" name="username"><br>
-                    PASSWORD: <input type="password" name="password"><br>
+                    <input type="text" name="username" placeholder="Username"><br>
+                    <input type="password" name="password" placeholder="Password"><br>
                     <input class="loginbutton" type="button" onclick="getLoggedIn()" value="LOGIN">
                 </form>
                 <form class="registerform" id="registerform">
-                    <text>NAME:</text> <input type="text" name="name"><br>
-                             USERNAME: <input type="text" name="username"><br>
-                             PASSWORD: <input type="password" name="password"><br>
+                    <input type="text" name="name" placeholder="Name"><br>
+                    <input type="text" name="username" placeholder="Username"><br>
+                    <input type="password" name="password" placeholder="Password"><br>
                     <input class="loginbutton" type="submit" value="REGISTER">
                 </form>
                 <img src="img/logo.png" alt="logo">

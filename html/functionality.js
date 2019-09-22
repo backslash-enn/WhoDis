@@ -52,7 +52,7 @@ var contactlist = [
 
 // Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
-
+    // Get document elements
     right_panel = document.getElementById('rightpanel');
     search_box = document.getElementById("searchbox");
     contactitemtemplate = document.getElementById("contactitemtemplate");
@@ -87,6 +87,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     login_tab = document.getElementById('logintab');
     register_tab = document.getElementById('registertab');
 
+    // This responsive design function is called every time the screen is resized, but must also be called initially
+    adaptToScreen();
+
+    // Initialize login page
     changeLoginTab("login");
 }, false);
 
@@ -638,4 +642,9 @@ function addcontactinfo() {
         notes_detail.defaultValue;
 
     }, 100);    
+}
+
+function adaptToScreen() {
+    // Make left panel width proportional to height
+    left_panel.style.width = left_panel.offsetHeight.toString() + "px";
 }
