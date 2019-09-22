@@ -12,7 +12,7 @@ $db_name = "user";
 
 //Contact's parameters
 $contactID = $inData["contact_id"];
-$user_id;
+$user_id = -1;
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
@@ -46,7 +46,11 @@ else
 		$sql = "DELETE FROM `contacts` where contact_id = '" . $contactID . "' AND user_id = '" . $user_id . "'";
 		if($conn->query($sql) === FALSE)
 		{
-			returnWithError("Error deleting contact.");
+			returnWithError("Unable to delete contact.");
+		}
+		else
+		{
+			returnWithInfo("Successfully deleted contact.")
 		}
 	}
 
@@ -66,13 +70,13 @@ function sendAsJSON($obj)
 
 function returnWithError($err)
 {
-	$retValue = '{"id":0,"username":"","error":"' . $err . '"}';
+	$retValue = '{"error":"' . $err . '"}';
 	sendAsJson( $retValue );
 }
 
-function returnWithInfo($username, $id)
+function returnWithInfo($message)
 {
-	$retValue = '{"id":' . $id . ',"username":"' . $username . '","error":""}';
+	$retValue = '{"message":"' . $message . '"}';				  
 	sendAsJson( $retValue );
 }
 
