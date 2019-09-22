@@ -553,8 +553,16 @@ function savecontactinfo(){
             notes_detail.value = contactlist[lastClicked].notes;
         }
         
-       
-        
+        //hide placeholders if user does not input anything in the field
+        if (email_detail.value === "")
+            email_detail.placeholder = "";
+        if (address_detail.value === "")
+            address_detail.placeholder = "";
+        if (color_detail.value === "")
+            color_detail.placeholder = "";
+        if (birthday_detail.value === "")
+            birthday_detail.placeholder = "";
+            
         //hide save and cancel buttons after user clicks save
         save_button.style.display = "none";
         cancel_button.style.display = "none";
@@ -578,6 +586,7 @@ function compare(a, b) {
 }
 
 function addcontactinfo() {
+    // animation
     left_panel.style.animation = 'none';
     left_panel.offsetHeight;
     contact_details.style.display = "none";
@@ -593,14 +602,22 @@ function addcontactinfo() {
     left_panel.style.animation = "swap-leftpanel-slide .4s forwards";
     left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
 
+    // makes sure welcome msg is not displayed
     document.getElementById('welcome').style.display = "none"; 
 
+    // empties the text fields, so user can type in new values
     name_detail.value = "";
     phone_detail.value = "";
     email_detail.value = "";
     address_detail.value = "";
     birthday_detail.value = "";        
     notes_detail.value = "";
+
+    // creates placeholders, so users know what each input field is
+    name_detail.placeholder = "Name";
+    phone_detail.placeholder = "(XXX) XXX - XXXX";
+    email_detail.placeholder = "Otty@Otmail.com";
+    address_detail.placeholder = "1234 The Address";
 
     setTimeout(function() {
         contact_details.style.display = "initial";
