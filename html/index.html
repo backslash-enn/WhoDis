@@ -49,12 +49,15 @@
                     <img class="pp-frame pp-picture" src="img/testpp.png">
                     <img class="pp-frame" src="img/frame.png">
                     <!--<text>Otty Osbourne</text>-->
-                    <input disabled class="name contactdetailsitem" id="name" type="text" required>
+                    <text class= "nameerrormsg" id= "name_errormsg">*name is required</text>
+                    <input disabled class="name contactdetailsitem" id="name" text="text" required>                     
                 </h2>  
                 <h3>
+                    <text class= "phoneerrormsg" id= "phone_errormsg">*phone number is required</text>
+                    <br>
                     <img src="img/phonenumbericon.png">
                     <!--<text>000-005-9709</text>-->
-                    <input disabled class="phone contactdetailsitem" type="tel" id="phone" name="phone" placeholder="(XXX) XXX-XXXX" pattern="([0-9]{3}) [0-9]{3}-[0-9]{4}" required>
+                    <input disabled class="phone contactdetailsitem" type="tel" id="phone" name="phone" placeholder="(XXX) XXX-XXXX" pattern="\(?[0-9]{3}\)? [0-9]{3}\s-\s[0-9]{4}" required>
                     <br> <br>
                     <img src="img/emailicon.png">
                     <!--<text>otty@yahoo.com</text>-->

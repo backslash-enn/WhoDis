@@ -469,6 +469,24 @@ button:hover {
     transition: 1s opacity;
 }
 
+.contactdetails .nameerrormsg {
+    position: relative;
+    top: 73%;
+    left: 42.5%;
+    color: red; 
+    font-size: 15px;
+    display: none;
+}
+
+.contactdetails .phoneerrormsg {
+    position: relative;
+    top: 100%;
+    left: 12.5%;
+    color: red;
+    font-size: 15px;
+    display: none;
+}
+
 .contactdetails h1 {
     float: left;
     margin: 0; 
@@ -481,6 +499,20 @@ button:hover {
     width: 90%;
     height: 45%;
 }
+
+.contactdetails h2 input {
+    background-color: #c7c7c7;
+    /* background-color: #ffdead;*/
+}
+
+.contactdetails h2 input:invalid {
+    border: 2px dashed red;
+}
+
+.contactdetails h2 input:valid {
+    border: 2px solid black;
+}
+
 .pp-frame {
     position: absolute;
     display: inline-block;
@@ -563,6 +595,14 @@ h3 input {
     transition-duration: 200ms;
 }
 
+.phone:invalid {
+    border: 2px dashed red;
+}
+
+.phone:valid {
+    border: 2px solid black;
+}
+
 .favcolor{
     background-color: #232323;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -597,7 +637,7 @@ h3 input {
     position: absolute;
     top: 47.5%;
     letter-spacing: 20px;
-    margin-top: 35px;
+    margin-top: 2%;
     margin-bottom: 0px;
 }
 

@@ -548,13 +548,22 @@ function savecontactinfo(){
         delete_button.style.display = "block";
 
         //load right panel with updated contact list
-        contactlist.sort(compare);
-        displayContacts("");
-        search_box.value = "";
+        if (name_detail.value !== "" && phone_detail.value !== "") {
+            contactlist.sort(compare);
+            displayContacts("");
+            search_box.value = "";            
+        }
+        else {
+            document.getElementById('name_errormsg').style.display = 'block';
+            document.getElementById('phone_errormsg').style.display = 'block';
+        }
+
+        console.log("end of save");
 
         left_panel_cover.style.display = "none";
         left_panel_cover.style.opacity = "0";
         left_panel.style.zIndex = "7";
+        document.getElementById("edit").style.display = "block";
 }
 
 function compare(a, b) {
