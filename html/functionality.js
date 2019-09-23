@@ -129,7 +129,17 @@ function fetchContacts(){
 //                        console.log(jsonObject2);
                           for(i = 0; i < jsonObject2.results.length; i++)
                                 {
-                                    var add = {name: jsonObject2.results[i]["name"], number: jsonObject2.results[i]["phone_number"], email: jsonObject2.results[i]["email"], color: jsonObject2.results[i]["fav_color"], address: jsonObject2.results[i]["primary_street_addr"], notes: jsonObject2.results[i]["notes"], favorite: false, contact_id: jsonObject2.results[i]["contact_id"], birthday: jsonObject2.results[i]["birthday"]};
+                                    var fav_db = jsonObject2.results[i]["favorite"];
+                                    var fav = false;
+                                    console.log("fav db");
+                                    console.log(fav_db);
+                                    if(fav_db == 0){
+                                        fav = false;
+                                    }
+                                    else{
+                                        fav = true;
+                                    }
+                                    var add = {name: jsonObject2.results[i]["name"], number: jsonObject2.results[i]["phone_number"], email: jsonObject2.results[i]["email"], color: jsonObject2.results[i]["fav_color"], address: jsonObject2.results[i]["primary_street_addr"], notes: jsonObject2.results[i]["notes"], favorite: fav, contact_id: jsonObject2.results[i]["contact_id"], birthday: jsonObject2.results[i]["birthday"]};
                                     console.log(jsonObject2.results[i]["name"]);
                                     console.log(add);
                                     contactlist.push(add);
@@ -199,7 +209,7 @@ function getLoggedIn() {
                             console.log("login log: ");
                             console.log(jsonObject);
                             error = jsonObject.error;
-                            if(error === "No records found"){
+                            if(error === "No records found" || error === "Failure"){
                                 left_panel_cover.style.display = "initial";
                                 left_panel_cover.style.opacity = "0.8";
                                 document.getElementById("deletemsg").textContent = "Invalid Credentials, please login again";
@@ -222,7 +232,7 @@ function getLoggedIn() {
 //                                console.log("user id: ");
 //                                console.log(user_id);
                                 document.getElementById("password_login").value = "";
-                                myvar = jsonObject.user_id;
+                                myvar = 15;
                                 name = jsonObject.name;
                                 localStorage.setItem("user_id_val", myvar);
                                 localStorage.setItem("name_val", name);
@@ -250,7 +260,7 @@ function getRegistered() {
     var username_register = document.getElementById("username_register");
     var password_register = document.getElementById("password_register");
     var name_register = document.getElementById("name_register")
-    if((username_register != "" && username_register != " " && username_register ==! "" && username_register) || (password_register != "" && password_register != " " && password_register ==! "" && password_register) || (name_register != "" && name_register != " " && name_register ==! "" && name_register)){
+    if((username_register.value != "" && username_register.value != " " && username_register.value !== "" && username_register.value) && (password_register.value != "" && password_register.value != " " && password_register.value !== "" && password_register.value) && (name_register.value != "" && name_register.value != " " && name_register.value !== "" && name_register.value)){
 
         var JSONPayload =            '{ "username" : "' + username_register.value + 
                                     '", "password" : "' +  password_register.value + 
@@ -266,9 +276,43 @@ function getRegistered() {
                         if (this.readyState == 4 && this.status == 200)
                             {
                                 var jsonObject = JSON.parse( xhr.responseText );
+                                var error = jsonObject.error;
                                 console.log("register log: ");
                                 console.log(jsonObject);
-                                setTimeout("location.reload(true);", 5000);
+                                if(error === "Username already in use." || error === "Unable to add user."){
+                                    left_panel_cover.style.display = "initial";
+                                    left_panel_cover.style.opacity = "0.8";
+                                    document.getElementById("deletemsg").textContent = error + " Please try again.";
+                                    document.getElementById("yes").textContent = "NO";
+                                     document.getElementById("yes").style.visibility = "hidden";
+    //                                document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
+                                    document.getElementById("abort").textContent = "Go Back";
+                                    document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+                                    popup.style.display = "block";
+
+                                    popup.style.animation = 'none';
+                                    left_panel.offsetHeight;
+
+                                    popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
+                                    popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+                                }
+                                else{
+                                    left_panel_cover.style.display = "initial";
+                                    left_panel_cover.style.opacity = "0.8";
+                                    document.getElementById("deletemsg").textContent ="Successfully registered! Please Login.";
+                                    document.getElementById("yes").textContent = "NO";
+                                     document.getElementById("yes").style.visibility = "hidden";
+                                    document.getElementById("abort").textContent = "Login";
+                                    document.getElementById("abort").style.visibility = "hidden";
+                                    popup.style.display = "block";
+
+                                    popup.style.animation = 'none';
+                                    left_panel.offsetHeight;
+
+                                    popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
+                                    popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+                                    setTimeout("location.reload(true);", 1500);
+                                }
                             }
                     }
                     xhr.send(JSONPayload);
@@ -278,6 +322,23 @@ function getRegistered() {
                     email_detail.value = "error while creating contact";
                 }
     }
+    else
+        {
+            left_panel_cover.style.display = "initial";
+            left_panel_cover.style.opacity = "0.8";
+            document.getElementById("deletemsg").textContent ="One of the fields does not have a valid input!";
+            document.getElementById("yes").textContent = "NO";
+             document.getElementById("yes").style.visibility = "hidden";
+            document.getElementById("abort").textContent = "Edit";
+            document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+            popup.style.display = "block";
+
+            popup.style.animation = 'none';
+            left_panel.offsetHeight;
+
+            popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
+            popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+}
 }
 
 function getLoggedOut() {
@@ -420,24 +481,17 @@ function displayContactInfo(b){
     }, 100); 
 }
 
-
 function select_fav(b) {
     let i = b.parentNode.id; 
 
     contactlist[i].favorite = !contactlist[i].favorite;
-    /*
-    b.style.backgroundImage = 
-        contactlist[i].favorite ?
-        'url("img/favoriteiconpink.png")' :
-        'url("img/favoriteiconyellow.png")';
-    */
 
     if(contactlist[i].favorite == true)
     {
         b.style.backgroundImage =  'url("img/favoriteiconpink.png")';
-        var JSONPayload = '{ "favorite" : "1", "contact_id" : "' + contactlist[i].contact_id.value + '"}';
-        console.log("contact id IS: " + contactlist[i].contact_id.value);
-        var url = "https://managerofcontacts.live/api/Edit.php";
+        var JSONPayload = '{ "favorite" : "1", "contact_id" : "' + contactlist[i].contact_id + '"}';
+        console.log("contact id IS: " + contactlist[i].contact_id);
+        var url = "https://managerofcontacts.live/api/Favorite.php";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -462,8 +516,8 @@ function select_fav(b) {
     else
     {
         b.style.backgroundImage =  'url("img/favoriteiconyellow.png")';
-        var JSONPayload = '{ "favorite" : "0", "contact_id" : "' + contactlist[i].contact_id.value + '"}';
-        var url = "https://managerofcontacts.live/api/Update.php";
+        var JSONPayload = '{ "favorite" : "0", "contact_id" : "' + contactlist[i].contact_id+ '"}';
+        var url = "https://managerofcontacts.live/api/Favorite.php";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -486,7 +540,6 @@ function select_fav(b) {
         } 
     }
 }
-
 
 function displayWelcomePanel(b) {
     left_panel.style.animation = 'none';
@@ -704,7 +757,7 @@ function savecontactinfo(){
                                 '", "fav_color" : "' + color_detail.value + 
                                 '", "notes" : "' + notes_detail.value + 
                                 '", "email" : "' + email_detail.value + 
-                                '", "primary_street_addr" : "", "phone_number" : "' + phone_detail.value + 
+                                '", "primary_street_addr" : "'+address_detail.value+'", "phone_number" : "' + phone_detail.value + 
                                 '", "birthday" : "' + birthday_detail.value +'", "favorite" : "0"}';
             var url = "https://managerofcontacts.live/api/Create.php";
             var xhr = new XMLHttpRequest();

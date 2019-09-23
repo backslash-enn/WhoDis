@@ -27,6 +27,7 @@ else
 	if ($result->num_rows > 0)
 	{
 		returnWithError("Username already in use.");
+        return;
 	}
 	else
 	{
@@ -44,6 +45,7 @@ else
 	}
 
 	$conn->close();
+    return;
 }
 
 function getRequestInfo()
