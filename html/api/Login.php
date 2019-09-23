@@ -25,6 +25,7 @@ if ($conn->connect_error)
 else
 {
 	//Check the user's username and password in the database
+	$password = hash('sha256', $password);
 	$sql = "SELECT user_id, name FROM `login` where username = '" . $username . "' AND password = '" . $password . "'";
 	$result = $conn->query($sql);
 	if ($result->num_rows > 0)

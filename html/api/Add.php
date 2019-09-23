@@ -32,6 +32,8 @@ else
 	else
 	{
 		//Insert the user's information into the database
+		//Hash the password for better security
+		$password = hash('sha256', $password);
 		$sql = "INSERT INTO `login` (name, username, password) VALUES ('" . $name . "', '" . $username . "', '" . $password . "')";
 		
 		if($conn->query($sql) == FALSE)
