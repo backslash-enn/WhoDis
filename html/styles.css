@@ -539,6 +539,22 @@ button:hover {
     height: 90%;
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 }
+.pp-edit {
+    position: absolute;
+    top: 6%;
+    left: 2.2%;
+    width: 52%;
+    opacity: .6;
+    background-image: url("img/editppoverlay.png");
+    background-color: #00000000;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    z-index: 1;
+    display: none;
+}
+.pp-edit:hover {
+    opacity: .85;
+}
 
 .contactdetails h2 text {
     position: relative;
@@ -713,10 +729,9 @@ h3 input {
     height: auto;
 }
 
-.popup .btn1 {
+.popup .popupbutton{
     position: absolute;
     top: 55%;
-    left: 36%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     background-color: #232323;
@@ -729,6 +744,54 @@ h3 input {
     font-size: 15px;
     font-weight: 20px;
     letter-spacing: 7px;
+}
+.popup .popupbutton:hover{
+    background-color: black;
+}
+
+.popup .btn1 {
+    left: 36%;
+}
+
+.popup .btn2 {
+    left: 63%;
+}
+
+.popup .popupconfirm {
+    top: 59%;
+    left: 49%;
+    width: 50%;
+}
+
+.popup .prevpp {
+    position: absolute;
+    top: 58%;
+    left: 22%;
+    width: 1%;
+    height: 6%;
+    background-image: url("img/leftarrow.png");
+    background-size: 50%;
+    background-repeat: no-repeat;
+}
+
+.popup .nextpp {
+    position: absolute;
+    top: 58%;
+    left: 75%;
+    width: 1%;
+    height: 6%;
+    background-image: url("img/rightarrow.png");
+    background-size: 50%;    
+    background-position-x: 10%;
+    background-position-y: 10%;
+    background-repeat: no-repeat;
+}
+
+.popup .choosepppopup img {
+    position: absolute;
+    top: 30%;
+    left: 37.5%;
+    width: 25%;
 }
 
 .popup .deletemsg {
@@ -753,34 +816,6 @@ h3 input {
     font-size: 11px;
     letter-spacing: 5px;
     color: whitesmoke;
-}
-
-.popup .btn2 {
-    position: absolute;
-    top: 55%;
-    left: 63%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    background-color: #232323;
-    color: whitesmoke;
-    padding: 12px 24px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-family: sans-serif;
-    font-size: 15px;
-    font-weight: 20px;
-    letter-spacing: 7px;
-}
-
-
-
-.popup .btn1:hover{
-    background-color: black;
-}
-
-.popup .btn2:hover{
-    background-color: black;
 }
 
 @keyframes popup-grace-the-room-with-its-presence {

@@ -36,8 +36,8 @@ let contactlist = [
     var delete_button;
     var login_tab;
     var register_tab;
-    var popup;
 
+    var pp_editbutton;
     var name_detail;
     var phone_detail;
     var email_detail;
@@ -52,7 +52,12 @@ let contactlist = [
     var loggedIn = false;
     var currentLoginTab = "";
 
+    var popup;
+    var delete_contact_popup;
+    var choose_pp_popup;
+
     var lastClicked;
+    var ppIndex;
 
 // Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
@@ -76,10 +81,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     delete_button = document.getElementById("delete");
     welcome_msg = document.getElementById('welcome');
     welcome_name = document.getElementById('welcomename');
-    popup = document.getElementById("popup");
     left_panel = document.getElementById('leftpanel');
     welcome_msg = document.getElementById('welcome');
 
+    pp_editbutton = document.getElementById('ppeditbutton');
     name_detail = document.getElementById('name');
     phone_detail = document.getElementById('phone');
     email_detail = document.getElementById('email');
@@ -90,6 +95,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     login_tab = document.getElementById('logintab');
     register_tab = document.getElementById('registertab');
+
+    popup = document.getElementById("popup");
+    delete_contact_popup = document.getElementById("deletecontactpopup");
+    choose_pp_popup = document.getElementById("choosepppopup");
+
 
     // This responsive design function is called every time the screen is resized, but must also be called initially
     adaptToScreen();
@@ -207,13 +217,7 @@ function getLoggedIn() {
 //                                document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
                                 document.getElementById("abort").textContent = "LoginAgain";
                                 document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
-                                popup.style.display = "block";
-
-                                popup.style.animation = 'none';
-                                left_panel.offsetHeight;
-
-                                popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
-                                popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+                                openPopup("deleteContact");
                             }
                             else{
 //                                name = jsonObject.name;
@@ -234,7 +238,7 @@ function getLoggedIn() {
                                 contactlist.sort(compare);
                                 displayContacts("");
                             }
-                            
+
                         }
                 }
                 xhr.send(JSONPayload);
@@ -513,18 +517,10 @@ function deletecontactinfo(b){
         document.getElementById("yes").textContent = "Of Course!";
         document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
         document.getElementById("abort").textContent = "No, Abort!";
-        popup.style.display = "block";
-
-        popup.style.animation = 'none';
-        left_panel.offsetHeight;
-        
-        popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
-        popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+        openPopup("deleteContact");
     }
     else if (b.id == "abort") {
-        popup.style.display = "none";
-        left_panel_cover.style.display = "none";
-        left_panel_cover.style.opacity = "0";
+        closePopup();
     }
     else if (b.id == "yes") {
 
@@ -590,6 +586,7 @@ function canceledit(){
     }
 
     //disables text fields, so user cannot keep editing them
+    pp_editbutton.style.display = "none";
     name_detail.disabled = true;
     phone_detail.disabled = true;
     email_detail.disabled = true;
@@ -632,6 +629,7 @@ function editcontactinfo(){
     left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
     
     if (editmode){
+        pp_editbutton.style.display = "initial";
         phone_detail.disabled = false;
         email_detail.disabled = false;
         address_detail.disabled = false;
@@ -685,6 +683,7 @@ function editcontactinfo(){
 //            email_detail.value = "errow while diting";
 //        }
 
+        pp_editbutton.style.display = "none";
         name_detail.disabled = true;
         phone_detail.disabled = true;
         email_detail.disabled = true;
@@ -737,6 +736,7 @@ function savecontactinfo(){
             }
 
             if (name_detail.value !== "" && phone_detail.value !== "") {
+                pp_editbutton.style.display = "none";
                 name_detail.disabled = true;
                 phone_detail.disabled = true;
                 email_detail.disabled = true;
@@ -792,6 +792,7 @@ function savecontactinfo(){
             console.log("existing contact");
             // Save changes to an existing contact
             if (name_detail.value !== "" && phone_detail.value !== "") {
+                pp_editbutton.style.display = "none";
                 name_detail.disabled = true;
                 phone_detail.disabled = true;
                 email_detail.disabled = true;
@@ -932,6 +933,7 @@ function addcontactinfo() {
         save_button.style.display = 'block';
     }, 100);   
 
+    pp_editbutton.style.display = "initial";
     name_detail.disabled = false;
     phone_detail.disabled = false;
     email_detail.disabled = false;
@@ -948,6 +950,8 @@ function addcontactinfo() {
 
     console.log("hello");
 
+    ppIndex = 0;
+
     document.getElementById("rightpanel").disabled = true;
     setTimeout(function() {
         contact_details.style.display = "initial";
@@ -961,13 +965,46 @@ function addcontactinfo() {
     }, 100);    
 }
 
-function checkForUnseenContacts () {
-    for(let i = 0; i < contactlist.length; i++) {
-        if(!seenContacts.has(contactlist[i].contact_id)) {
-            seenContacts.add(contactlist[i].contact_id);
-            lastClicked = i;
-        }
+function choosePP() {
+    console.log("im doing the right thing part 1");
+    openPopup("choosepp");
+    left_panel.style.zIndex = "7";
+}
+
+function changePPIndex(num) {
+    ppIndex += num;
+}
+
+function setPPIndex() {
+    closePopup();
+}
+
+function openPopup(popupMenu) {
+    console.log("I TRIED!");
+    console.log(delete_contact_popup);
+    if(popupMenu == "choosepp") {
+        delete_contact_popup.style.display = "none";
+        choose_pp_popup.style.display = "initial";
+        console.log("im doing the right thing part 2");
     }
+    else {
+        delete_contact_popup.style.display = "initial";
+        choose_pp_popup.style.display = "none";
+    }
+
+    popup.style.display = "block";
+
+    popup.style.animation = 'none';
+    left_panel.offsetHeight;
+
+    popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
+    popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+}
+
+function closePopup() {
+    popup.style.display = "none";
+    left_panel_cover.style.display = "none";
+    left_panel_cover.style.opacity = "0";
 }
 
 function adaptToScreen() {
