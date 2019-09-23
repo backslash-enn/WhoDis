@@ -35,6 +35,7 @@ let contactlist = [
     var register_tab;
 
     var pp_editbutton;
+    var pp_detail;
     var name_detail;
     var phone_detail;
     var email_detail;
@@ -54,9 +55,10 @@ let contactlist = [
     var popup;
     var delete_contact_popup;
     var choose_pp_popup;
+    var current_pp;
 
     var lastClicked;
-    var ppIndex;
+    var ppIndex = 0;
 
 // Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
@@ -84,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     welcome_msg = document.getElementById('welcome');
 
     pp_editbutton = document.getElementById('ppeditbutton');
+    pp_detail = document.getElementById('pp');
     name_detail = document.getElementById('name');
     phone_detail = document.getElementById('phone');
     email_detail = document.getElementById('email');
@@ -99,6 +102,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     popup = document.getElementById("popup");
     delete_contact_popup = document.getElementById("deletecontactpopup");
     choose_pp_popup = document.getElementById("choosepppopup");
+    current_pp = document.getElementById("currentpp");
 
 
     // This responsive design function is called every time the screen is resized, but must also be called initially
@@ -147,7 +151,7 @@ function fetchContacts(){
                                     else{
                                         fav = true;
                                     }
-                                    var add = {name: jsonObject2.results[i]["name"], number: jsonObject2.results[i]["phone_number"], email: jsonObject2.results[i]["email"], color: jsonObject2.results[i]["fav_color"], address: jsonObject2.results[i]["primary_street_addr"], notes: jsonObject2.results[i]["notes"], favorite: fav, contact_id: jsonObject2.results[i]["contact_id"], birthday: jsonObject2.results[i]["birthday"]};
+                                    var add = {name: jsonObject2.results[i]["name"], number: jsonObject2.results[i]["phone_number"], email: jsonObject2.results[i]["email"], color: jsonObject2.results[i]["fav_color"], address: jsonObject2.results[i]["primary_street_addr"], notes: jsonObject2.results[i]["notes"], favorite: fav, contact_id: jsonObject2.results[i]["contact_id"], birthday: jsonObject2.results[i]["birthday"], pp_index: jsonObject2.results[i]["pp_index"]};
                                     console.log(jsonObject2.results[i]["name"]);
                                     console.log(add);
                                     contactlist.push(add);
@@ -251,7 +255,6 @@ function getLoggedIn() {
             {
                 email_detail.value = "error while creating contact";
             }
-
 }
 
 function getRegistered() {
@@ -405,6 +408,7 @@ async function displayContacts(searchString) {
         clon.children[0].children[0].innerHTML = `${contactlist[i].name}<br><span>${contactlist[i].number}</span>`;
         clon.children[0].children[0].style.backgroundColor = contactlist[i].color;
         clon.children[0].children[0].style.color = contactlist[i].color;
+        clon.children[0].children[1].src = "img/ppics/pp-" + contactlist[i].pp_index.toString() + ".jpg";
         clon.children[0].id = i;
         if(contactlist[i].favorite == true) {
             clon.children[0].children[2].style.backgroundImage = 'url("img/favoriteiconpink.png")'; 
@@ -452,6 +456,9 @@ function displayContactInfo(b){
         contact_details.style.display = "block";
         welcome_msg.style.display = "none";
 
+
+        console.log("img/ppics/pp-" + contactlist[i].pp_index.toString() + ".jpg");
+        pp_detail.src = "img/ppics/pp-" + contactlist[i].pp_index.toString() + ".jpg"; 
         name_detail.value = contactlist[i].name;
         phone_detail.value = contactlist[i].number;
         email_detail.value = contactlist[i].email;
@@ -615,11 +622,11 @@ function canceledit(){
         address_detail.value = contactlist[lastClicked].address;
         color_detail.value = contactlist[lastClicked].color;
 
-        var slash = contactlist[i].birthday.indexOf("/");
-        var length = contactlist[i].birthday.length;
+        var slash = contactlist[lastClicked].birthday.indexOf("/");
+        var length = contactlist[lastClicked].birthday.length;
 
-        birthday_mm_detail.value = (contactlist[i].birthday.substring(0,slash));
-        birthday_dd_detail.value = (contactlist[i].birthday.substring(slash + 1, length));
+        birthday_mm_detail.value = (contactlist[lastClicked].birthday.substring(0,slash));
+        birthday_dd_detail.value = (contactlist[lastClicked].birthday.substring(slash + 1, length));
  
         notes_detail.value = contactlist[lastClicked].notes;
     
@@ -714,7 +721,7 @@ function savecontactinfo(){
                                 '", "notes" : "' + notes_detail.value + 
                                 '", "email" : "' + email_detail.value +
                                 '", "primary_street_addr" : "'+address_detail.value+'", "phone_number" : "' + phone_detail.value + 
-                                '", "birthday" : "' + birthday_detail +'", "favorite" : "0"}';
+                                '", "birthday" : "' + birthday_detail +'", "favorite" : "0", "pp_index" : "' + ppIndex + '"}';
             var url = "https://managerofcontacts.live/api/Create.php";
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url, true);
@@ -759,11 +766,13 @@ function savecontactinfo(){
                     notes: "", 
                     birthday: "",
                     contact_id: "",
-                    favorite: false
+                    favorite: false,
+                    pp_index: 0
                 };
 
                 birthday_detail = birthday_mm_detail.value + "/" + birthday_dd_detail.value;
                 
+                new_contact.pp_index = ppindex;
                 new_contact.name = name_detail.value;
                 new_contact.number = phone_detail.value;
                 new_contact.email = email_detail.value;
@@ -815,6 +824,8 @@ function savecontactinfo(){
                 contactlist[lastClicked].color = color_detail.value;
                 contactlist[lastClicked].birthday = birthday_detail;
                 contactlist[lastClicked].notes = notes_detail.value;
+                contactlist[lastClicked].pp_index = ppIndex;
+
 
                 //birthday_detail.value = "1999-29-01";
                 console.log("birthday value after edit is: " + birthday_detail);
@@ -981,14 +992,19 @@ function addcontactinfo() {
 function choosePP() {
     console.log("im doing the right thing part 1");
     openPopup("choosepp");
-    left_panel.style.zIndex = "7";
 }
 
 function changePPIndex(num) {
+    console.log(ppIndex);
     ppIndex += num;
+    if(ppIndex < 0) ppindex += 16;
+    console.log(ppIndex);
+    console.log("img/ppics/pp-" + ppIndex.toString() + ".jpg");
+    current_pp.src = "img/ppics/pp-" + ppIndex.toString() + ".jpg"; 
 }
 
 function setPPIndex() {
+    pp_detail.src = "img/ppics/pp-" + ppIndex.toString() + ".jpg"; 
     closePopup();
 }
 
@@ -1012,12 +1028,15 @@ function openPopup(popupMenu) {
 
     popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
     popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+
+    left_panel.style.zIndex = "7";
 }
 
 function closePopup() {
     popup.style.display = "none";
     left_panel_cover.style.display = "none";
     left_panel_cover.style.opacity = "0";
+    left_panel.style.zIndex = "8";    
 }
 
 function adaptToScreen() {

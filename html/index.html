@@ -53,7 +53,7 @@
                 </h1>
                 <h2>
                     <img class="pp-frame" src="img/frame.png">
-                    <img class="pp-frame pp-picture" src="img/testpp.png">
+                    <img class="pp-frame pp-picture" id="pp" src="img/testpp.png">
                     <button class="pp-frame pp-picture pp-edit" id="ppeditbutton" onclick="choosePP()"></button>
                     <!--<text>Otty Osbourne</text>-->
                     <text class= "nameerrormsg" id= "name_errormsg">*name is required</text>
@@ -108,10 +108,10 @@
                 <div class="pun">You otter be sure.</div>
             </div>
             <div class="choosepppopup" id="choosepppopup">
-                <img src="img/testpp.png" alt="chosen profile picture">
-                <button class="popupbutton nextpp" id="prev" onclick="changePPIndex(-1)"></button>
+                <img src="img/ppics/pp-0.jpg" id="currentpp" alt="chosen profile picture">
+                <button class="popupbutton prevpp" id="next" onclick="changePPIndex(-1)"></button>
                 <button class="popupbutton popupconfirm" id="confirm" onclick="setPPIndex()">Set Image</button>
-                <button class="popupbutton prevpp" id="next" onclick="changePPIndex(1)"></button>
+                <button class="popupbutton nextpp" id="prev" onclick="changePPIndex(1)"></button>
             </div>
         </div>
 
