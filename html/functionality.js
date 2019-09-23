@@ -106,9 +106,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     // Initialize login page
     changeLoginTab("login");
-    console.log("usssss");
-    console.log(myvar);
-    console.log(name);
     if(myvar != '' && myvar != "" && myvar != -1 && myvar != "-1" && myvar != null){
         login_panel.style.display = "none";
         welcome_msg.style.display = "block";
@@ -139,8 +136,6 @@ function fetchContacts(){
                                 {
                                     var fav_db = jsonObject2.results[i]["favorite"];
                                     var fav = false;
-                                    console.log("fav db");
-                                    console.log(fav_db);
                                     if(fav_db == 0){
                                         fav = false;
                                     }
@@ -148,10 +143,9 @@ function fetchContacts(){
                                         fav = true;
                                     }
                                     var add = {name: jsonObject2.results[i]["name"], number: jsonObject2.results[i]["phone_number"], email: jsonObject2.results[i]["email"], color: jsonObject2.results[i]["fav_color"], address: jsonObject2.results[i]["primary_street_addr"], notes: jsonObject2.results[i]["notes"], favorite: fav, contact_id: jsonObject2.results[i]["contact_id"], birthday: jsonObject2.results[i]["birthday"]};
-                                    console.log(jsonObject2.results[i]["name"]);
-                                    console.log(add);
+//                                    console.log(jsonObject2.results[i]["name"]);
+//                                    console.log(add);
                                     contactlist.push(add);
-                                    console.log("here");
                                 }
                     }
                 
@@ -213,8 +207,8 @@ function getLoggedIn() {
                     if (this.readyState == 4 && this.status == 200)
                         {
                             var jsonObject = JSON.parse( xhr.responseText );
-                            console.log("login log: ");
-                            console.log(jsonObject);
+//                            console.log("login log: ");
+//                            console.log(jsonObject);
                             error = jsonObject.error;
                             if(error === "No records found" || error === "Failure"){
                                 left_panel_cover.style.display = "initial";
@@ -223,7 +217,7 @@ function getLoggedIn() {
                                 document.getElementById("yes").textContent = "NO";
                                  document.getElementById("yes").style.visibility = "hidden";
 //                                document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
-                                document.getElementById("abort").textContent = "LoginAgain";
+                                document.getElementById("abort").textContent = "Try Again";
                                 document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
                                 openPopup("deleteContact");
                             }
@@ -275,8 +269,8 @@ function getRegistered() {
                             {
                                 var jsonObject = JSON.parse( xhr.responseText );
                                 var error = jsonObject.error;
-                                console.log("register log: ");
-                                console.log(jsonObject);
+//                                console.log("register log: ");
+//                                console.log(jsonObject);
                                 if(error === "Username already in use." || error === "Unable to add user."){
                                     left_panel_cover.style.display = "initial";
                                     left_panel_cover.style.opacity = "0.8";
@@ -334,16 +328,14 @@ function getLoggedOut() {
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-            console.log("555");
             try {
                 xhr.onreadystatechange = function()
                 {
-                    console.log("333");
                     if (this.readyState == 4 && this.status == 200)
                         {
                             var jsonObject = JSON.parse( xhr.responseText );
-                            console.log("logout log: ");
-                            console.log(jsonObject);
+//                            console.log("logout log: ");
+//                            console.log(jsonObject);
                             localStorage.setItem("user_id_val", -1);
                             localStorage.setItem("name_val", "");
                         }
@@ -371,12 +363,7 @@ async function displayContacts(searchString) {
     let promise = new Promise((res, rej) => {
         setTimeout(() => res("Now it's done!"), 350)
     });
-    if(!fetchContacts()){
-        console.log("false");
-    }
-    else{
-        console.log("true");
-    }
+    fetchContacts();
     let result = await promise;
     
     while (itemlist.firstChild) {
@@ -478,7 +465,7 @@ function select_fav(b) {
     {
         b.style.backgroundImage =  'url("img/favoriteiconpink.png")';
         var JSONPayload = '{ "favorite" : "1", "contact_id" : "' + contactlist[i].contact_id + '"}';
-        console.log("contact id IS: " + contactlist[i].contact_id);
+//        console.log("contact id IS: " + contactlist[i].contact_id);
         var url = "https://managerofcontacts.live/api/Favorite.php";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
@@ -490,8 +477,8 @@ function select_fav(b) {
                 if (this.readyState == 4 && this.status == 200)
                     {
                         var jsonObject = JSON.parse( xhr.responseText );
-                        console.log("favorite log: ");
-                        console.log(jsonObject);
+//                        console.log("favorite log: ");
+//                        console.log(jsonObject);
                     }
             }
             xhr.send(JSONPayload);
@@ -516,8 +503,8 @@ function select_fav(b) {
                 if (this.readyState == 4 && this.status == 200)
                     {
                         var jsonObject = JSON.parse( xhr.responseText );
-                        console.log("favorite log: ");
-                        console.log(jsonObject);
+//                        console.log("favorite log: ");
+//                        console.log(jsonObject);
                     }
             }
             xhr.send(JSONPayload);
@@ -570,8 +557,8 @@ function deletecontactinfo(b){
                 if (this.readyState == 4 && this.status == 200)
                     {
                         var jsonObject = JSON.parse( xhr.responseText );
-                        console.log("delete log: ");
-                        console.log(jsonObject);
+//                        console.log("delete log: ");
+//                        console.log(jsonObject);
                     }
             }
             xhr.send(JSONPayload);
@@ -708,91 +695,117 @@ function savecontactinfo(){
         if (lastClicked === -1)
         {
             // Save changes for a new Contact
-            
-            var JSONPayload = '{ "name" : "' + name_detail.value + 
-                                '", "fav_color" : "' + color_detail.value + 
-                                '", "notes" : "' + notes_detail.value + 
-                                '", "email" : "' + email_detail.value +
-                                '", "primary_street_addr" : "'+address_detail.value+'", "phone_number" : "' + phone_detail.value + 
-                                '", "birthday" : "' + birthday_detail +'", "favorite" : "0"}';
-            var url = "https://managerofcontacts.live/api/Create.php";
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-        
-            try {
-                xhr.onreadystatechange = function()
-                {
-                    if (this.readyState == 4 && this.status == 200)
-                        {
-                            var jsonObject = JSON.parse( xhr.responseText );
-                            console.log("create log: ");
-                            console.log(jsonObject);
-                        }
+            var name_taken = name_detail.value;
+            var phone_taken = phone_detail.value;
+            var error;
+            if(name_taken != "" && name_taken != " " && name_taken !== "" && phone_taken != "" && phone_taken != " " && phone_taken !== "" && name_taken && phone_taken){
+                var JSONPayload = '{ "name" : "' + name_detail.value + 
+                                    '", "fav_color" : "' + color_detail.value + 
+                                    '", "notes" : "' + notes_detail.value + 
+                                    '", "email" : "' + email_detail.value +
+                                    '", "primary_street_addr" : "'+address_detail.value+'", "phone_number" : "' + phone_detail.value + 
+                                    '", "birthday" : "' + birthday_detail +'", "favorite" : "0"}';
+                var url = "https://managerofcontacts.live/api/Create.php";
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+                try {
+                    xhr.onreadystatechange = function()
+                    {
+                        if (this.readyState == 4 && this.status == 200)
+                            {
+                                var jsonObject = JSON.parse( xhr.responseText );
+//                                console.log("create log: ");
+//                                console.log(jsonObject);
+                                erorr = jsonObject.error;
+
+                                if(error === "User not logged in." || error === "Unable to create contact.")
+                                {
+                                    left_panel_cover.style.display = "initial";
+                                    left_panel_cover.style.opacity = "0.8";
+                                    document.getElementById("deletemsg").textContent = error;
+                                    document.getElementById("yes").textContent = "NO";
+                                    document.getElementById("yes").style.visibility = "hidden";
+                                    document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
+                                    document.getElementById("abort").textContent = "Try again";
+                                    document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+                                    openPopup("createContact");
+                                }
+                            }
+                    }
+                    xhr.send(JSONPayload);
                 }
-                xhr.send(JSONPayload);
+                catch (err)
+                {
+                    email_detail.value = "error while creating contact";
+                }
+
+                if (name_detail.value !== "" && phone_detail.value !== "") {
+                    pp_editbutton.style.display = "none";
+                    name_detail.disabled = true;
+                    phone_detail.disabled = true;
+                    email_detail.disabled = true;
+                    address_detail.disabled = true;
+                    color_detail.disabled = true;
+                    birthday_dd_detail.disabled = true;
+                    birthday_mm_detail.disabled = true;
+                    notes_detail.disabled = true;
+
+                    new_contact = {
+                        name: "", 
+                        number: "", 
+                        email: "", 
+                        color: "", 
+                        address: "", 
+                        notes: "", 
+                        birthday: "",
+                        contact_id: "",
+                        favorite: false
+                    };
+
+                    birthday_detail = birthday_mm_detail.value + "/" + birthday_dd_detail.value;
+
+                    new_contact.name = name_detail.value;
+                    new_contact.number = phone_detail.value;
+                    new_contact.email = email_detail.value;
+                    new_contact.address = address_detail.value;
+                    new_contact.color = color_detail.value;
+                    new_contact.birthday = birthday_detail;
+                    new_contact.notes = notes_detail.value;
+
+                    //hide save and cancel buttons after user clicks save
+                    save_button.style.display = "none";
+                    cancel_button.style.display = "none";
+                    document.getElementById('name_errormsg').style.display = 'none';
+                    document.getElementById('phone_errormsg').style.display = 'none';
+
+                    //reveal edit and delete buttons after user clicks save
+                    edit_button.style.display = "block";
+                    delete_button.style.display = "block";
+                }
+                else if (name_detail.value == "") {
+                    document.getElementById('name_errormsg').style.display = 'block';
+                    document.getElementById('phone_errormsg').style.display = 'none';            
+                }
+                else if (phone_detail.value == "") {
+                    document.getElementById('name_errormsg').style.display = 'none';
+                    document.getElementById('phone_errormsg').style.display = 'block'; 
+                }
             }
-            catch (err)
-            {
-                email_detail.value = "error while creating contact";
-            }
-
-            if (name_detail.value !== "" && phone_detail.value !== "") {
-                pp_editbutton.style.display = "none";
-                name_detail.disabled = true;
-                phone_detail.disabled = true;
-                email_detail.disabled = true;
-                address_detail.disabled = true;
-                color_detail.disabled = true;
-                birthday_dd_detail.disabled = true;
-                birthday_mm_detail.disabled = true;
-                notes_detail.disabled = true;
-
-                console.log("filled field");
-
-                new_contact = {
-                    name: "", 
-                    number: "", 
-                    email: "", 
-                    color: "", 
-                    address: "", 
-                    notes: "", 
-                    birthday: "",
-                    contact_id: "",
-                    favorite: false
-                };
-
-                birthday_detail = birthday_mm_detail.value + "/" + birthday_dd_detail.value;
-                
-                new_contact.name = name_detail.value;
-                new_contact.number = phone_detail.value;
-                new_contact.email = email_detail.value;
-                new_contact.address = address_detail.value;
-                new_contact.color = color_detail.value;
-                new_contact.birthday = birthday_detail;
-                new_contact.notes = notes_detail.value;
-
-                //hide save and cancel buttons after user clicks save
-                save_button.style.display = "none";
-                cancel_button.style.display = "none";
-                document.getElementById('name_errormsg').style.display = 'none';
-                document.getElementById('phone_errormsg').style.display = 'none';
-
-                //reveal edit and delete buttons after user clicks save
-                edit_button.style.display = "block";
-                delete_button.style.display = "block";
-            }
-            else if (name_detail.value == "") {
-                document.getElementById('name_errormsg').style.display = 'block';
-                document.getElementById('phone_errormsg').style.display = 'none';            
-            }
-            else if (phone_detail.value == "") {
-                document.getElementById('name_errormsg').style.display = 'none';
-                document.getElementById('phone_errormsg').style.display = 'block'; 
+            else {
+                left_panel_cover.style.display = "initial";
+                left_panel_cover.style.opacity = "0.8";
+                document.getElementById("deletemsg").textContent ="Cannot leave phone or name field empty. Everyone has a name!";
+                document.getElementById("yes").textContent = "NO";
+                 document.getElementById("yes").style.visibility = "hidden";
+                document.getElementById("abort").textContent = "Edit";
+                openPopup("emptyFieldsCreate");
             }
         }
         else {
-            console.log("existing contact");
+            var error;
+//            console.log("existing contact");
             // Save changes to an existing contact
             if (name_detail.value !== "" && phone_detail.value !== "") {
                 pp_editbutton.style.display = "none";
@@ -817,7 +830,7 @@ function savecontactinfo(){
                 contactlist[lastClicked].notes = notes_detail.value;
 
                 //birthday_detail.value = "1999-29-01";
-                console.log("birthday value after edit is: " + birthday_detail);
+//                console.log("birthday value after edit is: " + birthday_detail);
  
                 //hide save and cancel buttons after user clicks save
                 save_button.style.display = "none";
@@ -848,8 +861,23 @@ function savecontactinfo(){
                     if (this.readyState == 4 && this.status == 200)
                         {
                             var jsonObject = JSON.parse( xhr.responseText );
-                            console.log("save log:");
-                            console.log(JSONPayload);
+                            error = jsonObject.error;
+//                            console.log("save log:");
+//                            console.log(JSONPayload);
+
+                            if(error === "User not logged in." || error === "Unable to edit contact.")
+                                {
+                                    left_panel_cover.style.display = "initial";
+                                    left_panel_cover.style.opacity = "0.8";
+                                    document.getElementById("deletemsg").textContent = error;
+                                    document.getElementById("yes").textContent = "NO";
+                                    document.getElementById("yes").style.visibility = "hidden";
+                                    document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
+                                    document.getElementById("abort").textContent = "Try again";
+                                    document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+                                    openPopup("editContact");
+                                }
+                        
                         }
                 }
                 xhr.send(JSONPayload);
@@ -885,9 +913,7 @@ function savecontactinfo(){
         //load right panel with updated contact list
         contactlist.sort(compare);
         displayContacts("");
-        search_box.value = "";            
-
-        console.log("end of save");
+        search_box.value = "";
 
         left_panel_cover.style.display = "none";
         left_panel_cover.style.opacity = "0";
@@ -960,8 +986,6 @@ function addcontactinfo() {
 
     save_button.style.display = 'block';
 
-    console.log("hello");
-
     ppIndex = 0;
 
     document.getElementById("rightpanel").disabled = true;
@@ -979,7 +1003,7 @@ function addcontactinfo() {
 }
 
 function choosePP() {
-    console.log("im doing the right thing part 1");
+//    console.log("im doing the right thing part 1");
     openPopup("choosepp");
     left_panel.style.zIndex = "7";
 }
@@ -993,12 +1017,12 @@ function setPPIndex() {
 }
 
 function openPopup(popupMenu) {
-    console.log("I TRIED!");
-    console.log(delete_contact_popup);
+//    console.log("I TRIED!");
+//    console.log(delete_contact_popup);
     if(popupMenu == "choosepp") {
         delete_contact_popup.style.display = "none";
         choose_pp_popup.style.display = "initial";
-        console.log("im doing the right thing part 2");
+//        console.log("im doing the right thing part 2");
     }
     else {
         delete_contact_popup.style.display = "initial";
