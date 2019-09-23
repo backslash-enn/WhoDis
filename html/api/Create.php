@@ -20,6 +20,7 @@ $primStrAddr = $inData["primary_street_addr"];
 $birthday = $inData["birthday"];
 $favorite = $inData["favorite"];
 $user_id = -1;
+$pp_index = $inData["pp_index"];
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
@@ -42,7 +43,7 @@ else
 
 	//Create the contact with given information
 	$sql = "INSERT INTO `contacts` (name, phone_number, email, fav_color, notes, primary_street_addr, birthday, favorite, user_id) 
-			VALUES ('" . $name . "', '" . $phoneNumber . "', '" . $email . "', '" . $favColor . "', '" . $notes . "', '" . $primStrAddr . "', '" . $birthday . "', '" . $favorite . "', '" . $user_id . "')";
+			VALUES ('" . $name . "', '" . $phoneNumber . "', '" . $email . "', '" . $favColor . "', '" . $notes . "', '" . $primStrAddr . "', '" . $birthday . "', pp_index = '" . $pp_index . "', '" . $favorite . "', '" . $user_id . "')";
 
 	if ($conn->query($sql) === FALSE)
 	{

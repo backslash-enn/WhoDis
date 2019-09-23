@@ -27,10 +27,13 @@ else
 	if ($result->num_rows > 0)
 	{
 		returnWithError("Username already in use.");
+        return;
 	}
 	else
 	{
 		//Insert the user's information into the database
+		//Hash the password for better security
+		$password = hash('sha256', $password);
 		$sql = "INSERT INTO `login` (name, username, password) VALUES ('" . $name . "', '" . $username . "', '" . $password . "')";
 		
 		if($conn->query($sql) == FALSE)
@@ -44,6 +47,7 @@ else
 	}
 
 	$conn->close();
+    return;
 }
 
 function getRequestInfo()

@@ -35,7 +35,7 @@
                         <br>
                     <input type="password" name="password" required="" placeholder="Password" id="password_register">
                         <br>
-                    <input class="loginbutton" type="submit" value="REGISTER" onclick = "getRegistered()" id = "register_button">
+                    <input class="loginbutton" type="button" value="REGISTER" onclick = "getRegistered()" id = "register_button">
                 </form>
                 <img src="img/logo.png" alt="logo">
             </div>
@@ -58,8 +58,9 @@
                     <button class="smolbutton save" id="save" type="button" onclick="savecontactinfo(this)"></button>
                 </h1>
                 <h2>
-                    <img class="pp-frame pp-picture" src="img/testpp.png">
                     <img class="pp-frame" src="img/frame.png">
+                    <img class="pp-frame pp-picture" id="pp" src="img/testpp.png">
+                    <button class="pp-frame pp-picture pp-edit" id="ppeditbutton" onclick="choosePP()"></button>
                     <!--<text>Otty Osbourne</text>-->
                     <text class= "nameerrormsg" id= "name_errormsg">*name is required</text>
                     <input disabled class="name contactdetailsitem" id="name" text="text" required>                     
@@ -104,12 +105,20 @@
 
         <div class="popup" id="popup">
             <img src="img/popuppanel.png">
-            <div class="deletemsg" id="deletemsg">Are you sure you wish to delete this contact from your contact list?</div>
-            <div class="button">
-                <button class="btn1" id="yes" onclick="deletecontactinfo(this)">Of Course!</button>
-                <button class="btn2" id="abort" onclick="deletecontactinfo(this)">No, Abort!</button>
+            <div class="deletecontactpopup" id="deletecontactpopup">
+                <div class="deletemsg" id="deletemsg">Are you sure you wish to delete this contact from your contact list?</div>
+                <div class="button">
+                    <button class="popupbutton btn1" id="yes" onclick="deletecontactinfo(this)">Of Course!</button>
+                    <button class="popupbutton btn2" id="abort" onclick="deletecontactinfo(this)">No, Abort!</button>
+                </div>
+                <div class="pun">You otter be sure.</div>
             </div>
-            <div class="pun">You otter be sure.</div>
+            <div class="choosepppopup" id="choosepppopup">
+                <img src="img/ppics/pp-0.jpg" id="currentpp" alt="chosen profile picture">
+                <button class="popupbutton prevpp" id="next" onclick="changePPIndex(-1)"></button>
+                <button class="popupbutton popupconfirm" id="confirm" onclick="setPPIndex()">Set Image</button>
+                <button class="popupbutton nextpp" id="prev" onclick="changePPIndex(1)"></button>
+            </div>
         </div>
 
         <template id="contactletterdivtemplate">

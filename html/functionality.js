@@ -1,18 +1,15 @@
 //contactlist[lastClicked].contact_id
 
 let contactlist = [
-    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "Pink", address: "4321 Waterbay Creek", notes: "", favorite: true, contact_id: 1000, birthday: "9/29"},
-    {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "Red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false, contact_id: 1001, birthday: "9/2"},
-    {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "Orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false, contact_id: 1002, birthday: "12/25"},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1003, birthday: "1/29"},
-    {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "Blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true, contact_id: 1004, birthday: ""},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1005, birthday: "1/29"},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1006, birthday: "1/29"}
+    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "Pink", address: "4321 Waterbay Creek", notes: "", favorite: true, contact_id: 1000, birthday: "1/29", pp_index: 0},
+    {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "Red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false, contact_id: 1001, birthday: "2/2", pp_index: 0},
+    {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "Orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false, contact_id: 1002, birthday: "12/25", pp_index: 0},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1003, birthday: "", pp_index: 0},
+    {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "Blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true, contact_id: 1004, birthday: "", pp_index: 0},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1005, birthday: "", pp_index: 0},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1006, birthday: "", pp_index: 0}
 ]
 
-//<script language="javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
-
-//    let name;
     let myvar = localStorage.getItem("user_id_val");
     let name = localStorage.getItem("name_val");
     var right_panel;
@@ -37,8 +34,9 @@ let contactlist = [
     var delete_button;
     var login_tab;
     var register_tab;
-    var popup;
 
+    var pp_editbutton;
+    var pp_detail;
     var name_detail;
     var phone_detail;
     var email_detail;
@@ -55,7 +53,13 @@ let contactlist = [
     var loggedIn = false;
     var currentLoginTab = "";
 
+    var popup;
+    var delete_contact_popup;
+    var choose_pp_popup;
+    var current_pp;
+
     var lastClicked;
+    var ppIndex = 0;
 
 // Don't do certain things until the DOM has finished loading
 document.addEventListener("DOMContentLoaded", function(event) { 
@@ -79,10 +83,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     delete_button = document.getElementById("delete");
     welcome_msg = document.getElementById('welcome');
     welcome_name = document.getElementById('welcomename');
-    popup = document.getElementById("popup");
     left_panel = document.getElementById('leftpanel');
     welcome_msg = document.getElementById('welcome');
 
+    pp_editbutton = document.getElementById('ppeditbutton');
+    pp_detail = document.getElementById('pp');
     name_detail = document.getElementById('name');
     phone_detail = document.getElementById('phone');
     email_detail = document.getElementById('email');
@@ -95,14 +100,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     login_tab = document.getElementById('logintab');
     register_tab = document.getElementById('registertab');
 
+    popup = document.getElementById("popup");
+    delete_contact_popup = document.getElementById("deletecontactpopup");
+    choose_pp_popup = document.getElementById("choosepppopup");
+    current_pp = document.getElementById("currentpp");
+
+
     // This responsive design function is called every time the screen is resized, but must also be called initially
     adaptToScreen();
 
     // Initialize login page
     changeLoginTab("login");
-    console.log("usssss");
-    console.log(myvar);
-    console.log(name);
     if(myvar != '' && myvar != "" && myvar != -1 && myvar != "-1" && myvar != null){
         login_panel.style.display = "none";
         welcome_msg.style.display = "block";
@@ -130,14 +138,22 @@ function fetchContacts(){
                 if (this.readyState == 4 && this.status == 200)
                     {
                         jsonObject2 = JSON.parse( xhr2.responseText );
-//                        console.log(jsonObject2);
                           for(i = 0; i < jsonObject2.results.length; i++)
                                 {
-                                    var add = {name: jsonObject2.results[i]["name"], number: jsonObject2.results[i]["phone_number"], email: jsonObject2.results[i]["email"], color: jsonObject2.results[i]["fav_color"], address: jsonObject2.results[i]["primary_street_addr"], notes: jsonObject2.results[i]["notes"], favorite: false, contact_id: jsonObject2.results[i]["contact_id"], birthday: jsonObject2.results[i]["birthday"]};
-                                    console.log(jsonObject2.results[i]["name"]);
-                                    console.log(add);
+                                    var fav_db = jsonObject2.results[i]["favorite"];
+                                    var fav = false;
+                                    if(fav_db == 0){
+                                        fav = false;
+                                    }
+                                    else{
+                                        fav = true;
+                                    }
+//                                    console.log(jsonObject2.results[i]["name"]);
+//                                    console.log(add);
+                                    var add = {name: jsonObject2.results[i]["name"], number: jsonObject2.results[i]["phone_number"], email: jsonObject2.results[i]["email"], color: jsonObject2.results[i]["fav_color"], address: jsonObject2.results[i]["primary_street_addr"], notes: jsonObject2.results[i]["notes"], favorite: fav, contact_id: jsonObject2.results[i]["contact_id"], birthday: jsonObject2.results[i]["birthday"], pp_index: jsonObject2.results[i]["pp_index"]};
                                     contactlist.push(add);
-                                    console.log("here");
+//                                    console.log("fetch");
+//                                    console.log(add);
                                 }
                     }
                 
@@ -147,7 +163,6 @@ function fetchContacts(){
         }
         catch (err)
         {
-//            document.getElementById("email").value = err.message;
             document.getElementById("email").value = "error while editing";
         }
     return true;
@@ -200,33 +215,23 @@ function getLoggedIn() {
                     if (this.readyState == 4 && this.status == 200)
                         {
                             var jsonObject = JSON.parse( xhr.responseText );
-                            console.log("login log: ");
-                            console.log(jsonObject);
+//                            console.log("login log: ");
+//                            console.log(jsonObject);
                             error = jsonObject.error;
-                            if(error === "No records found"){
+                            if(error === "No records found" || error === "Failure"){
                                 left_panel_cover.style.display = "initial";
                                 left_panel_cover.style.opacity = "0.8";
                                 document.getElementById("deletemsg").textContent = "Invalid Credentials, please login again";
                                 document.getElementById("yes").textContent = "NO";
                                  document.getElementById("yes").style.visibility = "hidden";
 //                                document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
-                                document.getElementById("abort").textContent = "LoginAgain";
+                                document.getElementById("abort").textContent = "Try Again";
                                 document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
-                                popup.style.display = "block";
-
-                                popup.style.animation = 'none';
-                                left_panel.offsetHeight;
-
-                                popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
-                                popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+                                openPopup("deleteContact");
                             }
                             else{
-//                                name = jsonObject.name;
-//                                user_id = jsonObject.user_id;
-//                                console.log("user id: ");
-//                                console.log(user_id);
                                 document.getElementById("password_login").value = "";
-                                myvar = jsonObject.user_id;
+                                myvar = 15;
                                 name = jsonObject.name;
                                 localStorage.setItem("user_id_val", myvar);
                                 localStorage.setItem("name_val", name);
@@ -239,7 +244,7 @@ function getLoggedIn() {
                                 contactlist.sort(compare);
                                 displayContacts("");
                             }
-                            
+
                         }
                 }
                 xhr.send(JSONPayload);
@@ -248,14 +253,13 @@ function getLoggedIn() {
             {
                 email_detail.value = "error while creating contact";
             }
-
 }
 
 function getRegistered() {
     var username_register = document.getElementById("username_register");
     var password_register = document.getElementById("password_register");
     var name_register = document.getElementById("name_register")
-    if((username_register != "" && username_register != " " && username_register ==! "" && username_register) || (password_register != "" && password_register != " " && password_register ==! "" && password_register) || (name_register != "" && name_register != " " && name_register ==! "" && name_register)){
+    if((username_register.value != "" && username_register.value != " " && username_register.value !== "" && username_register.value) && (password_register.value != "" && password_register.value != " " && password_register.value !== "" && password_register.value) && (name_register.value != "" && name_register.value != " " && name_register.value !== "" && name_register.value)){
 
         var JSONPayload =            '{ "username" : "' + username_register.value + 
                                     '", "password" : "' +  password_register.value + 
@@ -271,9 +275,31 @@ function getRegistered() {
                         if (this.readyState == 4 && this.status == 200)
                             {
                                 var jsonObject = JSON.parse( xhr.responseText );
-                                console.log("register log: ");
-                                console.log(jsonObject);
-                                setTimeout("location.reload(true);", 5000);
+                                var error = jsonObject.error;
+//                                console.log("register log: ");
+//                                console.log(jsonObject);
+                                if(error === "Username already in use." || error === "Unable to add user."){
+                                    left_panel_cover.style.display = "initial";
+                                    left_panel_cover.style.opacity = "0.8";
+                                    document.getElementById("deletemsg").textContent = error + " Please try again.";
+                                    document.getElementById("yes").textContent = "NO";
+                                     document.getElementById("yes").style.visibility = "hidden";
+    //                                document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
+                                    document.getElementById("abort").textContent = "Go Back";
+                                    document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+                                    openPopup("registerfailure");
+                                }
+                                else{
+                                    left_panel_cover.style.display = "initial";
+                                    left_panel_cover.style.opacity = "0.8";
+                                    document.getElementById("deletemsg").textContent ="Successfully registered! Please Login.";
+                                    document.getElementById("yes").textContent = "NO";
+                                     document.getElementById("yes").style.visibility = "hidden";
+                                    document.getElementById("abort").textContent = "Login";
+                                    document.getElementById("abort").style.visibility = "hidden";
+                                    openPopup("registersuccess");
+                                    setTimeout("location.reload(true);", 1500);
+                                }
                             }
                     }
                     xhr.send(JSONPayload);
@@ -283,6 +309,23 @@ function getRegistered() {
                     email_detail.value = "error while creating contact";
                 }
     }
+    else
+        {
+            left_panel_cover.style.display = "initial";
+            left_panel_cover.style.opacity = "0.8";
+            document.getElementById("deletemsg").textContent ="One of the fields does not have a valid input!";
+            document.getElementById("yes").textContent = "NO";
+             document.getElementById("yes").style.visibility = "hidden";
+            document.getElementById("abort").textContent = "Edit";
+            document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+            popup.style.display = "block";
+
+            popup.style.animation = 'none';
+            left_panel.offsetHeight;
+
+            popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
+            popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+}
 }
 
 function getLoggedOut() {
@@ -292,16 +335,14 @@ function getLoggedOut() {
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-            console.log("555");
             try {
                 xhr.onreadystatechange = function()
                 {
-                    console.log("333");
                     if (this.readyState == 4 && this.status == 200)
                         {
                             var jsonObject = JSON.parse( xhr.responseText );
-                            console.log("logout log: ");
-                            console.log(jsonObject);
+//                            console.log("logout log: ");
+//                            console.log(jsonObject);
                             localStorage.setItem("user_id_val", -1);
                             localStorage.setItem("name_val", "");
                         }
@@ -329,14 +370,8 @@ async function displayContacts(searchString) {
     let promise = new Promise((res, rej) => {
         setTimeout(() => res("Now it's done!"), 350)
     });
-    if(!fetchContacts()){
-        console.log("false");
-    }
-    else{
-        console.log("true");
-    }
+    fetchContacts();
     let result = await promise;
-//    alert(result);
     
     while (itemlist.firstChild) {
         itemlist.removeChild(itemlist.firstChild);
@@ -361,9 +396,11 @@ async function displayContacts(searchString) {
         }
 
         let clon = contactitemtemplate.content.cloneNode(true);
+//        console.log(contactlist[i]);
         clon.children[0].children[0].innerHTML = `${contactlist[i].name}<br><span>${contactlist[i].number}</span>`;
         clon.children[0].children[0].style.backgroundColor = contactlist[i].color;
         clon.children[0].children[0].style.color = contactlist[i].color;
+        clon.children[0].children[1].src = "img/ppics/pp-" + contactlist[i].pp_index.toString() + ".jpg";
         clon.children[0].id = i;
         if(contactlist[i].favorite == true) {
             clon.children[0].children[2].style.backgroundImage = 'url("img/favoriteiconpink.png")'; 
@@ -411,27 +448,23 @@ function displayContactInfo(b){
         contact_details.style.display = "block";
         welcome_msg.style.display = "none";
 
+
+//        console.log("img/ppics/pp-" + contactlist[i].pp_index.toString() + ".jpg");
+        pp_detail.src = "img/ppics/pp-" + contactlist[i].pp_index.toString() + ".jpg"; 
         name_detail.value = contactlist[i].name;
         phone_detail.value = contactlist[i].number;
         email_detail.value = contactlist[i].email;
         address_detail.value = contactlist[i].address;
         notes_detail.value = contactlist[i].notes;
-        // if (birthday_detail.value === "") {
-        //     birthday_detail.style.display = 'none';
-        // }
-        // else {
-        //     birthday_detail.value = contactlist[i].birthday;            
-        // }
 
         var slash = contactlist[i].birthday.indexOf("/");
         var length = contactlist[i].birthday.length;
 
-        birthday_mm_detail.value = parseInt(contactlist[i].birthday.substring(0,slash), 10);
-        birthday_dd_detail.value = parseInt(contactlist[i].birthday.substring(slash + 1, length), 10);
+        birthday_mm_detail.value = (contactlist[i].birthday.substring(0,slash));
+        birthday_dd_detail.value = (contactlist[i].birthday.substring(slash + 1, length));
 
         color_detail.value = contactlist[i].color;
         
-        //scaleFontSize('name contact_detailsitem');
     }, 100); 
 }
 
@@ -439,19 +472,13 @@ function select_fav(b) {
     let i = b.parentNode.id; 
 
     contactlist[i].favorite = !contactlist[i].favorite;
-    /*
-    b.style.backgroundImage = 
-        contactlist[i].favorite ?
-        'url("img/favoriteiconpink.png")' :
-        'url("img/favoriteiconyellow.png")';
-    */
 
     if(contactlist[i].favorite == true)
     {
         b.style.backgroundImage =  'url("img/favoriteiconpink.png")';
-        var JSONPayload = '{ "favorite" : "1", "contact_id" : "' + contactlist[i].contact_id.value + '"}';
-        console.log("contact id IS: " + contactlist[i].contact_id.value);
-        var url = "https://managerofcontacts.live/api/Edit.php";
+        var JSONPayload = '{ "favorite" : "1", "contact_id" : "' + contactlist[i].contact_id + '"}';
+//        console.log("contact id IS: " + contactlist[i].contact_id);
+        var url = "https://managerofcontacts.live/api/Favorite.php";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -462,8 +489,8 @@ function select_fav(b) {
                 if (this.readyState == 4 && this.status == 200)
                     {
                         var jsonObject = JSON.parse( xhr.responseText );
-                        console.log("favorite log: ");
-                        console.log(jsonObject);
+//                        console.log("favorite log: ");
+//                        console.log(jsonObject);
                     }
             }
             xhr.send(JSONPayload);
@@ -476,8 +503,8 @@ function select_fav(b) {
     else
     {
         b.style.backgroundImage =  'url("img/favoriteiconyellow.png")';
-        var JSONPayload = '{ "favorite" : "0", "contact_id" : "' + contactlist[i].contact_id.value + '"}';
-        var url = "https://managerofcontacts.live/api/Update.php";
+        var JSONPayload = '{ "favorite" : "0", "contact_id" : "' + contactlist[i].contact_id+ '"}';
+        var url = "https://managerofcontacts.live/api/Favorite.php";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -488,8 +515,8 @@ function select_fav(b) {
                 if (this.readyState == 4 && this.status == 200)
                     {
                         var jsonObject = JSON.parse( xhr.responseText );
-                        console.log("favorite log: ");
-                        console.log(jsonObject);
+//                        console.log("favorite log: ");
+//                        console.log(jsonObject);
                     }
             }
             xhr.send(JSONPayload);
@@ -500,7 +527,6 @@ function select_fav(b) {
         } 
     }
 }
-
 
 function displayWelcomePanel(b) {
     left_panel.style.animation = 'none';
@@ -525,18 +551,10 @@ function deletecontactinfo(b){
         document.getElementById("yes").textContent = "Of Course!";
         document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
         document.getElementById("abort").textContent = "No, Abort!";
-        popup.style.display = "block";
-
-        popup.style.animation = 'none';
-        left_panel.offsetHeight;
-        
-        popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
-        popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+        openPopup("deleteContact");
     }
     else if (b.id == "abort") {
-        popup.style.display = "none";
-        left_panel_cover.style.display = "none";
-        left_panel_cover.style.opacity = "0";
+        closePopup();
     }
     else if (b.id == "yes") {
 
@@ -552,8 +570,8 @@ function deletecontactinfo(b){
                 if (this.readyState == 4 && this.status == 200)
                     {
                         var jsonObject = JSON.parse( xhr.responseText );
-                        console.log("delete log: ");
-                        console.log(jsonObject);
+//                        console.log("delete log: ");
+//                        console.log(jsonObject);
                     }
             }
             xhr.send(JSONPayload);
@@ -598,17 +616,18 @@ function canceledit(){
         address_detail.value = contactlist[lastClicked].address;
         color_detail.value = contactlist[lastClicked].color;
 
-        var slash = contactlist[i].birthday.indexOf("/");
-        var length = contactlist[i].birthday.length;
+        var slash = contactlist[lastClicked].birthday.indexOf("/");
+        var length = contactlist[lastClicked].birthday.length;
 
-        birthday_mm_detail.value = parseInt(contactlist[i].birthday.substring(0,slash), 10);
-        birthday_dd_detail.value = parseInt(contactlist[i].birthday.substring(slash + 1, length), 10);
+        birthday_mm_detail.value = (contactlist[lastClicked].birthday.substring(0,slash));
+        birthday_dd_detail.value = (contactlist[lastClicked].birthday.substring(slash + 1, length));
  
         notes_detail.value = contactlist[lastClicked].notes;
     
     }
 
     //disables text fields, so user cannot keep editing them
+    pp_editbutton.style.display = "none";
     name_detail.disabled = true;
     phone_detail.disabled = true;
     email_detail.disabled = true;
@@ -653,6 +672,7 @@ function editcontactinfo(){
     left_panel.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
     
     if (editmode){
+        pp_editbutton.style.display = "initial";
         phone_detail.disabled = false;
         email_detail.disabled = false;
         address_detail.disabled = false;
@@ -671,51 +691,12 @@ function editcontactinfo(){
         birthday_mm_detail.placeholder = "MM"
         birthday_dd_detail.placeholder = "DD"
     }
-    else{        
-//        console.log("cc: " + contactlist[lastClicked].contact_id);
-//        var JSONPayload = '{ "name" : "' + name_detail.value + 
-//                          '", "fav_color" : "' + color_detail.value + 
-//                          '", "notes" : "' + notes_detail.value + 
-//                          '", "email" : "' + email_detail.value + 
-//                          '", "primary_street_addr" : "' + address_detail.value + '", "phone_number" : "' + phone_detail.value + 
-//                          '", "birthday" : "' + birthday_detail.value +
-//                          '", "favorite" : "1", "contact_id" : "' + contactlist[lastClicked].contact_id + '" }';
-//        var url = "https://managerofcontacts.live/api/Edit.php";
-//        var xhr = new XMLHttpRequest();
-//        xhr.open("POST", url, true);
-//        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-//        
-//        try {
-//            
-////            xhr.send(JSONPayload);
-////            document.getElementById("address").value = "ttt";
-////            var jsonObject = JSON.parse( xhr.responseText );
-////            email_detail.value = "aaa";
-//            xhr.onreadystatechange = function()
-//            {
-//                if (this.readyState == 4 && this.status == 200)
-//                    {
-//                        //set some success message
-////                        document.getElementById("email").value = "bb";
-//                        var jsonObject = JSON.parse( xhr.responseText );
-////                        email_detail.value = "aa";
-//                        console.log(jsonObject);
-//                    }
-//            }
-//            xhr.send(JSONPayload);
-//            
-//        }
-//        catch (err)
-//        {
-//            email_detail.value = "errow while diting";
-//        }
-
+    else{
         name_detail.disabled = true;
         phone_detail.disabled = true;
         email_detail.disabled = true;
         address_detail.disabled = true;
         color_detail.disabled = true;
-        //birthday_detail.disabled = true;
         birthday_dd_detail.disabled = true;
         birthday_mm_detail.disabled = true;
         notes_detail.disabled = true;
@@ -728,54 +709,61 @@ function savecontactinfo(){
         if (lastClicked === -1)
         {
             // Save changes for a new Contact
-            
-            //testing
-            var JSONPayload = '{ "name" : "' + name_detail.value + 
-                                '", "fav_color" : "' + color_detail.value + 
-                                '", "notes" : "' + notes_detail.value + 
-                                '", "email" : "' + email_detail.value + 
-                                '", "primary_street_addr" : "", "phone_number" : "' + phone_detail.value + 
-                                '", "birthday" : "' + birthday_detail +'", "favorite" : "0"}';
-            var url = "https://managerofcontacts.live/api/Create.php";
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-        
-            try {
-//              xhr.send(JSONPayload);
-//              document.getElementById("address").value = "ttt";
-//              var jsonObject = JSON.parse( xhr.responseText )
-//              email_detail.value = "aaa";
-                xhr.onreadystatechange = function()
-                {
-                    if (this.readyState == 4 && this.status == 200)
-                        {
-                            //set some success message
-//                          document.getElementById("email").value = "bb";
-                            var jsonObject = JSON.parse( xhr.responseText );
-                            console.log("create log: ");
-                            console.log(jsonObject);
-                        }
+            var name_taken = name_detail.value;
+            var phone_taken = phone_detail.value;
+            var error;
+            if(name_taken != "" && name_taken != " " && name_taken !== "" && phone_taken != "" && phone_taken != " " && phone_taken !== "" && name_taken && phone_taken){
+                var JSONPayload = '{ "name" : "' + name_detail.value + 
+                                    '", "fav_color" : "' + color_detail.value + 
+                                    '", "notes" : "' + notes_detail.value + 
+                                    '", "email" : "' + email_detail.value +
+                                    '", "primary_street_addr" : "'+address_detail.value+'", "phone_number" : "' + phone_detail.value + '", "birthday" : "' + birthday_detail +'", "favorite" : "0", "pp_index" : "' + ppIndex + '"}';
+                var url = "https://managerofcontacts.live/api/Create.php";
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+                try {
+                    xhr.onreadystatechange = function()
+                    {
+                        if (this.readyState == 4 && this.status == 200)
+                            {
+                                var jsonObject = JSON.parse( xhr.responseText );
+//                                console.log("create log: ");
+//                                console.log(jsonObject);
+                                erorr = jsonObject.error;
+
+                                if(error === "User not logged in." || error === "Unable to create contact.")
+                                {
+                                    left_panel_cover.style.display = "initial";
+                                    left_panel_cover.style.opacity = "0.8";
+                                    document.getElementById("deletemsg").textContent = error;
+                                    document.getElementById("yes").textContent = "NO";
+                                    document.getElementById("yes").style.visibility = "hidden";
+                                    document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
+                                    document.getElementById("abort").textContent = "Try again";
+                                    document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+                                    openPopup("createContact");
+                                }
+                            }
+                    }
+                    xhr.send(JSONPayload);
                 }
-                xhr.send(JSONPayload);
-            }
-            catch (err)
-            {
-                email_detail.value = "error while creating contact";
-            }
+                catch (err)
+                {
+                    email_detail.value = "error while creating contact";
+                }
 
-            if (name_detail.value !== "" && phone_detail.value !== "") {
-                name_detail.disabled = true;
-                phone_detail.disabled = true;
-                email_detail.disabled = true;
-                address_detail.disabled = true;
-                color_detail.disabled = true;
-                //birthday_detail.disabled = true;
-                birthday_dd_detail.disabled = true;
-                birthday_mm_detail.disabled = true;
-                notes_detail.disabled = true;
-
-                console.log("filled field");
+                if (name_detail.value !== "" && phone_detail.value !== "") {
+                    pp_editbutton.style.display = "none";
+                    name_detail.disabled = true;
+                    phone_detail.disabled = true;
+                    email_detail.disabled = true;
+                    address_detail.disabled = true;
+                    color_detail.disabled = true;
+                    birthday_dd_detail.disabled = true;
+                    birthday_mm_detail.disabled = true;
+                    notes_detail.disabled = true;
 
                 new_contact = {
                     name: "", 
@@ -786,44 +774,55 @@ function savecontactinfo(){
                     notes: "", 
                     birthday: "",
                     contact_id: "",
-                    favorite: false
+                    favorite: false,
+                    pp_index: 0
                 };
+                    birthday_detail = birthday_mm_detail.value + "/" + birthday_dd_detail.value;
 
-                birthday_detail = birthday_mm_detail.value + "/" + birthday_dd_detail.value;
-                
-                new_contact.name = name_detail.value;
-                new_contact.number = phone_detail.value;
-                new_contact.email = email_detail.value;
-                new_contact.address = address_detail.value;
-                new_contact.color = color_detail.value;
-                new_contact.birthday = birthday_detail;
-                new_contact.notes = notes_detail.value;
+                    new_contact.name = name_detail.value;
+                    new_contact.number = phone_detail.value;
+                    new_contact.email = email_detail.value;
+                    new_contact.address = address_detail.value;
+                    new_contact.color = color_detail.value;
+                    new_contact.birthday = birthday_detail;
+                    new_contact.notes = notes_detail.value;
+                    new_contact.pp_index = ppindex;
 
-//                contactlist.push(new_contact);
+                    //hide save and cancel buttons after user clicks save
+                    save_button.style.display = "none";
+                    cancel_button.style.display = "none";
+                    document.getElementById('name_errormsg').style.display = 'none';
+                    document.getElementById('phone_errormsg').style.display = 'none';
 
-                //hide save and cancel buttons after user clicks save
-                save_button.style.display = "none";
-                cancel_button.style.display = "none";
-                document.getElementById('name_errormsg').style.display = 'none';
-                document.getElementById('phone_errormsg').style.display = 'none';
-
-                //reveal edit and delete buttons after user clicks save
-                edit_button.style.display = "block";
-                delete_button.style.display = "block";
+                    //reveal edit and delete buttons after user clicks save
+                    edit_button.style.display = "block";
+                    delete_button.style.display = "block";
+                }
+                else if (name_detail.value == "") {
+                    document.getElementById('name_errormsg').style.display = 'block';
+                    document.getElementById('phone_errormsg').style.display = 'none';            
+                }
+                else if (phone_detail.value == "") {
+                    document.getElementById('name_errormsg').style.display = 'none';
+                    document.getElementById('phone_errormsg').style.display = 'block'; 
+                }
             }
-            else if (name_detail.value == "") {
-                document.getElementById('name_errormsg').style.display = 'block';
-                document.getElementById('phone_errormsg').style.display = 'none';            
-            }
-            else if (phone_detail.value == "") {
-                document.getElementById('name_errormsg').style.display = 'none';
-                document.getElementById('phone_errormsg').style.display = 'block'; 
+            else {
+                left_panel_cover.style.display = "initial";
+                left_panel_cover.style.opacity = "0.8";
+                document.getElementById("deletemsg").textContent ="Cannot leave phone or name field empty. Everyone has a name!";
+                document.getElementById("yes").textContent = "NO";
+                 document.getElementById("yes").style.visibility = "hidden";
+                document.getElementById("abort").textContent = "Edit";
+                openPopup("emptyFieldsCreate");
             }
         }
         else {
-            console.log("existing contact");
+            var error;
+//            console.log("existing contact");
             // Save changes to an existing contact
             if (name_detail.value !== "" && phone_detail.value !== "") {
+                pp_editbutton.style.display = "none";
                 name_detail.disabled = true;
                 phone_detail.disabled = true;
                 email_detail.disabled = true;
@@ -836,16 +835,18 @@ function savecontactinfo(){
 
                 birthday_detail = birthday_mm_detail.value + "/" + birthday_dd_detail.value;
 
-                contactlist[lastClicked].name = name_detail.value;
-                contactlist[lastClicked].number = phone_detail.value;
-                contactlist[lastClicked].email = email_detail.value;
-                contactlist[lastClicked].address = address_detail.value;
-                contactlist[lastClicked].color = color_detail.value;
-                contactlist[lastClicked].birthday = birthday_detail;
-                contactlist[lastClicked].notes = notes_detail.value;
+//                contactlist[lastClicked].name = name_detail.value;
+//                contactlist[lastClicked].number = phone_detail.value;
+//                contactlist[lastClicked].email = email_detail.value;
+//                contactlist[lastClicked].address = address_detail.value;
+//                contactlist[lastClicked].color = color_detail.value;
+//                contactlist[lastClicked].birthday = birthday_detail;
+//                contactlist[lastClicked].notes = notes_detail.value;
+//                contactlist[lastClicked].pp_index = ppIndex;
+
 
                 //birthday_detail.value = "1999-29-01";
-                console.log("birthday value after edit is: " + birthday_detail);
+//                console.log("birthday value after edit is: " + birthday_detail);
  
                 //hide save and cancel buttons after user clicks save
                 save_button.style.display = "none";
@@ -864,7 +865,7 @@ function savecontactinfo(){
                           '", "email" : "' + email_detail.value + 
                           '", "primary_street_addr" : "' + address_detail.value + '", "phone_number" : "' + phone_detail.value + 
                           '", "birthday" : "' + birthday_detail +
-                          '", "favorite" : "1", "contact_id" : "' + contactlist[lastClicked].contact_id + '"}';
+                          '", "favorite" : "1", "contact_id" : "' + contactlist[lastClicked].contact_id + '", "pp_index" : "' + ppIndex + '"}';
             var url = "https://managerofcontacts.live/api/Edit.php";
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url, true);
@@ -876,8 +877,23 @@ function savecontactinfo(){
                     if (this.readyState == 4 && this.status == 200)
                         {
                             var jsonObject = JSON.parse( xhr.responseText );
-                            console.log("save log:");
-                            console.log(JSONPayload);
+                            error = jsonObject.error;
+//                            console.log("save log:");
+//                            console.log(JSONPayload);
+
+                            if(error === "User not logged in." || error === "Unable to edit contact.")
+                                {
+                                    left_panel_cover.style.display = "initial";
+                                    left_panel_cover.style.opacity = "0.8";
+                                    document.getElementById("deletemsg").textContent = error;
+                                    document.getElementById("yes").textContent = "NO";
+                                    document.getElementById("yes").style.visibility = "hidden";
+                                    document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
+                                    document.getElementById("abort").textContent = "Try again";
+                                    document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+                                    openPopup("editContact");
+                                }
+                        
                         }
                 }
                 xhr.send(JSONPayload);
@@ -913,9 +929,7 @@ function savecontactinfo(){
         //load right panel with updated contact list
         contactlist.sort(compare);
         displayContacts("");
-        search_box.value = "";            
-
-        console.log("end of save");
+        search_box.value = "";
 
         left_panel_cover.style.display = "none";
         left_panel_cover.style.opacity = "0";
@@ -972,6 +986,7 @@ function addcontactinfo() {
         save_button.style.display = 'block';
     }, 100);   
 
+    pp_editbutton.style.display = "initial";
     name_detail.disabled = false;
     phone_detail.disabled = false;
     email_detail.disabled = false;
@@ -987,7 +1002,7 @@ function addcontactinfo() {
 
     save_button.style.display = 'block';
 
-    console.log("hello");
+    ppIndex = 0;
 
     document.getElementById("rightpanel").disabled = true;
     setTimeout(function() {
@@ -995,8 +1010,7 @@ function addcontactinfo() {
         name_detail.defaultValue;
         phone_detail.defaultValue;
         email_detail.defaultValue;
-        address_detail.defaultValue;
-        //birthday_detail.defaultValue;   
+        address_detail.defaultValue; 
         birthday_dd_detail.defaultValue;
         birthday_mm_detail.defaultValue;     
         notes_detail.defaultValue;
@@ -1023,13 +1037,54 @@ function getUpcomingBirthdays() {
     }
 }
 
-function checkForUnseenContacts () {
-    for(let i = 0; i < contactlist.length; i++) {
-        if(!seenContacts.has(contactlist[i].contact_id)) {
-            seenContacts.add(contactlist[i].contact_id);
-            lastClicked = i;
-        }
+function choosePP() {
+//    console.log("im doing the right thing part 1");
+    openPopup("choosepp");
+}
+
+function changePPIndex(num) {
+//    console.log(ppIndex);
+    ppIndex += num;
+    if(ppIndex < 0) ppindex += 16;
+//    console.log(ppIndex);
+//    console.log("img/ppics/pp-" + ppIndex.toString() + ".jpg");
+    current_pp.src = "img/ppics/pp-" + ppIndex.toString() + ".jpg"; 
+}
+
+function setPPIndex() {
+    pp_detail.src = "img/ppics/pp-" + ppIndex.toString() + ".jpg"; 
+    closePopup();
+}
+
+function openPopup(popupMenu) {
+//    console.log("I TRIED!");
+//    console.log(delete_contact_popup);
+    if(popupMenu == "choosepp") {
+        delete_contact_popup.style.display = "none";
+        choose_pp_popup.style.display = "initial";
+//        console.log("im doing the right thing part 2");
     }
+    else {
+        delete_contact_popup.style.display = "initial";
+        choose_pp_popup.style.display = "none";
+    }
+
+    popup.style.display = "block";
+
+    popup.style.animation = 'none';
+    left_panel.offsetHeight;
+
+    popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
+    popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+
+    left_panel.style.zIndex = "7";
+}
+
+function closePopup() {
+    popup.style.display = "none";
+    left_panel_cover.style.display = "none";
+    left_panel_cover.style.opacity = "0";
+    left_panel.style.zIndex = "8";    
 }
 
 function adaptToScreen() {

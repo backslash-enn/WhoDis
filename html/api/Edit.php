@@ -20,6 +20,7 @@ $primStrAddr = $inData["primary_street_addr"];
 $birthday = $inData["birthday"];
 $favorite = $inData["favorite"];
 $contactID = $inData["contact_id"];
+$pp_index = $inData["pp_index"];
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
@@ -47,6 +48,7 @@ else
 									fav_color= '" . $favColor . "',
 									notes = '" . $notes . "',
 									primary_street_addr = '" . $primStrAddr . "',
+                                    pp_index = '" . $pp_index . "',
 									birthday = '" . $birthday . "',
 									favorite = '" . $favorite . "'
 							WHERE 	contact_id = '" . $contactID . "'";
