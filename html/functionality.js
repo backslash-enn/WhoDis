@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
         welcome_name.innerHTML = name;
-        contactlist.sort(compare);
+//        contactlist.sort(compare);
         displayContacts("");
     }
     
@@ -236,7 +236,7 @@ function getLoggedIn() {
 
 
                         welcome_name.innerHTML = name;
-                        contactlist.sort(compare);
+//                        contactlist.sort(compare);
                         displayContacts("");
                     }
 
@@ -338,7 +338,7 @@ function getLoggedOut() {
 async function displayContacts(searchString) {
     contactlist = [];
     let promise = new Promise((res, rej) => {
-        setTimeout(() => res("Now it's done!"), 350)
+        setTimeout(() => res("Now it's done!"), 750)
     });
     fetchContacts();
     let result = await promise;
@@ -346,7 +346,7 @@ async function displayContacts(searchString) {
     while (itemlist.firstChild) {
         itemlist.removeChild(itemlist.firstChild);
     }
-
+    contactlist.sort(compare);
     let lastChar = '@';
     let currentChar = '@';
 
@@ -894,7 +894,7 @@ function savecontactinfo(){
         }
 
         //load right panel with updated contact list
-        contactlist.sort(compare);
+//        contactlist.sort(compare);
         console.log("repopulating");
         displayContacts("");
         search_box.value = "";
