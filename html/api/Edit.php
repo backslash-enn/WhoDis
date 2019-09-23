@@ -32,9 +32,8 @@ else
 	//Checking for valid session
 	if (!isset($_SESSION["user_id"]))
 	{
-		//returnWithError("User not logged in.");
-		//return;
-		$user_id = 1;
+		returnWithError("User not logged in.");
+		return;	
 	}
 	else
 	{

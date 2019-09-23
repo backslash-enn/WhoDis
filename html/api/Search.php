@@ -6,7 +6,7 @@ $inData = getRequestInfo();
 
 $searchResults = "";
 $searchCount = 0;
-$session_id = -123;
+$user_id = -1;
 $connection = new mysqli("localhost", "frontend", "simpleyetEffective2019!", "user");
 if ($connection->connect_error) 
 {
@@ -19,35 +19,25 @@ else
     
     if(!isset($_SESSION["user_id"]))
     {
-//        errorReturn("User not logged in!");
-        $session_id = 1;
-//        return;
+        errorReturn("User not logged in!");
+        return;
     }
     else
     {
-        $session_id = $_SESSION["user_id"];
+        $user_id = $_SESSION["user_id"];
     }
-//    
-//    //making sure it's a valid user
-//    $test_id_query = "SELECT name from `login` where user_id = ".$session_id;
-//    $test_result = $connection->query($test_id_query);
-//    if($test_result->num_rows <= 0)
-//    {
-//        errorReturn("Invalid credentials, please log in again");
-//    }
     
     $name_given = $inData["search"];
     if (strlen($name_given) <= 0)
     {
-        $query = 'SELECT * from `contacts` where user_id = "1"';
-//        $query = "SELECT * from `contacts` where user_id = ".$session_id;
+        $query = 'SELECT * from `contacts` where user_id = "' . $user_id . '"';
     }
     else
     {
-    //getting the results from searching
-//    $query = "SELECT * from `contacts` where user_id = ".$session_id." AND name LIKE '%".$inData["search"]."%'";
-    $query = "SELECT * from `contacts` where user_id = 1 AND name LIKE '%".$inData["search"]."%'";
+        //getting the results from searching
+        $query = "SELECT * from `contacts` where user_id = 1 AND name LIKE '%".$inData["search"]."%'";
     }
+
     $result = $connection->query($query);
     if($result->num_rows > 0)
     {
@@ -58,13 +48,13 @@ else
                 $searchResults .= ",";
             }
             $searchCount++;
-            //$searchResults .= '{"name" : "' . $row["name"] . '", "fav_color" : "' . $row["fav_color"] . '", "phone_number" : "' . $row["phone_number"] . '", "email" : "' . $row["email"] . '","birthday" : "' . $row["birthday"] . '", "notes" : "' . $row["notes"] . '", "primary_street_addr" : "' . $row["primary_street_addr"] . '", "row" : "' . $row["favorite"] . '"}';
-           $searchResults .= '{"name" : "' . $row["name"] . '", "fav_color" : "' . $row["fav_color"] . '", "phone_number" : "' . $row["phone_number"] . '", "email" : "' . $row["email"] . '","birthday" : "' . $row["birthday"] . '", "notes" : "' . $row["notes"] . '", "primary_street_addr" : "' . $row["primary_street_addr"] . '", "favorite" : "' . $row["favorite"] . '", "contact_id" : "' . $row["contact_id"] . '"}';
+            $searchResults .= '{"name" : "' . $row["name"] . '", "fav_color" : "' . $row["fav_color"] . '", "phone_number" : "' . $row["phone_number"] . '", "email" : "' . $row["email"] . '","birthday" : "' . $row["birthday"] . '", "notes" : "' . $row["notes"] . '", "primary_street_addr" : "' . $row["primary_street_addr"] . '", "favorite" : "' . $row["favorite"] . '", "contact_id" : "' . $row["contact_id"] . '"}';
         }
     }
     else
     {
         errorReturn("No Records Found");
+        return;
     }
     $connection->close();
 }
