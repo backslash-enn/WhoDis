@@ -42,13 +42,11 @@
             <div class="welcome" id="welcome">
                     <text>Welcome,</text>
                     <button onclick="getLoggedOut()">Logout</button>
-                    <text id="welcomename"></text>
                     <div class="upcomingbirthdays">
-                        <text>Birthdays This Month:</text>
-                        <br>
-                        <text id="birthdays">
-                        </text>
+                        <text>BIRTHDAYS THIS MONTH</text>
+                        <text id="birthdays"></text>
                     </div>
+                    <text id="welcomename"></text>
             </div>
             <div class="contactdetails" id="contactdetails">
                 <h1>
@@ -60,7 +58,7 @@
                 <h2>
                     <img class="pp-frame" src="img/frame.png">
                     <img class="pp-frame pp-picture" id="pp" src="img/testpp.png">
-                    <button class="pp-frame pp-picture pp-edit" id="ppeditbutton" onclick="choosePP()"></button>
+                    <button class="pp-frame pp-picture pp-edit" id="ppeditbutton" onclick="openPopup('choosepp')"></button>
                     <!--<text>Otty Osbourne</text>-->
                     <text class= "nameerrormsg" id= "name_errormsg">*name is required</text>
                     <input disabled class="name contactdetailsitem" id="name" text="text" required>                     
@@ -94,9 +92,7 @@
                     </select>
                     <img class="bday contactdetailsitem" src="img/birthdayicon.png">
                     <!--<text>01-01-2001</text>-->
-                    <input disabled="disabled" class="birthday contactdetailsitem" id="birthday_mm" type="number" min="1" max="12">
-                    <text>/</text>
-                    <input disabled="disabled" class="birthday contactdetailsitem" id="birthday_dd" type="number" min="1" max="31">
+                    <input disabled="disabled" class="birthday contactdetailsitem" id="birthday_mm" type="number" min="1" max="12"><text>/</text><input disabled="disabled" class="birthday contactdetailsitem" id="birthday_dd" type="number" min="1" max="31">
                     <br> <br>
                     <textarea disabled="disabled" class="notes" id="notes" type="text" placeholder="Notes" spellcheck="true" rows="3" cols="57"></textarea>
                 </h3>       
@@ -119,6 +115,9 @@
                 <button class="popupbutton popupconfirm" id="confirm" onclick="setPPIndex()">Set Image</button>
                 <button class="popupbutton nextpp" id="prev" onclick="changePPIndex(1)"></button>
             </div>
+            <div class="genericmessagepopup" id="genericmessagepopup">
+                <button class="popupbutton closepopup" id="closepopup" onclick="closePopup(false)">Ok</button>
+            </div>
         </div>
 
         <template id="contactletterdivtemplate">
@@ -126,12 +125,12 @@
                     <span>H</span>
                 </div>
             </template>
-            <template id="contactitemtemplate">
-                <div class="contactitem">
-                    <button class="base" onclick="displayContactInfo(this)"></button>
-                    <img class="contactitempp" src="img/test.png" alt="">
-                    <button class="fav" onclick="select_fav(this)"></button>
-                </div>
-            </template>
+        <template id="contactitemtemplate">
+            <div class="contactitem">
+                <button class="base" onclick="displayContactInfo(this)"></button>
+                <img class="contactitempp" src="img/test.png" alt="">
+                <button class="fav" onclick="select_fav(this)"></button>
+            </div>
+        </template>
     </body>
 </html>
