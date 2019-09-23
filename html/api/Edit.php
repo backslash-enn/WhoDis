@@ -19,7 +19,7 @@ $notes = $inData["notes"];
 $primStrAddr = $inData["primary_street_addr"];
 $birthday = $inData["birthday"];
 $favorite = $inData["favorite"];
-$contactID = $inData["contact_id"];
+$contact_id = $inData["contact_id"];
 $pp_index = $inData["pp_index"];
 
 //Connect to the database
@@ -42,26 +42,23 @@ else
 	}
 		
 	//Update according to the parameters given
-	$sql = "UPDATE `contacts` SET 	name = '" . $name . "', 
-									phone_number = '" . $phoneNumber . "',
-									email = '" . $email . "',
-									fav_color= '" . $favColor . "',
-									notes = '" . $notes . "',
-									primary_street_addr = '" . $primStrAddr . "',
-                                    pp_index = '" . $pp_index . "',
-									birthday = '" . $birthday . "',
-									favorite = '" . $favorite . "'
-							WHERE 	contact_id = '" . $contactID . "'";
+	//Checks for possible SQL injections and prevents it
+	$sql = $conn->prepare("UPDATE `contacts` SET name = ?, phone_number = ?, email = ?, fav_color= ?, notes = ?,
+												 primary_street_addr = ?, birthday = ?, pp_index = ?, favorite = ?
+											 WHERE contact_id = ?");
+	$sql->bind_param('sssssssiii', $name, $phoneNumber, $email, $favColor, $notes, $primStrAddr, $birthday, $pp_index, $favColor, $contact_id);
 
-	if (empty($contactID) || $conn->query($sql) === FALSE)
+	if (empty($contact_id) || $sql->execute() == FALSE)
 	{
 		returnWithError("Unable to edit contact.");
 	}
 	else
 	{
-		returnWithInfo($name, $phoneNumber, $email, $favColor, $notes, $primStrAddr, $birthday, $favorite, "Successfully edited contact.");
+		returnWithInfo($name, $phoneNumber, $email, $favColor, $notes, $primStrAddr, $birthday, $pp_index, $favorite, "Successfully edited contact.");
 	}
 
+	$sql->free_result();
+	$sql->close();
 	$conn->close();
 }
 
@@ -82,7 +79,7 @@ function returnWithError($err)
 	sendAsJson( $retValue );
 }
 
-function returnWithInfo($name, $favColor, $notes, $primStrAddr, $phoneNumber, $birthday, $favorite, $err)
+function returnWithInfo($name, $favColor, $notes, $primStrAddr, $phoneNumber, $birthday, $pp_index, $favorite, $err)
 	{
 		$retValue = '{"name":"' . $name . '",
 					"fav_color":"' . $favColor . '",
@@ -90,6 +87,7 @@ function returnWithInfo($name, $favColor, $notes, $primStrAddr, $phoneNumber, $b
 					"primary_street_addr":"' . $primStrAddr . '",
 					"phone_number":"' . $phoneNumber . '",
 					"birthday":"' . $birthday . '",
+					"pp_index":"' . $pp_index . '",
 					"favorite":"' . $favorite . '",
 					"error":"' . $err . '"}';
 	sendAsJSON($retValue);

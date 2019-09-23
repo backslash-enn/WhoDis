@@ -22,8 +22,12 @@ if ($conn->connect_error)
 else
 {
 	//Checks the database to make sure the username isn't taken already
-	$sql = "SELECT user_id FROM `login` where username = '" . $username . "'";
-	$result = $conn->query($sql);
+	$sql = $conn->prepare("SELECT user_id FROM `login` where username = ?");
+	//Checks for possible SQL injections and prevents it
+	$sql->bind_param('s', $username);
+	$sql->execute();
+
+	$result = $sql->get_result();
 	if ($result->num_rows > 0)
 	{
 		returnWithError("Username already in use.");
@@ -31,12 +35,17 @@ else
 	}
 	else
 	{
+		$sql->free_result();
+		$sql->close();
+		
 		//Insert the user's information into the database
 		//Hash the password for better security
 		$password = hash('sha256', $password);
-		$sql = "INSERT INTO `login` (name, username, password) VALUES ('" . $name . "', '" . $username . "', '" . $password . "')";
-		
-		if($conn->query($sql) == FALSE)
+		//Checks for possible SQL injections and prevents it
+		$sql = $conn->prepare("INSERT INTO `login` (name, username, password) VALUES (?, ?, ?)");
+		$sql->bind_param('sss', $name, $username, $password);
+
+		if($sql->execute() == FALSE)
 		{
 			returnWithError("Unable to add user.");
 		}
@@ -46,6 +55,8 @@ else
 		}
 	}
 
+	$sql->free_result();
+	$sql->close();
 	$conn->close();
     return;
 }

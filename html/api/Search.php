@@ -8,6 +8,8 @@ $searchResults = "";
 $searchCount = 0;
 $user_id = -1;
 $connection = new mysqli("localhost", "frontend", "simpleyetEffective2019!", "user");
+$search = $inData["search"];
+
 if ($connection->connect_error) 
 {
     errorReturn("cannot connect to db");
@@ -30,15 +32,21 @@ else
     $name_given = $inData["search"];
     if (strlen($name_given) <= 0)
     {
-        $query = 'SELECT * from `contacts` where user_id = "' . $user_id . '"';
+        //Checks for possible SQL injections and prevents it
+        $query = $connection->prepare("SELECT * from `contacts` where user_id = ?");
+        $query->bind_param('i', $user_id);
     }
     else
     {
+        /*
         //getting the results from searching
-        $query = "SELECT * from `contacts` where user_id = 1 AND name LIKE '%".$inData["search"]."%'";
+        $query = $connection->prepare("SELECT * from `contacts` where user_id = ? AND name LIKE '%".$inData["search"]."%'");
+        $query->bind_param('i')
+        */
     }
 
-    $result = $connection->query($query);
+    $query->execute();
+    $result = $query->get_result();
     if($result->num_rows > 0)
     {
         while($row = $result->fetch_assoc())

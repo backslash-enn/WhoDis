@@ -11,7 +11,7 @@ $db_pw = "simpleyetEffective2019!";
 $db_name = "user";
 
 //Contact's parameters
-$contactID = $inData["contact_id"];
+$contact_id = $inData["contact_id"];
 $user_id = -1;
 
 //Connect to the database
@@ -34,17 +34,26 @@ else
 	}
 
 	//First check that the contact actually exists in the user's list
-	$sql = "SELECT name FROM `contacts` where contact_id = '" . $contactID . "' AND user_id = '" . $user_id . "'";
-	$result = $conn->query($sql);
+	//Checks for possible SQL injections and prevents it
+	$sql = $conn->prepare("SELECT name FROM `contacts` where contact_id = ? AND user_id = ?");
+	$sql->bind_param('ii', $contact_id, $user_id);
+	$sql->execute();
+
+	$result = $sql->get_result();
 	if ($result->num_rows <= 0)
 	{
 		returnWithError("Contact does not exist.");
 	}
 	else
 	{
+		$sql->free_result();
+		$sql->close();
+
 		//Delete the contact based on the contact id given
-		$sql = "DELETE FROM `contacts` where contact_id = '" . $contactID . "' AND user_id = '" . $user_id . "'";
-		if($conn->query($sql) === FALSE)
+		//Checks for possible SQL injections and prevents it
+		$sql = $conn->prepare("DELETE FROM `contacts` where contact_id = ? AND user_id = ?");
+		$sql->bind_param('ii', $contact_id, $user_id);
+		if($sql->execute() === FALSE)
 		{
 			returnWithError("Unable to delete contact.");
 		}

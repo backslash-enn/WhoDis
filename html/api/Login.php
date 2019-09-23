@@ -26,8 +26,13 @@ else
 {
 	//Check the user's username and password in the database
 	$password = hash('sha256', $password);
-	$sql = "SELECT user_id, name FROM `login` where username = '" . $username . "' AND password = '" . $password . "'";
-	$result = $conn->query($sql);
+
+	//Checks for possible SQL injections and prevents it
+	$sql = $conn->prepare("SELECT user_id, name FROM `login` where username = ? AND password = ?");
+	$sql->bind_param('ss', $username, $password);
+	$sql->execute();
+	
+	$result = $sql->get_result();
 	if ($result->num_rows > 0)
 	{
 		$row = $result->fetch_assoc();
@@ -48,6 +53,8 @@ else
 		returnWithError($user_id, $name, "No records found");
 	}
 
+	$sql->free_result();
+	$sql->close();
 	$conn->close();
 }
 

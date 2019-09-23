@@ -12,7 +12,7 @@ $db_name = "user";
 
 //Contact's parameters
 $favorite = $inData["favorite"];
-$contactID = $inData["contact_id"];
+$contact_id = $inData["contact_id"];
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
@@ -34,10 +34,11 @@ else
 	}
 		
 	//Update according to the parameters given
-	$sql = "UPDATE `contacts` SET 	favorite = '" . $favorite . "'
-							WHERE 	contact_id = '" . $contactID . "'";
+	//Checks for possible SQL injections and prevents it
+	$sql = $conn->prepare("UPDATE `contacts` SET favorite = ? WHERE contact_id = ?");
+	$sql->bind_param('ii', $favorite, $contact_id);
 
-	if (empty($contactID) || $conn->query($sql) === FALSE)
+	if (empty($contact_id) || $sql->execute() == FALSE)
 	{
 		returnWithError("Unable to edit contact.");
 	}
@@ -46,6 +47,8 @@ else
 		returnWithInfo($favorite, "Successfully edited contact.");
 	}
 
+	$sql->free_result();
+	$sql->close();
 	$conn->close();
 }
 

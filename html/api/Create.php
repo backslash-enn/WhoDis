@@ -42,6 +42,7 @@ else
 	}
 
 	//Create the contact with given information
+	//Checks for possible SQL injections and prevents it
 	$sql = $conn->prepare("INSERT INTO `contacts` (name, phone_number, email, fav_color, notes, primary_street_addr, birthday, pp_index, favorite, user_id) 
 												   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 	$sql->bind_param('sssssssiii', $name, $phoneNumber, $email, $favColor, $notes, $primStrAddr, $birthday, $pp_index, $favorite, $user_id);
@@ -55,6 +56,8 @@ else
 		returnWithInfo("Successfully created contact.", $name);
 	}
 
+	$sql->free_result();
+	$sql->close();
 	$conn->close();
 }
 
