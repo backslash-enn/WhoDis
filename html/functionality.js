@@ -373,7 +373,7 @@ async function displayContacts(searchString) {
     });
     fetchContacts();
     let result = await promise;
-    
+    getUpcomingBirthdays();
     while (itemlist.firstChild) {
         itemlist.removeChild(itemlist.firstChild);
     }
@@ -744,7 +744,7 @@ function savecontactinfo(){
                                 var jsonObject = JSON.parse( xhr.responseText );
 //                                console.log("create log: ");
 //                                console.log(jsonObject);
-                                erorr = jsonObject.error;
+                                error = jsonObject.error;
 
                                 if(error === "User not logged in." || error === "Unable to create contact.")
                                 {
@@ -797,7 +797,7 @@ function savecontactinfo(){
                     new_contact.color = color_detail.value;
                     new_contact.birthday = birthday_detail;
                     new_contact.notes = notes_detail.value;
-                    new_contact.pp_index = ppindex;
+                    new_contact.pp_index = ppIndex;
 
                     //hide save and cancel buttons after user clicks save
                     save_button.style.display = "none";
@@ -939,6 +939,7 @@ function savecontactinfo(){
 
         //load right panel with updated contact list
         contactlist.sort(compare);
+        console.log("repopulating");
         displayContacts("");
         search_box.value = "";
 

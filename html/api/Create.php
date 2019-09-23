@@ -42,10 +42,11 @@ else
 	}
 
 	//Create the contact with given information
-	$sql = "INSERT INTO `contacts` (name, phone_number, email, fav_color, notes, primary_street_addr, birthday, favorite, user_id) 
-			VALUES ('" . $name . "', '" . $phoneNumber . "', '" . $email . "', '" . $favColor . "', '" . $notes . "', '" . $primStrAddr . "', '" . $birthday . "', pp_index = '" . $pp_index . "', '" . $favorite . "', '" . $user_id . "')";
+	$sql = $conn->prepare("INSERT INTO `contacts` (name, phone_number, email, fav_color, notes, primary_street_addr, birthday, pp_index, favorite, user_id) 
+												   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	$sql->bind_param('sssssssiii', $name, $phoneNumber, $email, $favColor, $notes, $primStrAddr, $birthday, $pp_index, $favorite, $user_id);
 
-	if ($conn->query($sql) === FALSE)
+	if ($sql->execute() == FALSE)
 	{
 		returnWithError("Unable to create contact.");
 	}
