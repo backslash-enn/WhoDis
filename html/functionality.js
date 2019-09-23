@@ -1027,6 +1027,8 @@ function getUpcomingBirthdays() {
     
     for (let i = 0; i < length; i++){
         slash = contactlist[i].birthday.indexOf("/");
+        if (slash === -1)
+            continue;
         if (contactlist[i].birthday.substring(0, slash) === mm){
             count++;
             document.getElementById("birthdays").innerHTML += "<br>" + contactlist[i].name + ": " + contactlist[i].birthday + "";
