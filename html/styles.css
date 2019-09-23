@@ -642,10 +642,9 @@ h3 input {
     font-size: 30px;
     font-weight: 100;
     letter-spacing: 7px;
-    width: 40%;
+    width: 10%;
     resize: none;
     overflow: auto;
-    float: right;
 }
 
 .contactdetails h3 {
