@@ -209,50 +209,59 @@ function getLoggedIn() {
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
         
-            try {
-                xhr.onreadystatechange = function()
-                {
-                    if (this.readyState == 4 && this.status == 200)
-                        {
-                            var jsonObject = JSON.parse( xhr.responseText );
-//                            console.log("login log: ");
-//                            console.log(jsonObject);
-                            error = jsonObject.error;
-                            if(error === "No records found" || error === "Failure"){
-                                left_panel_cover.style.display = "initial";
-                                left_panel_cover.style.opacity = "0.8";
-                                document.getElementById("deletemsg").textContent = "Invalid Credentials, please login again";
-                                document.getElementById("yes").textContent = "NO";
-                                 document.getElementById("yes").style.visibility = "hidden";
-//                                document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
-                                document.getElementById("abort").textContent = "Try Again";
-                                document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
-                                openPopup("deleteContact");
-                            }
-                            else{
-                                document.getElementById("password_login").value = "";
-                                myvar = 15;
-                                name = jsonObject.name;
-                                localStorage.setItem("user_id_val", myvar);
-                                localStorage.setItem("name_val", name);
-                                login_panel.style.display = "none";
-                                welcome_msg.style.display = "block";
-                                right_panel.style.display = "initial";
+//             try {
+//                 xhr.onreadystatechange = function()
+//                 {
+//                     if (this.readyState == 4 && this.status == 200)
+//                         {
+//                             var jsonObject = JSON.parse( xhr.responseText );
+// //                            console.log("login log: ");
+// //                            console.log(jsonObject);
+//                             error = jsonObject.error;
+//                             if(error === "No records found" || error === "Failure"){
+//                                 left_panel_cover.style.display = "initial";
+//                                 left_panel_cover.style.opacity = "0.8";
+//                                 document.getElementById("deletemsg").textContent = "Invalid Credentials, please login again";
+//                                 document.getElementById("yes").textContent = "NO";
+//                                  document.getElementById("yes").style.visibility = "hidden";
+// //                                document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
+//                                 document.getElementById("abort").textContent = "Try Again";
+//                                 document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+//                                 openPopup("deleteContact");
+//                             }
+//                             else{
+//                                 document.getElementById("password_login").value = "";
+//                                 myvar = 15;
+//                                 name = jsonObject.name;
+//                                 localStorage.setItem("user_id_val", myvar);
+//                                 localStorage.setItem("name_val", name);
+//                                 login_panel.style.display = "none";
+//                                 welcome_msg.style.display = "block";
+//                                 right_panel.style.display = "initial";
 
 
-                                welcome_name.innerHTML = name;
-                                contactlist.sort(compare);
-                                displayContacts("");
-                            }
+//                                 welcome_name.innerHTML = name;
+//                                 contactlist.sort(compare);
+//                                 displayContacts("");
+//                             }
 
-                        }
-                }
-                xhr.send(JSONPayload);
-            }
-            catch (err)
-            {
-                email_detail.value = "error while creating contact";
-            }
+//                         }
+//                 }
+//                 xhr.send(JSONPayload);
+//             }
+//             catch (err)
+//             {
+//                 email_detail.value = "error while creating contact";
+//             }
+
+            login_panel.style.display = "none";
+            welcome_msg.style.display = "block";
+            right_panel.style.display = "initial";
+
+
+            welcome_name.innerHTML = name;
+            contactlist.sort(compare);
+            displayContacts("");
 }
 
 function getRegistered() {
@@ -366,7 +375,7 @@ function getLoggedOut() {
 }
 
 async function displayContacts(searchString) {
-    contactlist = [];
+    //contactlist = [];
     let promise = new Promise((res, rej) => {
         setTimeout(() => res("Now it's done!"), 350)
     });
@@ -435,6 +444,7 @@ function toggleFavoritesOnly(searchString) {
 
 function displayContactInfo(b){
 
+
     let i = b.parentNode.id;
     lastClicked = i;
 
@@ -448,6 +458,9 @@ function displayContactInfo(b){
         contact_details.style.display = "block";
         welcome_msg.style.display = "none";
 
+        console.log("PLEASE PLEASE PLEASE one last thing");
+        console.log(i);
+
 
 //        console.log("img/ppics/pp-" + contactlist[i].pp_index.toString() + ".jpg");
         pp_detail.src = "img/ppics/pp-" + contactlist[i].pp_index.toString() + ".jpg"; 
@@ -456,14 +469,17 @@ function displayContactInfo(b){
         email_detail.value = contactlist[i].email;
         address_detail.value = contactlist[i].address;
         notes_detail.value = contactlist[i].notes;
+        color_detail.value = contactlist[i].color;
 
         var slash = contactlist[i].birthday.indexOf("/");
+
+        if(slash == -1)
+            return;
+
         var length = contactlist[i].birthday.length;
 
         birthday_mm_detail.value = (contactlist[i].birthday.substring(0,slash));
         birthday_dd_detail.value = (contactlist[i].birthday.substring(slash + 1, length));
-
-        color_detail.value = contactlist[i].color;
         
     }, 100); 
 }
@@ -615,14 +631,18 @@ function canceledit(){
         email_detail.value = contactlist[lastClicked].email;
         address_detail.value = contactlist[lastClicked].address;
         color_detail.value = contactlist[lastClicked].color;
+        notes_detail.value = contactlist[lastClicked].notes;
 
         var slash = contactlist[lastClicked].birthday.indexOf("/");
+
+        if(slash == -1)
+            break;
+
         var length = contactlist[lastClicked].birthday.length;
 
         birthday_mm_detail.value = (contactlist[lastClicked].birthday.substring(0,slash));
         birthday_dd_detail.value = (contactlist[lastClicked].birthday.substring(slash + 1, length));
  
-        notes_detail.value = contactlist[lastClicked].notes;
     
     }
 
