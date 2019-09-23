@@ -150,6 +150,8 @@ function fetchContacts(){
 //                                    console.log(add);
                                     var add = {name: jsonObject2.results[i]["name"], number: jsonObject2.results[i]["phone_number"], email: jsonObject2.results[i]["email"], color: jsonObject2.results[i]["fav_color"], address: jsonObject2.results[i]["primary_street_addr"], notes: jsonObject2.results[i]["notes"], favorite: fav, contact_id: jsonObject2.results[i]["contact_id"], birthday: jsonObject2.results[i]["birthday"], pp_index: jsonObject2.results[i]["pp_index"]};
                                     contactlist.push(add);
+//                                    console.log("fetch");
+//                                    console.log(add);
                                 }
                     }
                 
@@ -392,6 +394,7 @@ async function displayContacts(searchString) {
         }
 
         let clon = contactitemtemplate.content.cloneNode(true);
+//        console.log(contactlist[i]);
         clon.children[0].children[0].innerHTML = `${contactlist[i].name}<br><span>${contactlist[i].number}</span>`;
         clon.children[0].children[0].style.backgroundColor = contactlist[i].color;
         clon.children[0].children[0].style.color = contactlist[i].color;
@@ -444,7 +447,7 @@ function displayContactInfo(b){
         welcome_msg.style.display = "none";
 
 
-        console.log("img/ppics/pp-" + contactlist[i].pp_index.toString() + ".jpg");
+//        console.log("img/ppics/pp-" + contactlist[i].pp_index.toString() + ".jpg");
         pp_detail.src = "img/ppics/pp-" + contactlist[i].pp_index.toString() + ".jpg"; 
         name_detail.value = contactlist[i].name;
         phone_detail.value = contactlist[i].number;
@@ -710,8 +713,7 @@ function savecontactinfo(){
                                     '", "fav_color" : "' + color_detail.value + 
                                     '", "notes" : "' + notes_detail.value + 
                                     '", "email" : "' + email_detail.value +
-                                    '", "primary_street_addr" : "'+address_detail.value+'", "phone_number" : "' + phone_detail.value + 
-                                    '", "birthday" : "' + birthday_detail +'", "favorite" : "0", "pp_index" : "' + ppIndex + '"}';
+                                    '", "primary_street_addr" : "'+address_detail.value+'", "phone_number" : "' + phone_detail.value + '", "birthday" : "' + birthday_detail +'", "favorite" : "0", "pp_index" : "' + ppIndex + '"}';
                 var url = "https://managerofcontacts.live/api/Create.php";
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", url, true);
@@ -744,7 +746,6 @@ function savecontactinfo(){
                     xhr.send(JSONPayload);
                 }
                 catch (err)
-                                '", "birthday" : "' + birthday_detail +'", "favorite" : "0", "pp_index" : "' + ppIndex + '"}';
                 {
                     email_detail.value = "error while creating contact";
                 }
@@ -830,14 +831,14 @@ function savecontactinfo(){
 
                 birthday_detail = birthday_mm_detail.value + "/" + birthday_dd_detail.value;
 
-                contactlist[lastClicked].name = name_detail.value;
-                contactlist[lastClicked].number = phone_detail.value;
-                contactlist[lastClicked].email = email_detail.value;
-                contactlist[lastClicked].address = address_detail.value;
-                contactlist[lastClicked].color = color_detail.value;
-                contactlist[lastClicked].birthday = birthday_detail;
-                contactlist[lastClicked].notes = notes_detail.value;
-                contactlist[lastClicked].pp_index = ppIndex;
+//                contactlist[lastClicked].name = name_detail.value;
+//                contactlist[lastClicked].number = phone_detail.value;
+//                contactlist[lastClicked].email = email_detail.value;
+//                contactlist[lastClicked].address = address_detail.value;
+//                contactlist[lastClicked].color = color_detail.value;
+//                contactlist[lastClicked].birthday = birthday_detail;
+//                contactlist[lastClicked].notes = notes_detail.value;
+//                contactlist[lastClicked].pp_index = ppIndex;
 
 
                 //birthday_detail.value = "1999-29-01";
@@ -860,7 +861,7 @@ function savecontactinfo(){
                           '", "email" : "' + email_detail.value + 
                           '", "primary_street_addr" : "' + address_detail.value + '", "phone_number" : "' + phone_detail.value + 
                           '", "birthday" : "' + birthday_detail +
-                          '", "favorite" : "1", "contact_id" : "' + contactlist[lastClicked].contact_id + '"}';
+                          '", "favorite" : "1", "contact_id" : "' + contactlist[lastClicked].contact_id + '", "pp_index" : "' + ppIndex + '"}';
             var url = "https://managerofcontacts.live/api/Edit.php";
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url, true);
@@ -1019,11 +1020,11 @@ function choosePP() {
 }
 
 function changePPIndex(num) {
-    console.log(ppIndex);
+//    console.log(ppIndex);
     ppIndex += num;
     if(ppIndex < 0) ppindex += 16;
-    console.log(ppIndex);
-    console.log("img/ppics/pp-" + ppIndex.toString() + ".jpg");
+//    console.log(ppIndex);
+//    console.log("img/ppics/pp-" + ppIndex.toString() + ".jpg");
     current_pp.src = "img/ppics/pp-" + ppIndex.toString() + ".jpg"; 
 }
 
