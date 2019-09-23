@@ -790,6 +790,7 @@ h3 input {
 
 .popup .btn1 {
     left: 36%;
+    border-width: 3%;
 }
 
 .popup .btn2 {
@@ -810,6 +811,8 @@ h3 input {
     height: 6%;
     background-image: url("img/leftarrow.png");
     background-size: 50%;
+    background-position-x: 60%;
+    background-position-y: 50%;
     background-repeat: no-repeat;
 }
 
@@ -821,19 +824,27 @@ h3 input {
     height: 6%;
     background-image: url("img/rightarrow.png");
     background-size: 50%;    
-    background-position-x: 10%;
-    background-position-y: 10%;
+    background-position-x: 60%;
+    background-position-y: 50%;
     background-repeat: no-repeat;
 }
 
 .popup .choosepppopup img {
     position: absolute;
     top: 30%;
-    left: 37.5%;
-    width: 25%;
+    left: 35.5%;
+    width: 27%;
+    border: solid;
+    border-radius: 6%;
 }
 
-.popup .deletemsg {
+.popup .closepopup {
+    width: 40%;
+    top: 58%;
+    left: 49%;
+}
+
+.popup .popupmessage {
     position: absolute;
     top: 43%;
     left: 50%;
@@ -844,6 +855,10 @@ h3 input {
     font-weight: 20px;
     letter-spacing: 7px;
     width: 50%;
+}
+
+.popup #genericmessage {
+    text-align: center;
 }
 
 .popup .pun {
