@@ -6,11 +6,11 @@ session_start();
 $inData = getRequestInfo();
 
 $user_id = $_SESSION["user_id"];
-returnWithError($user_id, "Successfully logged out.");
 unset($_SESSION["user_id"]);
+unset($_SESSION["name"]);
+returnWithError($user_id, "Successfully logged out.");
 session_destroy();
 //header('Location: https://managerofcontacts.live');
-
 
 function getRequestInfo()
 {
