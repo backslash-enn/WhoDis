@@ -1,9 +1,9 @@
 //contactlist[lastClicked].contact_id
 
 let contactlist = [
-    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "Pink", address: "4321 Waterbay Creek", notes: "", favorite: true, contact_id: 1000, birthday: "9/2", pp_index: 0},
+    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "Pink", address: "4321 Waterbay Creek", notes: "", favorite: true, contact_id: 1000, birthday: "10/3", pp_index: 0},
     {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "Red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false, contact_id: 1001, birthday: "9/2", pp_index: 0},
-    {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "Orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false, contact_id: 1002, birthday: "12/25", pp_index: 0},
+    {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "Orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false, contact_id: 1002, birthday: "10/10", pp_index: 0},
     {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1003, birthday: "9/27", pp_index: 0},
     {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "Blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true, contact_id: 1004, birthday: "", pp_index: 0},
     {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1005, birthday: "", pp_index: 0},
@@ -904,10 +904,6 @@ function savecontactinfo(){
         left_panel.style.zIndex = "7";
 }
 
-function compare(a, b) {
-    return a.name.localeCompare(b.name);
-}
-
 function addcontactinfo() {
     // animation
     left_panel.style.animation = 'none';
@@ -990,7 +986,8 @@ function addcontactinfo() {
 
 function getUpcomingBirthdays() {
     var today = new Date();
-    var mm = String(today.getMonth() + 1).padStart(1, '0');
+    var curMonth = (today.getMonth()) + 1;
+    var curDate = (today.getDate()) + 1;
     var length = contactlist.length;
     var slash;
     var count = 0;
@@ -998,23 +995,40 @@ function getUpcomingBirthdays() {
     var m = "";
     var d = "";
 
+    var tempBdays = [];
+
     document.getElementById("birthdays").innerHTML = "";
-    
-    for (let i = 0; i < length; i++){
+
+    //collects all the contacts who have a birthday coming up within the next 30 days 
+    for (let i = 0; i < length; i++) {
         slash = contactlist[i].birthday.indexOf("/");
         if (slash === -1)
             continue;
-        if (contactlist[i].birthday.substring(0, slash) === mm){
-            count++;
-            m = (contactlist[i].birthday.substring(0,slash));
-            d = (contactlist[i].birthday.substring(slash + 1, length));
-            if(m.length == 1)
-                m = "0" + m;
-            if(d.length == 1)
-                d = "0" + d;
-            document.getElementById("birthdays").innerHTML += (count == 1 ? "" : "<br>") + " <span>" + m + "/" + d + "</span> " + contactlist[i].name;
+
+        m = contactlist[i].birthday.substring(0,slash);
+        d = contactlist[i].birthday.substring(slash + 1, length);
+
+        if((m == curMonth && d >= curDate || m == (((curMonth-1)+1)%12) + 1 && d < curDate)) {
+            let newBday = {
+                name: contactlist[i].name,
+                month: m,
+                day: d 
+            };
+            tempBdays.push(newBday);
         }
-        if (count === 5) {
+    }
+    tempBdays.sort(compareBirthdays);
+    
+    for (let i = 0; i < tempBdays.length; i++) {
+
+            if(tempBdays[i].month.length == 1)
+                tempBdays[i].month = "0" + tempBdays[i].month;
+            if(tempBdays[i].day.length == 1)
+                tempBdays[i].day = "0" + tempBdays[i].day;
+
+            document.getElementById("birthdays").innerHTML += (i == 0 ? "" : "<br>") + " <span>" + tempBdays[i].month + "/" + tempBdays[i].day + "</span> " + tempBdays[i].name;
+
+        if (i === 3) {
             break;
         }
     }
@@ -1076,6 +1090,20 @@ function closePopup() {
         left_panel_cover.style.display = "none";
         left_panel_cover.style.opacity = "0";
     }
+}
+
+
+function compare(a, b) {
+    return a.name.localeCompare(b.name);
+}
+
+function compareBirthdays(a, b) {
+    let aBirthNum = (Number(a.month) * 1000) + Number(a.day);
+    let bBirthNum = (Number(b.month) * 1000) + Number(b.day);
+
+console.log(a.name + ": " + aBirthNum);
+console.log(b.name + ": " + bBirthNum);
+    return aBirthNum - bBirthNum;
 }
 
 function adaptToScreen() {
