@@ -209,59 +209,51 @@ function getLoggedIn() {
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
         
-//             try {
-//                 xhr.onreadystatechange = function()
-//                 {
-//                     if (this.readyState == 4 && this.status == 200)
-//                         {
-//                             var jsonObject = JSON.parse( xhr.responseText );
-// //                            console.log("login log: ");
-// //                            console.log(jsonObject);
-//                             error = jsonObject.error;
-//                             if(error === "No records found" || error === "Failure"){
-//                                 left_panel_cover.style.display = "initial";
-//                                 left_panel_cover.style.opacity = "0.8";
-//                                 document.getElementById("deletemsg").textContent = "Invalid Credentials, please login again";
-//                                 document.getElementById("yes").textContent = "NO";
-//                                  document.getElementById("yes").style.visibility = "hidden";
-// //                                document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
-//                                 document.getElementById("abort").textContent = "Try Again";
-//                                 document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
-//                                 openPopup("deleteContact");
-//                             }
-//                             else{
-//                                 document.getElementById("password_login").value = "";
-//                                 myvar = 15;
-//                                 name = jsonObject.name;
-//                                 localStorage.setItem("user_id_val", myvar);
-//                                 localStorage.setItem("name_val", name);
-//                                 login_panel.style.display = "none";
-//                                 welcome_msg.style.display = "block";
-//                                 right_panel.style.display = "initial";
+            try {
+                xhr.onreadystatechange = function()
+                {
+                    if (this.readyState == 4 && this.status == 200)
+                        {
+                            var jsonObject = JSON.parse( xhr.responseText );
+//                            console.log("login log: ");
+//                            console.log(jsonObject);
+                            error = jsonObject.error;
+                            if(error === "No records found" || error === "Failure"){
+                                left_panel_cover.style.display = "initial";
+                                left_panel_cover.style.opacity = "0.8";
+                                document.getElementById("deletemsg").textContent = "Invalid Credentials, please login again";
+                                document.getElementById("yes").textContent = "NO";
+                                 document.getElementById("yes").style.visibility = "hidden";
+//                                document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
+                                document.getElementById("abort").textContent = "Try Again";
+                                document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
+                                openPopup("deleteContact");
+                            }
+                            else{
+                                document.getElementById("password_login").value = "";
+                                myvar = 15;
+                                name = jsonObject.name;
+                                localStorage.setItem("user_id_val", myvar);
+                                localStorage.setItem("name_val", name);
+                                login_panel.style.display = "none";
+                                welcome_msg.style.display = "block";
+                                right_panel.style.display = "initial";
 
 
-//                                 welcome_name.innerHTML = name;
-//                                 contactlist.sort(compare);
-//                                 displayContacts("");
-//                             }
+                                welcome_name.innerHTML = name;
+                                contactlist.sort(compare);
+                                displayContacts("");
+                            }
 
-//                         }
-//                 }
-//                 xhr.send(JSONPayload);
-//             }
-//             catch (err)
-//             {
-//                 email_detail.value = "error while creating contact";
-//             }
+                        }
+                }
+                xhr.send(JSONPayload);
+            }
+            catch (err)
+            {
+                email_detail.value = "error while creating contact";
+            }
 
-            login_panel.style.display = "none";
-            welcome_msg.style.display = "block";
-            right_panel.style.display = "initial";
-
-
-            welcome_name.innerHTML = name;
-            contactlist.sort(compare);
-            displayContacts("");
             getUpcomingBirthdays();
 
 }
@@ -375,7 +367,7 @@ function getLoggedOut() {
 }
 
 async function displayContacts(searchString) {
-    //contactlist = [];
+    contactlist = [];
     let promise = new Promise((res, rej) => {
         setTimeout(() => res("Now it's done!"), 350)
     });
