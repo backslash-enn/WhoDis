@@ -9,9 +9,6 @@ let contactlist = [
     {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1006, birthday: ""}
 ]
 
-//<script language="javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
-
-//    let name;
     let myvar = localStorage.getItem("user_id_val");
     let name = localStorage.getItem("name_val");
     var right_panel;
@@ -128,7 +125,6 @@ function fetchContacts(){
                 if (this.readyState == 4 && this.status == 200)
                     {
                         jsonObject2 = JSON.parse( xhr2.responseText );
-//                        console.log(jsonObject2);
                           for(i = 0; i < jsonObject2.results.length; i++)
                                 {
                                     var fav_db = jsonObject2.results[i]["favorite"];
@@ -155,7 +151,6 @@ function fetchContacts(){
         }
         catch (err)
         {
-//            document.getElementById("email").value = err.message;
             document.getElementById("email").value = "error while editing";
         }
     return true;
@@ -229,10 +224,6 @@ function getLoggedIn() {
                                 popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
                             }
                             else{
-//                                name = jsonObject.name;
-//                                user_id = jsonObject.user_id;
-//                                console.log("user id: ");
-//                                console.log(user_id);
                                 document.getElementById("password_login").value = "";
                                 myvar = 15;
                                 name = jsonObject.name;
@@ -395,7 +386,6 @@ async function displayContacts(searchString) {
         console.log("true");
     }
     let result = await promise;
-//    alert(result);
     
     while (itemlist.firstChild) {
         itemlist.removeChild(itemlist.firstChild);
@@ -475,22 +465,15 @@ function displayContactInfo(b){
         email_detail.value = contactlist[i].email;
         address_detail.value = contactlist[i].address;
         notes_detail.value = contactlist[i].notes;
-        // if (birthday_detail.value === "") {
-        //     birthday_detail.style.display = 'none';
-        // }
-        // else {
-        //     birthday_detail.value = contactlist[i].birthday;            
-        // }
 
         var slash = contactlist[i].birthday.indexOf("/");
         var length = contactlist[i].birthday.length;
 
-        birthday_mm_detail.value = parseInt(contactlist[i].birthday.substring(0,slash), 10);
-        birthday_dd_detail.value = parseInt(contactlist[i].birthday.substring(slash + 1, length), 10);
+        birthday_mm_detail.value = (contactlist[i].birthday.substring(0,slash));
+        birthday_dd_detail.value = (contactlist[i].birthday.substring(slash + 1, length));
 
         color_detail.value = contactlist[i].color;
         
-        //scaleFontSize('name contact_detailsitem');
     }, 100); 
 }
 
@@ -651,8 +634,8 @@ function canceledit(){
         var slash = contactlist[i].birthday.indexOf("/");
         var length = contactlist[i].birthday.length;
 
-        birthday_mm_detail.value = parseInt(contactlist[i].birthday.substring(0,slash), 10);
-        birthday_dd_detail.value = parseInt(contactlist[i].birthday.substring(slash + 1, length), 10);
+        birthday_mm_detail.value = (contactlist[i].birthday.substring(0,slash));
+        birthday_dd_detail.value = (contactlist[i].birthday.substring(slash + 1, length));
  
         notes_detail.value = contactlist[lastClicked].notes;
     
@@ -721,51 +704,12 @@ function editcontactinfo(){
         birthday_mm_detail.placeholder = "MM"
         birthday_dd_detail.placeholder = "DD"
     }
-    else{        
-//        console.log("cc: " + contactlist[lastClicked].contact_id);
-//        var JSONPayload = '{ "name" : "' + name_detail.value + 
-//                          '", "fav_color" : "' + color_detail.value + 
-//                          '", "notes" : "' + notes_detail.value + 
-//                          '", "email" : "' + email_detail.value + 
-//                          '", "primary_street_addr" : "' + address_detail.value + '", "phone_number" : "' + phone_detail.value + 
-//                          '", "birthday" : "' + birthday_detail.value +
-//                          '", "favorite" : "1", "contact_id" : "' + contactlist[lastClicked].contact_id + '" }';
-//        var url = "https://managerofcontacts.live/api/Edit.php";
-//        var xhr = new XMLHttpRequest();
-//        xhr.open("POST", url, true);
-//        xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-//        
-//        try {
-//            
-////            xhr.send(JSONPayload);
-////            document.getElementById("address").value = "ttt";
-////            var jsonObject = JSON.parse( xhr.responseText );
-////            email_detail.value = "aaa";
-//            xhr.onreadystatechange = function()
-//            {
-//                if (this.readyState == 4 && this.status == 200)
-//                    {
-//                        //set some success message
-////                        document.getElementById("email").value = "bb";
-//                        var jsonObject = JSON.parse( xhr.responseText );
-////                        email_detail.value = "aa";
-//                        console.log(jsonObject);
-//                    }
-//            }
-//            xhr.send(JSONPayload);
-//            
-//        }
-//        catch (err)
-//        {
-//            email_detail.value = "errow while diting";
-//        }
-
+    else{
         name_detail.disabled = true;
         phone_detail.disabled = true;
         email_detail.disabled = true;
         address_detail.disabled = true;
         color_detail.disabled = true;
-        //birthday_detail.disabled = true;
         birthday_dd_detail.disabled = true;
         birthday_mm_detail.disabled = true;
         notes_detail.disabled = true;
@@ -779,7 +723,6 @@ function savecontactinfo(){
         {
             // Save changes for a new Contact
             
-            //testing
             var JSONPayload = '{ "name" : "' + name_detail.value + 
                                 '", "fav_color" : "' + color_detail.value + 
                                 '", "notes" : "' + notes_detail.value + 
@@ -792,16 +735,10 @@ function savecontactinfo(){
             xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
         
             try {
-//              xhr.send(JSONPayload);
-//              document.getElementById("address").value = "ttt";
-//              var jsonObject = JSON.parse( xhr.responseText )
-//              email_detail.value = "aaa";
                 xhr.onreadystatechange = function()
                 {
                     if (this.readyState == 4 && this.status == 200)
                         {
-                            //set some success message
-//                          document.getElementById("email").value = "bb";
                             var jsonObject = JSON.parse( xhr.responseText );
                             console.log("create log: ");
                             console.log(jsonObject);
@@ -820,7 +757,6 @@ function savecontactinfo(){
                 email_detail.disabled = true;
                 address_detail.disabled = true;
                 color_detail.disabled = true;
-                //birthday_detail.disabled = true;
                 birthday_dd_detail.disabled = true;
                 birthday_mm_detail.disabled = true;
                 notes_detail.disabled = true;
@@ -848,8 +784,6 @@ function savecontactinfo(){
                 new_contact.color = color_detail.value;
                 new_contact.birthday = birthday_detail;
                 new_contact.notes = notes_detail.value;
-
-//                contactlist.push(new_contact);
 
                 //hide save and cancel buttons after user clicks save
                 save_button.style.display = "none";
@@ -1045,8 +979,7 @@ function addcontactinfo() {
         name_detail.defaultValue;
         phone_detail.defaultValue;
         email_detail.defaultValue;
-        address_detail.defaultValue;
-        //birthday_detail.defaultValue;   
+        address_detail.defaultValue; 
         birthday_dd_detail.defaultValue;
         birthday_mm_detail.defaultValue;     
         notes_detail.defaultValue;
