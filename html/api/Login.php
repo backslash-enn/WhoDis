@@ -13,9 +13,8 @@ $db_name = "user";
 //User parameters
 $username = $inData["username"];
 $password = $inData["password"];
-//$user_id = -1;
-//$username = "kart";
-//$password = "hahah";
+$name = "error name";
+$user_id = -1;
 
 //Connect to the database
 $conn = new mysqli($db_user, $db_username, $db_pw, $db_name);
@@ -26,25 +25,26 @@ if ($conn->connect_error)
 else
 {
 	//Check the user's username and password in the database
-	$sql = "SELECT user_id FROM `login` where username = '" . $username . "' AND password = '" . $password . "'";
+	$sql = "SELECT user_id, name FROM `login` where username = '" . $username . "' AND password = '" . $password . "'";
 	$result = $conn->query($sql);
 	if ($result->num_rows > 0)
 	{
 		$row = $result->fetch_assoc();
-		//Create new session based on the user's id
+		//Create new session based on the user's id and name
 		$user_id = $row["user_id"];
+		$name = $row["name"];
 		$_SESSION["user_id"] = $user_id;
-//		returnWithInfo($username, $user_id);
+		$_SESSION["name"] = $name;
         if(isset($_SESSION["user_id"])){
-            returnWithError("Success");
+            returnWithError($user_id, $name, "Success");
         }
         else{
-            returnWithError("Failure");
+            returnWithError($user_id, $name, "Failure");
         }
 	}
 	else
 	{
-		returnWithError("No records found");
+		returnWithError($user_id, $name, "No records found");
 	}
 
 	$conn->close();
@@ -61,15 +61,9 @@ function sendAsJSON($obj)
 	echo $obj;
 }
 
-function returnWithError($err)
+function returnWithError($user_id, $name, $err)
 {
-	$retValue = '{"id":0,"username":"","error":"' . $err . '"}';
-	sendAsJson( $retValue );
-}
-
-function returnWithInfo($username, $user_id)
-{
-	$retValue = '{"id":' . $user_id . ',"username":"' . $username . '","error":""}';
+	$retValue = '{"user_id":"' . $user_id . '", "name":"' . $name . '", "error":"' . $err . '"}';
 	sendAsJson( $retValue );
 }
 
