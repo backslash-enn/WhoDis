@@ -436,6 +436,7 @@ function select_fav(b) {
     {
         b.style.backgroundImage =  'url("img/favoriteiconpink.png")';
         var JSONPayload = '{ "favorite" : "1", "contact_id" : "' + contactlist[i].contact_id.value + '"}';
+        console.log("contact id IS: " + contactlist[i].contact_id.value);
         var url = "https://managerofcontacts.live/api/Edit.php";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
