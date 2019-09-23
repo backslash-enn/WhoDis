@@ -35,7 +35,7 @@
                         <br>
                     <input type="password" name="password" required="" placeholder="Password" id="password_register">
                         <br>
-                    <input class="loginbutton" type="submit" value="REGISTER" onclick = "getRegistered()" id = "register_button">
+                    <input class="loginbutton" type="button" value="REGISTER" onclick = "getRegistered()" id = "register_button">
                 </form>
                 <img src="img/logo.png" alt="logo">
             </div>
@@ -88,7 +88,9 @@
                     </select>
                     <img class="bday contactdetailsitem" src="img/birthdayicon.png">
                     <!--<text>01-01-2001</text>-->
-                    <input disabled="disabled" class="birthday contactdetailsitem" id="birthday" type="date">
+                    <input disabled="disabled" class="birthday contactdetailsitem" id="birthday_mm" type="number" min="1" max="12">
+                    <text>/</text>
+                    <input disabled="disabled" class="birthday contactdetailsitem" id="birthday_dd" type="number" min="1" max="31">
                     <br> <br>
                     <textarea disabled="disabled" class="notes" id="notes" type="text" placeholder="Notes" spellcheck="true" rows="3" cols="57"></textarea>
                 </h3>       
