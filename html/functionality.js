@@ -1,12 +1,13 @@
 //contactlist[lastClicked].contact_id
+
 let contactlist = [
-    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "Pink", address: "4321 Waterbay Creek", notes: "", favorite: true, contact_id: 1000, birthday: "1/29"},
-    {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "Red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false, contact_id: 1001, birthday: "2/2"},
+    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "Pink", address: "4321 Waterbay Creek", notes: "", favorite: true, contact_id: 1000, birthday: "9/29"},
+    {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "Red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false, contact_id: 1001, birthday: "9/2"},
     {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "Orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false, contact_id: 1002, birthday: "12/25"},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1003, birthday: ""},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1003, birthday: "1/29"},
     {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "Blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true, contact_id: 1004, birthday: ""},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1005, birthday: ""},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1006, birthday: ""}
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1005, birthday: "1/29"},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1006, birthday: "1/29"}
 ]
 
 //<script language="javascript" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
@@ -105,6 +106,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     if(myvar != '' && myvar != "" && myvar != -1 && myvar != "-1" && myvar != null){
         login_panel.style.display = "none";
         welcome_msg.style.display = "block";
+        getUpcomingBirthdays();
         right_panel.style.display = "initial";
 
 
@@ -433,7 +435,6 @@ function displayContactInfo(b){
     }, 100); 
 }
 
-
 function select_fav(b) {
     let i = b.parentNode.id; 
 
@@ -511,6 +512,7 @@ function displayWelcomePanel(b) {
     setTimeout(function() {
         contact_details.style.display = "none";
         welcome_msg.style.display = "block";
+        getUpcomingBirthdays();
     }, 100);
 }
 
@@ -582,6 +584,7 @@ function canceledit(){
 
         setTimeout(function() {
             welcome_msg.style.display = "block";
+            getUpcomingBirthdays();
         }, 100);   
         
     }
@@ -999,6 +1002,25 @@ function addcontactinfo() {
         notes_detail.defaultValue;
 
     }, 100);    
+}
+
+function getUpcomingBirthdays() {
+    var today = new Date();
+    var mm = String(today.getMonth() + 1).padStart(1, '0');
+    var length = contactlist.length;
+    var slash;
+    var count = 0;
+    
+    for (let i = 0; i < length; i++){
+        slash = contactlist[i].birthday.indexOf("/");
+        if (contactlist[i].birthday.substring(0, slash) === mm){
+            count++;
+            document.getElementById("birthdays").innerHTML += "<br>" + contactlist[i].name + ": " + contactlist[i].birthday + "";
+        }
+        if (count === 5) {
+            break;
+        }
+    }
 }
 
 function checkForUnseenContacts () {

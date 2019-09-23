@@ -473,6 +473,20 @@ button:hover {
     font-weight: 30;
 }
 
+.welcome .upcomingbirthdays text {
+    position: absolute;
+    font-size: 20px;
+    font-weight: 30;
+    top: 70%;
+}
+
+.birthdays text {
+    position: absolute;
+    font-size: 20px;
+    font-weight: 30;
+    top: 80%;
+}
+
 .contactdetails {
     display: none;
     position: absolute;
