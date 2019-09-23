@@ -1,12 +1,12 @@
 //contactlist[lastClicked].contact_id
 let contactlist = [
-    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "Pink", address: "4321 Waterbay Creek", notes: "", favorite: true, contact_id: 1000, birthday: "1/29"},
-    {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "Red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false, contact_id: 1001, birthday: "2/2"},
-    {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "Orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false, contact_id: 1002, birthday: "12/25"},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1003, birthday: ""},
-    {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "Blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true, contact_id: 1004, birthday: ""},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1005, birthday: ""},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1006, birthday: ""}
+    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "Pink", address: "4321 Waterbay Creek", notes: "", favorite: true, contact_id: 1000, birthday: "1/29", pp_index: 0},
+    {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "Red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false, contact_id: 1001, birthday: "2/2", pp_index: 0},
+    {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "Orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false, contact_id: 1002, birthday: "12/25", pp_index: 0},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1003, birthday: "", pp_index: 0},
+    {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "Blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true, contact_id: 1004, birthday: "", pp_index: 0},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1005, birthday: "", pp_index: 0},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1006, birthday: "", pp_index: 0}
 ]
 
     let myvar = localStorage.getItem("user_id_val");
@@ -286,13 +286,7 @@ function getRegistered() {
     //                                document.getElementById("yes").onclick = function() {deletecontactinfo(this);}
                                     document.getElementById("abort").textContent = "Go Back";
                                     document.getElementById("abort").onclick = function() {deletecontactinfo(this);}
-                                    popup.style.display = "block";
-
-                                    popup.style.animation = 'none';
-                                    left_panel.offsetHeight;
-
-                                    popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
-                                    popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+                                    openPopup("registerfailure");
                                 }
                                 else{
                                     left_panel_cover.style.display = "initial";
@@ -302,13 +296,7 @@ function getRegistered() {
                                      document.getElementById("yes").style.visibility = "hidden";
                                     document.getElementById("abort").textContent = "Login";
                                     document.getElementById("abort").style.visibility = "hidden";
-                                    popup.style.display = "block";
-
-                                    popup.style.animation = 'none';
-                                    left_panel.offsetHeight;
-
-                                    popup.style.animation = "popup-grace-the-room-with-its-presence .4s forwards";
-                                    popup.style.animationTimingFunction = "cubic-bezier(0, .85, .31, .99)";
+                                    openPopup("registersuccess");
                                     setTimeout("location.reload(true);", 1500);
                                 }
                             }
