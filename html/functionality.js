@@ -626,9 +626,6 @@ function canceledit(){
 
         var slash = contactlist[lastClicked].birthday.indexOf("/");
 
-        if(slash == -1)
-            break;
-
         var length = contactlist[lastClicked].birthday.length;
 
         birthday_mm_detail.value = (contactlist[lastClicked].birthday.substring(0,slash));
