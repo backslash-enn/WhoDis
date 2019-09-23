@@ -1,9 +1,9 @@
 //contactlist[lastClicked].contact_id
 var contactlist = [
-    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "Pink", address: "4321 Waterbay Creek", notes: "", favorite: true, contact_id: 1000, birthday: "01/29/1999"},
-    {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "Red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false, contact_id: 1001, birthday: ""},
-    {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "Orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false, contact_id: 1002, birthday: ""},
-    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1003, birthday: ""},
+    {name: "Cat", number: "(786) 009 - 2089", email: "familyfriendly@ottmail.com", color: "Pink", address: "4321 Waterbay Creek", notes: "", favorite: true, contact_id: 1000, birthday: "", justAdded: false},
+    {name: "Otty Osbourne", number: "(904) 607 - 3083", email: "otty@yahoo.com", color: "Red", address: "1234 The Street", notes: "Will die for his guitar. Owes me $5", favorite: false, contact_id: 1001, birthday: "", justAdded: false},
+    {name: "Time Arrow", number: "(000) 000 - 1994", email: "test@gmail.com", color: "Orange", address: "1234 The Street", notes: 'Was kidnapped and is now being forced to say nice things about Apple', favorite: false, contact_id: 1002, birthday: "", justAdded: false},
+    {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1003, birthday: "", justAdded: false},
     {name: "Uri", number: "(123) 123 - 1234", email: "ok@fuby.com", color: "Blue", address: "1234 The Street", notes: 'Wishes he had more time on the last test. Might drop out and sell crack. Apparently it pays pretty well.', favorite: true, contact_id: 1004, birthday: ""},
     {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1005, birthday: ""},
     {name: "Toffeny", number: "(000) 000 - 1994", email: "lostinthetoff@aol.com", color: "Yellow", address: "1234 The Street", notes: "Claims she finished the database. We'll see.", favorite: false, contact_id: 1006, birthday: ""}
@@ -17,6 +17,7 @@ var contactlist = [
     var contactitemtemplate;
     var contactletterdivtemplate;
     var itemlist;
+    var seenContacts = new Set();
 
     var search_box;
     var left_panel;
@@ -43,7 +44,6 @@ var contactlist = [
     var color_detail;
     var birthday_detail;
     var notes_detail;
-    var contact_id;
 
     var favoritesOnly = false;
     var firstLogin = true;
@@ -86,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     color_detail = document.getElementById("color");
     birthday_detail = document.getElementById("birthday");
     notes_detail = document.getElementById('notes');
-    contact_id = document.getElementById('contact_id');
 
     login_tab = document.getElementById('logintab');
     register_tab = document.getElementById('registertab');
@@ -366,6 +365,11 @@ async function displayContacts(searchString) {
         }
 
         itemlist.appendChild(clon);
+
+        if(!seenContacts.has(contactlist[i].contact_id)) {
+            seenContacts.add(contactlist[i].contact_id);
+            lastClicked = i;
+        }
     }
 }
 
@@ -405,7 +409,6 @@ function displayContactInfo(b){
         else {
             birthday_detail.value = contactlist[i].birthday;            
         }
-        contact_id.value = contactlist[i].contact_id;
         color_detail.value = contactlist[i].color;
         
         //scaleFontSize('name contact_detailsitem');
@@ -459,7 +462,7 @@ function deletecontactinfo(b){
     }
     else if (b.id == "yes") {
 
-        var JSONPayload = '{ "contact_id" : "' + contact_id.value + '"}';
+        var JSONPayload = '{ "contact_id" : "' + contactlist[lastClicked].contact_id + '"}';
         var url = "https://managerofcontacts.live/api/Delete.php";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
@@ -517,7 +520,6 @@ function canceledit(){
         color_detail.value = contactlist[lastClicked].color;
         birthday_detail.value = contactlist[lastClicked].birthday;        
         notes_detail.value = contactlist[lastClicked].notes;
-        contact_id.value = contactlist[lastClicked].contact_id;
     
     }
 
@@ -698,7 +700,6 @@ function savecontactinfo(){
                 new_contact.color = color_detail.value;
                 new_contact.birthday = birthday_detail.value;
                 new_contact.notes = notes_detail.value;
-                // Fill in new_contact.contact_id with value returned by jsonObject (xhr.responseText) here
 
                 contactlist.push(new_contact);
 
@@ -713,7 +714,7 @@ function savecontactinfo(){
                 delete_button.style.display = "block";
             }
             else if (name_detail.value == "") {
-                document.getElementById('name_errormsg').style.display = 'block';   
+                document.getElementById('name_errormsg').style.display = 'block';
                 document.getElementById('phone_errormsg').style.display = 'none';            
             }
             else if (phone_detail.value == "") {
@@ -740,7 +741,6 @@ function savecontactinfo(){
                 contactlist[lastClicked].color = color_detail.value;
                 contactlist[lastClicked].birthday = birthday_detail.vallue;
                 contactlist[lastClicked].notes = notes_detail.value;
-                //contactlist[lastClicked].contact_id = contact_id.value;
 
                 //birthday_detail.value = "1999-29-01";
                 console.log("birthday value after edit is: " + birthday_detail.value);
@@ -763,7 +763,7 @@ function savecontactinfo(){
                           '", "email" : "' + email_detail.value + 
                           '", "primary_street_addr" : "' + address_detail.value + '", "phone_number" : "' + phone_detail.value + 
                           '", "birthday" : "' + birthday_detail.value +
-                          '", "favorite" : "1", "contact_id" : "' + contact_id.value + '"}';
+                          '", "favorite" : "1", "contact_id" : "' + contactlist[lastClicked].contact_id + '"}';
             var url = "https://managerofcontacts.live/api/Edit.php";
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url, true);
@@ -850,7 +850,6 @@ function addcontactinfo() {
     address_detail.value = "";
     birthday_detail.value = "";        
     notes_detail.value = "";
-    contact_id.value = "";
 
     // creates placeholders, so users know what each input field is
     name_detail.placeholder = "Name";
@@ -892,9 +891,17 @@ function addcontactinfo() {
         address_detail.defaultValue;
         birthday_detail.defaultValue;        
         notes_detail.defaultValue;
-        contact_id.value = "-1";
 
     }, 100);    
+}
+
+function checkForUnseenContacts () {
+    for(let i = 0; i < contactlist.length; i++) {
+        if(!seenContacts.has(contactlist[i].contact_id)) {
+            seenContacts.add(contactlist[i].contact_id);
+            lastClicked = i;
+        }
+    }
 }
 
 function adaptToScreen() {
